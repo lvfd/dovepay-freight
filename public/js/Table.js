@@ -1,4 +1,3 @@
-//
 function Table(data, from, indexPage, args) {
   this.data = data;
   this.from = from;  // form name
