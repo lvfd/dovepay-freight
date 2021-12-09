@@ -1,0 +1,57 @@
+<table>
+<tbody><tr>
+    <td>
+<select id="sourceSelect" size="10" multiple="">
+ <option value="a">Afghanistan</option>
+ <option value="b">Bahamas</option>
+ <option value="c">Barbados</option>
+ <option value="d">Belgium</option>
+ <option value="e">Bhutan</option>
+ <option value="f">China</option>
+ <option value="g">Croatia</option>
+ <option value="h">Denmark</option>
+ <option value="i">France</option>
+</select>
+    </td>
+    <td>
+        <button onclick="listboxMoveacross('sourceSelect', 'destSelect');">>></button>  <br>
+        <button onclick="listboxMoveacross('destSelect', 'sourceSelect');"><<</button>
+    </td>
+    <td>
+<select id="destSelect" size="10" multiple="">
+ <option value="a">Afghanistan</option>
+ <option value="b">Bahamas</option>
+ <option value="c">Barbados</option>
+ <option value="d">Belgium</option>
+ <option value="e">Bhutan</option>
+ <option value="f">China</option>
+ <option value="g">Croatia</option>
+ <option value="h">Denmark</option>
+ <option value="i">France</option>
+</select>
+    </td>
+</tr>
+</tbody></table>
+    <script>
+function listboxMoveacross(sourceID, destID) {
+    var src = document.getElementById(sourceID);
+    var dest = document.getElementById(destID);
+    for(var count=0; count < src.options.length; count++) {
+        if(src.options[count].selected == true) {
+                var option = src.options[count];
+                var newOption = document.createElement("option");
+                newOption.value = option.value;
+                newOption.text = option.text;
+                newOption.selected = true;
+                try {
+                         dest.add(newOption, null); //Standard
+                         src.remove(count, null);
+                 }catch(error) {
+                         dest.add(newOption); // IE only
+                         src.remove(count);
+                 }
+                count--;
+        }
+    }
+}
+</script>

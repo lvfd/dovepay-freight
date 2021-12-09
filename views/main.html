@@ -1,0 +1,40 @@
+<main>
+  <hr>
+  <section class="maincontent">
+    <% if (type == 'station') { %>
+      <% if (name == 'userInfo') { %>
+        <%- include('components/station/userManagement/userInfo.html') %>
+      <% } else if (name == 'discountPolicies') { %>
+        <%- include('components/station/userManagement/discountPolicies.html') %>
+      <% } else if (name == 'discountPoliciesManagement') { %>
+        <%- include('components/station/userManagement/discountPoliciesManagement.html') %>
+      <% } else if (name == 'discountPoliciesManagementDetails') { %>
+        <%- include('components/station/userManagement/discountPoliciesManagementDetails.html') %>
+      <% } else if (name == 'billManagement') { %>
+        <%- include('components/station/billManagement/index.html') %>
+      <% } else if (name == 'billDetails') { %>
+        <%- include('components/station/billManagement/details.html') %>
+      <% } %>
+    <% } else if (type == 'agent') {%>
+      <% if (name == 'accountBinding') { %>
+        <%- include('components/agent/accountBinding/accountBinding.html') %>
+      <% } else if (name == 'billManagement') { %>
+        <%- include('components/agent/billManagement/index.html') %>
+      <% } else if (name == 'billDetails') { %>
+        <%- include('components/agent/billManagement/details.html') %>
+      <% } %>
+    <% } else if (type == 'system') {%>
+      <% if (name == 'userInfoManagement') { %>
+        <%- include('components/system/userInfoManagement.html') %>
+      <% } else if (name == 'billsManagement') { %>
+        <%- include('components/system/billsManagement.html') %>
+      <% } else if (name == 'billDetails') { %>
+        <%- include('components/system/billDetails.html') %>
+      <% } else if (name == 'policiesManagement') { %>
+        <%- include('components/system/policiesManagement.html') %>
+      <% } else if (name == 'policyDetails') { %>
+        <%- include('components/system/policyDetails.html') %>
+      <% } %>
+    <% } %>
+  </section>
+</main>

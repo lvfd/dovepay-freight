@@ -1,0 +1,66 @@
+@CHARSET "UTF-8";
+nav {
+  background-color: rgb(3,78,162);
+}
+nav .button-group {
+  width: 980px;
+  margin: 0 auto;
+}
+nav .fa-caret-down, nav .fa-caret-up {
+  margin-left: 10px;
+}
+nav .button-group {
+  display: block;
+}
+nav .button {
+  font-size: 14px;
+}
+nav .button-primary {
+  background-color: rgb(3,78,162);
+}
+nav .menu-group-inline {
+    display: block;
+    float: left;
+    position: relative;
+    max-width: 100%;
+    vertical-align: middle;
+    -webkit-backface-visibility: hidden;
+}
+nav ul {
+  display: none;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  z-index: 1020;
+  box-shadow: 0 5px 12px rgb(0 0 0 / 15%);
+  min-width: 200px;
+  box-sizing: border-box;
+  padding: 0;
+  color: white;
+  background-color: #4cb0f9;
+}
+nav ul li {
+  padding: 10px 25px;
+  display: flex;
+  align-items: center;
+  column-gap: .25em;
+  text-decoration: none;
+  font-size: 14px;
+}
+nav ul li:hover,
+nav ul li:focus {
+  background-color: rgb(250,166,26);
+}
+nav ul li i {
+  padding-right: 15px;
+}
+nav ul li a {
+  cursor: pointer;
+  width: 100%;
+}
+nav ul li a,
+nav ul li a:hover,
+nav ul li a:focus {
+  text-decoration: none;
+  color: #fff;
+}

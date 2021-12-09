@@ -1,0 +1,318 @@
+{
+  "consumer": [
+    {
+      "id": "consumerQueryBill",
+      "code":"200",
+      "msg": "",
+      "data": {
+        "total": 100,
+        "summaryList": [{
+          "orderTime": "123456",
+          "time": "账期",
+          "type": "货运类型 如国际进港",
+          "orderNo": "结算订单号",
+          "payNo": "支付订单号",
+          "totalFee": "费用汇总",
+          "realTotalFee": "优惠后费汇总",
+          "status": "结算状态",
+          "payMode": "计费方式"
+        }]
+      }
+    },
+    {
+      "id": "consumerQueryBillDetails",
+      "code": "200",
+  "msg": "",
+  "data": {
+    "total": 100,
+    "detailedList": [{
+      "feeRecId": "费用记录编号，唯一",
+      "stockPre": "运单前缀",
+      "stockNo": "运单号",
+      "cargoNm": "品名 如服装",
+      "sAirPortId": "运单始发站",
+      "eAirPortId": "运单目的站",
+      "flight": "航班号",
+      "pcs": "件数",
+      "weight": "重量",
+      "feeWt": "计费重量",
+      "type": "国际直达",
+      "customerName": "重庆锦航国际货运有限公司",
+      "crtopeTime": "计费时间",
+      "opedepartId": "计费营业点",
+      "realTotalFee": "优惠后费用汇总",
+      "totalfee": "费用汇总",
+      "realFeeItemList": [{
+          "feeId": 17,
+          "feeShortNM": "处理费",
+          "feerate": 0.4,
+          "fee": 40
+        },
+        {
+          "feeId": 23,
+          "feeShortNM": "仓储费",
+          "feerate": 0.4,
+          "fee": 40
+        }
+      ],
+      "feeItemList": [{
+          "feeId": 17,
+          "feeShortNM": "处理费",
+          "feerate": 0.4,
+          "fee": 40
+        },
+        {
+          "feeId": 23,
+          "feeShortNM": "仓储费",
+          "feerate": 0.4,
+          "fee": 40
+        }
+      ]
+    }]
+  }
+    },
+    {
+      "id": "getBindConsumer",
+      "code": "200",
+      "msg": "success",
+      "data": {
+        "customerId": "132",
+        "customerNameChn": "顺丰速运重庆有限公司",
+        "status": "0"
+      }
+    },
+    {
+      "id": "bindConsumer",
+      "code": "200",
+      "msg": "success"
+    }
+  ],
+  "station": [
+    {
+      "id": "stationQueryBill",
+      "code": "200",
+      "msg": "",
+      "data": {
+        "total": 100,
+        "summaryList": [{
+          "orderTime": "开账时间",
+          "time": "账期",
+          "type": "货运类型 如国际进港",
+          "orderNo": "结算订单号",
+          "payNo": "支付订单号",
+          "totalFee": "费用汇总",
+          "realTotalFee": "优惠后费汇总",
+          "status": "结算状态",
+          "payMode": "计费方式"
+        }]
+      }
+    },
+    {
+      "id": "stationQueryBillDetails",
+      "code": "200",
+      "msg": "",
+      "data": {
+        "total": 100,
+        "detailedList": [{
+          "feeRecId": "费用记录编号，唯一",
+          "stockPre": "运单前缀",
+          "stockNo": "运单号",
+          "cargoNm": "品名 如服装",
+          "sAirPortId": "运单始发站",
+          "eAirPortId": "运单目的站",
+          "flight": "航班号",
+          "pcs": "件数",
+          "weight": "重量",
+          "feeWt": "计费重量",
+          "type": "国际直达",
+          "customerName": "重庆锦航国际货运有限公司",
+          "crtopeTime": "计费时间",
+          "opedepartId": "计费营业点",
+          "realTotalFee": "优惠后费用汇总",
+          "totalfee": "费用汇总",
+          "realFeeItemList": [{
+              "feeId": 17,
+              "feeShortNM": "处理费",
+              "feerate": 0.4,
+              "fee": 40
+            },
+            {
+              "feeId": 23,
+              "feeShortNM": "仓储费",
+              "feerate": 0.4,
+              "fee": 40
+            }
+          ],
+          "feeItemList": [{
+              "feeId": 17,
+              "feeShortNM": "处理费",
+              "feerate": 0.4,
+              "fee": 40
+            },
+            {
+              "feeId": 23,
+              "feeShortNM": "仓储费",
+              "feerate": 0.4,
+              "fee": 40
+            }
+          ]
+        }]
+      }
+    },
+    {
+      "id": "stationFeeUpdate",
+      "code": "200",
+      "msg": "修改成功"
+    },
+    {
+      "id": "stationBillPush",
+      "code": "200",
+      "msg": "推送成功"
+    },
+    {
+      "id": "getStationAllConsumer",
+      "code": "200",
+      "msg": "success",
+      "data": {
+        "customerList": [{
+          "customerId": "132",
+          "customerNameChn": "顺丰速运重庆有限公司",
+          "status": "0"
+        }],
+        "totalCustomer": "20"
+      }
+    }
+  ],
+  "system": [
+    {
+      "id": "systemQueryBill",
+      "code": "200",
+      "msg": "",
+      "data": {
+        "total": 100,
+        "summaryList": [{
+          "orderTime": "开账时间",
+          "time": "账期",
+          "type": "货运类型 如国际进港",
+          "orderNo": "结算订单号",
+          "payNo": "支付订单号",
+          "totalFee": "费用汇总",
+          "realTotalFee": "优惠后费汇总",
+          "status": "结算状态",
+          "payMode": "计费方式"
+        }]
+      }
+    },
+    {
+      "id": "systemQueryBillDetails",
+      "code": "200",
+      "msg": "",
+      "data": {
+        "total": 100,
+        "detailedList": [{
+          "feeRecId": "费用记录编号， 唯一",
+          "stockPre": "运单前缀",
+          "stockNo": "运单号",
+          "cargonm": "品名 如服装",
+          "sAirPortid": "运单始发站",
+          "eAirPortid": "运单目的站",
+          "flight": "航班号",
+          "pcs": "件数",
+          "weight": "重量",
+          "feeWt": "计费重量",
+          "type": "国际直达",
+          "customerName": "重庆锦航国际货运有限公司",
+          "crtopeTime": "计费时间",
+          "opedepartId": "计费营业点",
+          "expenseDetailsFront": {
+            "totalfee": "费用汇总",
+            "feeItemList": [{
+              "feeId": 17,
+              "feeShortNM": "处理费",
+              "feerate": 0.4,
+              "fee": 40
+            }, {
+              "feeId": 23,
+              "feeShortNM": "仓储费",
+              "feerate": 0.4,
+              "fee": 40
+            }]
+          },
+          "expenseDetailsAfter": {
+            "totalfee": "费用汇总",
+            "feeItemList": [{
+              "feeId": 17,
+              "feeShortNM": "处理费",
+              "feerate": 0.4,
+              "fee": 40
+            }, {
+              "feeId": 23,
+              "feeShortNM": "仓储费",
+              "feerate": 0.4,
+              "fee": 40
+            }]
+          }
+        }]
+      }
+    },
+    {
+      "id": "getAllConsumer",
+      "code": "200",
+      "msg": "success",
+      "data": {
+        "customerList": [{
+            "customerId": "132",
+            "customerNameChn": "顺丰速运重庆有限公司",
+            "status": "0"
+          },
+          {
+            "customerId": "ZGYZ",
+            "customerNameChn": "顺丰速运重庆有限公司",
+            "status": "0"
+          }
+        ],
+        "totalCustomer": "20"
+      }
+    }
+  ],
+  "pay": [
+    {
+      "id": "pay",
+      "code": "200",
+      "msg": "success",
+      "data": {
+        "payUrl": "https://www.dovepay.com/dovePay/orderAction.do",
+        "payData": {
+          "inputcharset": "",
+          "version": "",
+          "language": "",
+          "signtype": "",
+          "pageurl": "",
+          "bgurl": "",
+          "transactionid": "",
+          "orderamount": "",
+          "ordertime": "",
+          "ext1": "",
+          "paytype": "",
+          "pid": "",
+          "sharingfeecalctype": "",
+          "sharingfeetype": "",
+          "haspayeefee": "",
+          "sharingdata": "",
+          "signmsg": ""
+        }
+      }
+    }
+  ],
+  "dict": {
+    "code": "200",
+    "msg": "success",
+    "data": [{
+      "key": "E",
+      "value": "出港"
+    }, {
+      "key": "I",
+      "value": "进港"
+    }]
+  }
+}

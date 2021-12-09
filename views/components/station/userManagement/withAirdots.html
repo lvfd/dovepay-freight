@@ -1,0 +1,82 @@
+<form class="uk-form-stacked">
+  <div class="uk-flex uk-flex-middle uk-margin">
+    <div class="uk-width-large">
+      <label class="uk-form-label" for="discountPolicyName">优惠政策名称</label>
+      <input class="uk-input" type="text" name="discountPolicyName">
+    </div>
+    <div class="uk-margin-left">
+      <label class="uk-form-label" for="startTime">有效期</label>
+      <div class="uk-flex uk-flex-middle">
+        <input class="uk-input date-time-picker uk-width-small" type="text" name="startTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" readonly>
+        <span class="uk-margin-small-left uk-margin-small-right">至</span>
+        <input class="uk-input date-time-picker uk-width-small" type="text" name="endTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" readonly>
+      </div>
+    </div>
+  </div>
+  <div class="uk-heading-line uk-text-center uk-margin-bottom">
+    <span>航点信息</span>
+  </div>
+  <div id="departureInfo" class="uk-grid-small" uk-grid>
+    <!-- <div class="uk-flex uk-flex-bottom fn_departureInfo_wrap uk-width-1-2">
+      <div class="fn_departureInfo_1">
+        <label class="uk-form-label">起点站</label>
+        <input class="uk-input" type="text" name="">
+      </div>
+      <div class="fn_departureInfo_2 uk-margin-small-left uk-margin-small-right">
+        <label class="uk-form-label">起点站三字码</label>
+        <input class="uk-input" type="text" name="discountValue">
+      </div>
+      <button class="button button-primary button-square">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+      </button>
+      <button class="button button-highlight button-square">
+        <i class="fa fa-minus" aria-hidden="true"></i>
+      </button>
+    </div> -->
+  </div>
+  <hr>
+  <div class="uk-flex uk-flex-middle uk-margin">
+    <div>
+      <label class="uk-form-label" for="minCharge">运单最低运费</label>
+      <div class="uk-flex uk-flex-middle">
+        <input class="uk-input date-time-picker" type="number" name="minCharge">
+        <span class="uk-margin-small-left">元</span>
+      </div>  
+    </div>
+    <div class="uk-margin-left">
+      <label class="uk-form-label" for="feerate">费率</label>
+      <div class="uk-flex uk-flex-middle">
+        <input class="uk-input date-time-picker" type="text" name="feerate">
+        <span class="uk-margin-small-left uk-text-nowrap">元/公斤</span>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div id="wrap_feeDiscount_assets">
+    <!-- <div class="uk-flex uk-flex-middle uk-margin ">
+      <div class="uk-width-small">
+        <label class="uk-form-label" for="discountFeeKey">费用减免项</label>
+        <select class="uk-select" name="discountFeeKey"></select>
+      </div>
+      <div class="uk-margin-small-left">
+        <label class="uk-form-label" for="discountFeeType">减免类型</label>
+        <div class="uk-flex uk-flex-middle">
+          <select class="uk-select uk-width-small" name="discountFeeType">
+            <option></option>
+          </select>
+          <input class="uk-input uk-margin-small-left uk-width-small" type="text" name="discountFeeValue">
+          <span class="uk-margin-small-left uk-text-nowrap">元/折</span>
+          <button class="button button-primary button-square uk-margin-small-left">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </button>
+          <button class="button button-highlight button-square">
+            <i class="fa fa-minus" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </div> -->
+  </div>
+  <div class="uk-flex uk-flex-center uk-padding">
+    <button id="fn_submitDiscountPage_2" class="button button-primary button-rounded fn_submit-discountPage">完成</button>
+  </div>
+</form>

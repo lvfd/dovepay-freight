@@ -1,0 +1,41 @@
+@CHARSET "UTF-8";
+header.header {
+  display:block; 
+  background-color: #fff;
+  border-bottom:1px solid #d7d7d7;
+}
+header .header-container {
+  max-width:980px;
+  margin:0 auto; 
+  padding:21px 3%; 
+  height:30px; 
+  -webkit-transition:height 0.2s ease-out; 
+  transition:height 0.2s ease-out;
+}
+header .dovepay-img-logo {
+  display: inline-block;
+  width: 242px;
+  height: 33px;
+  overflow: hidden;
+  background-image: url(/dovepay-freight/images/accessory.png);
+  background-position: 0 -50px;
+  vertical-align: middle;
+}
+header .fixtop {
+  position: static;
+  top: 0px;
+  z-index: 1000;
+  width: 100%;
+}
+header h2, header #quitBtn {
+  float: right;
+}
+header h2 {
+  line-height: 30px;
+  font-size: 14px;
+  margin-right: 15px;
+  color: #666;
+}
+header h2 i {
+  color: rgb(3,78,162);
+}

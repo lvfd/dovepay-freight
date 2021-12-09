@@ -1,0 +1,55 @@
+<input type="hidden" name="dict_api" value=<%= urls.api.dict%>>
+<input type="hidden" name="getAllDiscountPolicy_api" value=<%= urls.api.station.getAllDiscountPolicy%>>
+<input type="hidden" name="api_changeDiscountStatus" value=<%= urls.api.station.changeDiscountStatus%>>
+<section class="breadcrumb">
+  <ul>
+    <li>用户管理</li>
+    <li><%= title %></li>
+  </ul>
+</section>
+<hr>
+<form name="station_getAllDiscountPolicy" class="uk-grid-small fn_showTab" uk-grid method="post" data-showTab=<%= urls.api.station.getAllDiscountPolicy%>>
+  <div class="uk-width-1-4">
+    <label class="uk-form-label" for="discountPolicyName">优惠政策名称</label>
+    <input class="uk-input" type="text" name="discountPolicyName">
+  </div>
+  <div class="uk-width-1-4">
+    <label class="uk-form-label" for="discountType">优惠类型</label>
+    <select class="uk-select" name="discountType"></select>
+  </div>
+  <div class="uk-width-1-2">
+    <label class="uk-form-label" for="">有效期</label>
+    <div class="uk-flex uk-flex-middle">
+      <input class="uk-input date-time-picker" type="text" name="startTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" readonly>
+      <span class="uk-margin-small-left uk-margin-small-right">至</span>
+      <input class="uk-input date-time-picker" type="text" name="endTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" readonly>
+    </div>
+  </div>
+  <div class="uk-width-1-2">
+    <label class="uk-form-label" for="">设置时间</label>
+    <div class="uk-flex uk-flex-middle">
+      <input class="uk-input date-time-picker" type="text" name="setStartTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" readonly>
+      <span class="uk-margin-small-left uk-margin-small-right">至</span>
+      <input class="uk-input date-time-picker" type="text" name="setEndTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" readonly>
+    </div>
+  </div>
+  <div class="uk-width-1-4">
+    <label class="uk-form-label" for="status">状态</label>
+    <select class="uk-select" name="status">
+      <option value="-1">全部</option>
+      <option value="0">未启用</option>
+      <option value="1">已启用</option>
+      <option value="2">已作废</option>
+    </select>
+  </div>
+  <div class="uk-width-1-1 uk-flex uk-flex-center uk-margin">
+    <button class="button button-primary button-rounded uk-width-1-5" id='fn_getAllDiscountPolicy'>查询</button>
+    <button class="button button-highlight button-rounded uk-margin-small-left uk-width-1-5" id="toDiscountPolicies">新增优惠政策</button>
+  </div>
+</form>
+<hr>
+<table class="uk-table uk-table-small uk-table-divider uk-table-striped uk-table-hover" id="discountPoliciesTable">
+  <thead></thead>
+  <tbody></tbody>
+</table>
+<ul class="uk-pagination uk-flex-center" data-for="discountPoliciesTable"></ul>

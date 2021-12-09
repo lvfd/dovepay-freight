@@ -1,0 +1,66 @@
+<input type="hidden" data-pageId="discountPoliciesManagementDetails">
+<input type="hidden" name="discountPolicyId" value=<%= discountPolicyId %>>
+<input type="hidden" name="api_getDiscountPolicy" value=<%= urls.api.station.getDiscountPolicy%>>
+<input type="hidden" name="api_changeDiscountStatus" value=<%= urls.api.station.changeDiscountStatus%>>
+<input type="hidden" name="url_discountPoliciesManagement" value=<%- urls.station.index + urls.station.discountPoliciesManagement %>>
+<input type="hidden" name="data_from_api" value="">
+<section class="breadcrumb">
+  <ul>
+    <li>用户管理</li>
+    <li><%= title %></li>
+  </ul>
+</section>
+<hr>
+<div class="uk-grid-small uk-margin" uk-grid>
+  <div class="uk-width-2-5">
+    <label class="uk-form-label">优惠政策名称</label>
+    <input class="uk-input" type="text" id="discountPolicyName" disabled>
+  </div>
+  <div class="uk-width-1-5">
+    <label class="uk-form-label">状态</label>
+    <input class="uk-input" type="text" id="status" disabled>
+  </div>
+  <div class="uk-width-2-5">
+    <label class="uk-form-label">有效期</label>
+    <div class="uk-flex uk-flex-middle">
+      <input class="uk-input" type="text" id="startTime" disabled>
+      <span class="uk-margin-small-left uk-margin-small-right">至</span>
+      <input class="uk-input" type="text" id="endTime" disabled>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="uk-width-1-5">
+  <label class="uk-form-label">优惠类型</label>
+  <input class="uk-input" type="text" id="discountType" disabled>
+</div>
+<div class="uk-width-1-1 uk-margin" id="discountValue">
+</div>
+<div class="uk-width-1-1 uk-margin" id="cargoName">
+</div>
+<hr>
+<div class="uk-flex">
+  <div class="uk-width-1-5">
+    <label class="uk-form-label">最低收费金额</label>
+    <input class="uk-input" type="text" id="minCharge" disabled>
+  </div>
+  <div class="uk-width-1-5 uk-margin-small-left">
+    <label class="uk-form-label">费率</label>
+    <input class="uk-input" type="text" id="feerateValue" disabled>
+  </div>
+</div>
+<hr>
+<table id="discountFeeRequestList" class="uk-table uk-table-small uk-table-divider uk-width-1-2">
+  <caption>减免</caption>
+  <thead>
+    <tr>
+      <th>减免费用项</th>
+      <th>减免类型</th>
+      <th>减免金额折扣(元/折)</th>
+    </tr>
+  </thead>
+</table>
+<div class="uk-flex uk-flex-center uk-padding">
+  <button id="btnBack" class="button button-primary button-rounded uk-width-small">返回</button>
+  <button id="btnAction" class="button button-highlight button-rounded uk-margin-small-left uk-width-small"></button>
+</div>

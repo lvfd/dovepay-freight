@@ -1,0 +1,128 @@
+<section class="breadcrumb">
+  <ul>
+    <li>用户管理</li>
+    <li><%= title %></li>
+  </ul>
+</section>
+<hr>
+<input type="hidden" name="fn_discShow_url" value=<%= urls.api.station.queryDiscountCustomer%>>
+<input type="hidden" name="fn_discSet_url" value=<%= urls.api.station.queryDiscountPolicy%>>
+<input type="hidden" name="fn_discSorS_url" value=<%= urls.api.station.changeCustomerDiscountStatus%>>
+<input type="hidden" name="fn_discSettle_url" value=<%= urls.api.station.addDiscountCustomer%>>
+<form name="station_getStationAllConsumer" class="uk-grid-small fn_showTab fn_quindex" uk-grid method="post" data-countPage="10" data-showTab=<%= urls.api.station.getStationAllConsumer%>>
+  <div class="uk-width-1-5">
+    <label class="uk-form-label" for="customerId">客户代码</label>
+    <input class="uk-input" type="text" name="customerId">
+  </div>
+  <div class="uk-width-1-5">
+    <label class="uk-form-label" for="customerNameChn">公司名称</label>
+    <input class="uk-input" type="text" name="customerNameChn">
+  </div>
+  <div class="uk-width-1-5">
+    <label class="uk-form-label" for="status">状态</label>
+    <select class="uk-select" name="status">
+      <option value="-1">请选择</option>
+      <option value="1">已注册</option>
+      <option value="0">未注册</option>
+    </select>
+  </div>
+  <div class="uk-width-1-5">
+    <label class="uk-form-label" for="feeWay">结算方式</label>
+    <select class="uk-select" name="feeWay">
+      <option value="">请选择</option>
+      <option value="CS">现结</option>
+      <option value="MP">月结</option>
+    </select>
+  </div>
+  <div class="uk-width-1-5">
+    <label class="uk-form-label" for="canYes">用户状态</label>
+    <select class="uk-select" name="canYes">
+      <option value="-1">请选择</option>
+      <option value="0">使用中</option>
+      <option value="1">已作废</option>
+    </select>
+  </div>
+  <section class="action-buttons">
+    <button class="button button-primary button-rounded fn_showTab">查询</button>
+    <input type="reset" class="button button-highlight button-rounded" value="清空">
+    <button class="button button-action button-rounded">导出数据</button>
+  </section>
+</form>
+<hr>
+<div class="uk-overflow-auto">
+  <section class="tabTotalData">
+    <span class="ttdGroup">
+      <span class="ttdName">全部</span>
+      <span class="ttdValue data-res" data-res="totalCustomer"></span>
+    </span>
+    <span class="ttdGroup">
+      <span class="ttdName">已注册</span>
+      <span class="ttdValue data-res" data-res="totalRegistered"></span>
+    </span>
+    <span class="ttdGroup">
+      <span class="ttdName">未注册</span>
+      <span class="ttdValue data-res" data-res="totalUnregistered"></span>
+    </span>
+    <span class="ttdGroup">
+      <span class="ttdName">月结</span>
+      <span class="ttdValue data-res" data-res="mpNumber"></span>
+    </span>
+    <span class="ttdGroup">
+      <span class="ttdName">现结</span>
+      <span class="ttdValue data-res" data-res="csNumber"></span>
+    </span>
+  </section>
+  <table class="uk-table uk-table-small uk-table-divider">
+    <thead></thead><tbody></tbody>
+  </table>
+</div>
+<div id="discountSetting" class="uk-flex-top" uk-modal>
+  <div class="uk-modal-dialog uk-margin-auto-vertical">
+    <div class="uk-modal-header">
+      <h2 class="uk-modal-title">优惠减免设置</h2>
+    </div>
+    <div class="uk-margin uk-flex uk-flex-center uk-flex-middle">
+      <div class="uk-width-1-3">
+        <label class="uk-form-label">可选择的优惠政策</label>
+        <select id="sourceSelect" class="uk-select uk-height-medium" multiple="multiple"></select>
+      </div>
+      <div class="uk-flex uk-flex-column uk-margin-left">
+        <button id="listboxL2R" class="button button-small button-rounded button-primary uk-margin-top">
+          <i class="fa fa-arrow-right" aria-hidden="true"></i>
+        </button>
+        <button id="listboxR2L" class="button button-small button-rounded button-primary uk-margin-top">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="uk-width-1-3 uk-margin-left">
+        <label class="uk-form-label">已设置的优惠政策</label>
+        <select id="destSelect" class="uk-select uk-height-medium" multiple="multiple"></select>
+      </div>
+    </div>
+    <div class="uk-modal-footer uk-text-right">
+      <button class="button button-rounded button-primary" id="fn_discSettle" type="button">完成</button>
+      <button class="button button-rounded button-default uk-modal-close" type="button">取消</button>
+    </div>
+  </div>
+</div>
+<div id="discountShowing" class="uk-flex-top" uk-modal>
+  <div class="uk-modal-dialog uk-margin-auto-vertical">
+    <div class="uk-modal-header">
+      <h2 class="uk-modal-title">参与优惠政策</h2>
+    </div>
+    <div class="uk-container uk-container-xsmall uk-margin">
+      <table class="uk-table uk-table-divider uk-table-hover uk-table-small" data-api=<%= urls.api.station.queryDiscountCustomer%>>
+        <thead>
+          <tr>
+            <th>优惠政策名称</th>
+            <th>有效期</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div class="uk-modal-footer uk-text-right">
+      <button class="button button-rounded button-primary uk-modal-close" type="button">返回</button>
+    </div>
+  </div>
+</div>

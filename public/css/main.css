@@ -1,0 +1,114 @@
+@CHARSET "UTF-8";
+main {
+  background-color: #f8f8f8;
+  font-size: 14px;
+}
+main label:not(.void)::after {
+  content: ":";
+}
+main .button {
+  font-size: 14px;
+}
+main .maincontent {
+  width: 980px;
+  margin: 0 auto;
+}
+main .breadcrumb ul > * {
+  display: contents;
+  display: -ms-inline-flexbox;
+}
+main .breadcrumb * {
+  font-size: 14px;
+  color: #666;
+}
+main .breadcrumb ul > :nth-child(n+2):not(.first-column)::before {
+  content: "/";
+  display: inline-block;
+  margin: 0 20px 0 calc(20px - 4px);
+  font-size: 14px;
+  color: #999;
+}
+main input[onClick] {
+  cursor: pointer;
+}
+main .selector-container {
+  display: block;
+}
+main .selector-container button {
+  width: 100%;
+  background-color: rgb(3,78,162);
+}
+main .action-buttons {
+  display: block;
+  margin: 0 auto;
+}
+main .action-buttons input,
+main .action-buttons button {
+  display: inline-block;
+  width: 200px;
+}
+main .uk-overflow-auto {
+  margin-top: 30px;
+}
+main .tabTotalData {
+  display: none;
+}
+main .tabTotalData .ttdGroup {
+  display: inline-block;
+  min-width: 90px;
+}
+main .tabTotalData .ttdName {
+  width: 50px;
+}
+main .tabTotalData .ttdName::after {
+  content: ": ";
+}
+main table {
+  font-size: 14px;
+  background-color: #fff;
+  white-space:nowrap;
+  cursor: default;
+}
+main #listboxL2R,
+main #listboxR2L {
+  display: block;
+  margin: 15px;
+}
+main #sourceSelect,
+main #destSelect {
+  overflow: hidden;
+  resize: none;
+}
+main #sourceSelect option,
+main #destSelect option {
+  padding: 5px 0;
+}
+main .addDiscountBtn {
+  display: none;
+}
+main .uk-pagination {
+  line-height: 28px;
+  padding: 15px 0;
+}
+main .uk-pagination .button {
+  color:  #fff;
+  line-height: normal;
+}
+.uk-modal-dialog .uk-modal-title {
+  font-size: 16px;
+}
+.uk-modal-dialog .uk-form-label {
+  font-size: 14px;
+}
+.uk-modal-dialog .action-buttons {
+  margin: 20px auto 0;
+}
+.uk-alert h3 {
+  padding-bottom: 10px;
+}
+#discountShowing td, #discountSetting td {
+  font-size: 14px;
+}
+#discountShowing td span:first-child:after {
+  content: ' 至 ';
+}

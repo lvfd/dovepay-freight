@@ -1,0 +1,61 @@
+<nav>
+  <section class="button-group">
+    <% if (!!type && type == 'station') {
+      var station = urls.station;
+      var base = urls.station.index;
+    %>
+    <section class="menu-group-inline">
+      <button class="button button-primary">用户管理<i class="fa fa-caret-down" aria-hidden="true"></i></button>
+      <ul>
+        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + station.userInfo %>>用户信息管理</a></li>
+        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + station.discountPoliciesManagement %>>优惠政策管理</a></li>
+      </ul>
+    </section>
+    <section class="menu-group-inline">
+      <button class="button button-primary">账单管理<i class="fa fa-caret-down" aria-hidden="true"></i></button>
+      <ul>
+        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + station.internationalBills %>>国际直达</a></li>
+        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + station.domesticBills %>>国内直达</a></li>
+        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + station.transferBills %>>中转</a></li>
+      </ul>
+    </section>
+    <% }
+    if (!!type && type == 'agent') {
+      var agent = urls.agent;
+      var base = urls.agent.index;
+    %>
+    <section class="menu-group-inline">
+      <button class="button button-primary">账户绑定<i class="fa fa-caret-down" aria-hidden="true"></i></button>
+      <ul>
+        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + agent.accountBinding %>>账户绑定</a></li>
+      </ul>
+    </section>
+    <section class="menu-group-inline">
+      <button class="button button-primary">账单管理<i class="fa fa-caret-down" aria-hidden="true"></i></button>
+      <ul>
+        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + agent.internationalBills %>>国际直达</a></li>
+        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + agent.domesticBills %>>国内直达</a></li>
+        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + agent.transferBills %>>中转</a></li>
+      </ul>
+    </section>
+    <% }
+    if (!!type && type == 'system') {
+      var system = urls.system;
+      var base = urls.system.index;
+    %>
+    <section class="menu-group-inline">
+      <button class="button button-primary">用户管理<i class="fa fa-caret-down" aria-hidden="true"></i></button>
+      <ul>
+        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + system.userInfoManagement %>>用户信息管理</a></li>
+        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + system.policiesManagement %>>优惠政策管理</a></li>
+      </ul>
+    </section>
+    <section class="menu-group-inline">
+      <button class="button button-primary">账单管理<i class="fa fa-caret-down" aria-hidden="true"></i></button>
+      <ul>
+        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + system.billsManagement %>>账单管理</a></li>
+      </ul>
+    </section>
+    <% }%>
+  </section>
+</nav>

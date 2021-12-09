@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>选择用户类型</title>
+</head>
+<body>
+  <h1>参数设置界面</h1>
+  <form method="post" action="/dovepay-freight/log/login">
+    <label for="userId">登录ID</label>
+    <input type="text" name="userId" value="516171584@qq.com">
+    <label for="accountId">M号</label>
+    <input type="text" name="accountId" value="M4280">
+    <label for="userType">登录类型</label>
+    <select name="userType">
+      <option value="agent">货代</option>
+      <option value="station">货站</option>
+      <option value="system">系统商</option>
+    </select>
+    <input type="submit" name="" value="进入">
+  </form>
+</body>
+</html>

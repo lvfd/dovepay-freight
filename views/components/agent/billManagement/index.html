@@ -1,0 +1,60 @@
+<section class="breadcrumb">
+  <ul>
+    <li>账单管理</li>
+    <li><%= title %></li>
+  </ul>
+</section>
+<hr>
+<input type="hidden" name="pageUrl" value=<%= pageUrl %>>
+<form name="consumer_consumerQueryBill" class="uk-grid-small fn_showTab fn_quindex" uk-grid method="post" data-showTab=<%= urls.api.consumer.consumerQueryBill%> action=<%= urls.api.consumer.consumerBillExcel%>>
+  <input type="hidden" name="type" value=<%= tType %>>
+  <div class="uk-width-1-5">
+    <label class="uk-form-label" for="staTime">开始时间</label>
+    <input class="uk-input date-time-picker" type="text" name="staTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" readonly>
+  </div>
+  <div class="uk-width-1-5">
+    <label class="uk-form-label" for="endTime">终止时间</label>
+    <input class="uk-input date-time-picker" type="text" name="endTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" readonly>
+  </div>
+  <div class="uk-width-1-5">
+    <label class="uk-form-label" for="status">付款状态</label>
+    <select class="uk-select" name="status">
+      <option value="-1">请选择</option>
+      <option value="1">已支付</option>
+      <option value="2">未支付</option>
+      <option value="3">支付失败</option>
+    </select>
+  </div>
+  <div class="uk-width-1-5">
+    <label class="uk-form-label" for="inAndOut">货运类型</label>
+    <select class="uk-select" name="inAndOut">
+      <option value="-1">请选择</option>
+      <option value="1">进港</option>
+      <option value="2">出港</option>
+      <option value="3">国际</option>
+      <option value="4">国内</option>
+    </select>
+  </div>
+  <div class="uk-width-1-5">
+    <label class="uk-form-label" for="payMode">计费方式</label>
+    <select class="uk-select" name="payMode">
+      <option value="-1">请选择</option>
+      <option value="1">现结</option>
+      <option value="2">记账</option>
+    </select>
+  </div>
+  <section class="action-buttons">
+    <button class="button button-primary button-rounded fn_showTab">查询</button>
+    <input type="reset" class="button button-highlight button-rounded" value="清空">
+    <button class="button button-action button-rounded fn_showExc">导出数据</button>
+  </section>
+</form>
+<hr>
+<div class="uk-overflow-auto">
+  <table class="uk-table uk-table-small uk-table-divider uk-table-striped uk-table-hover" data-details=<%= urls.agent.billDetails %> data-pay=<%= urls.api.pay.pay%>>
+    <thead>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
