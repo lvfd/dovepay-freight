@@ -1,4 +1,22 @@
 $(document).ready(function() {
+
+  // readonly禁用backspace:
+  document.onkeydown = Glob_fn.banBackSpace;
+
+  // Init Main:
+  if (document.getElementById('dpfMain')) {
+    Glob_fn.initMain();
+  }
+
+  // Init navbar:
+  if (document.getElementById('dpfNav')) {
+    Glob_fn.initNav();
+  }
+  
+  // Init header:
+  if (document.getElementById('dpfHeader')) {
+    Glob_fn.initQuirBtn();
+  }
   
   // 绑定表格查询：
   $('button.fn_showTab').click(function(event) {

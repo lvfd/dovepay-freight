@@ -4,6 +4,68 @@ var Glob_fn = {
     prototype.constructor = subType;              //增强对象
     subType.prototype = prototype;                //指定对象
   },
+  initMain: function() {
+    const headerH = 73
+    const navH = 40
+    const footerH = 90
+    const browserH = window.outerHeight
+    const browserVisibleH = window.innerHeight
+    // console.log(browserH, browserVisibleH)
+    var dH = browserVisibleH - headerH - navH - footerH;
+    document.querySelector('main').setAttribute("style", "min-height:" + dH + "px")
+  },
+  initNav: function() {
+    var btns = document.querySelectorAll('#dpfNav button')
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].addEventListener('click', function(){
+        event.stopPropagation()
+        var thisBtnCls = this.querySelector('i').classList
+        var dropdown = this.nextElementSibling
+        if (thisBtnCls.contains('fa-caret-down')) {
+          for (var j = 0; j < btns.length; j++) {
+            btns[j].querySelector('i')
+              .setAttribute('class', 'fa fa-caret-down')
+            btns[j].nextElementSibling.setAttribute('style', 'display:none')
+          }
+          thisBtnCls.remove('fa-caret-down')
+          thisBtnCls.add('fa-caret-up')
+          dropdown.setAttribute('style', 'display:block')
+        } else {
+          this.blur()
+          thisBtnCls.remove('fa-caret-up')
+          thisBtnCls.add('fa-caret-down')
+          dropdown.setAttribute('style', 'display:none')
+        }
+      }, false)
+    }
+    document.addEventListener('click', function(){
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].nextElementSibling.setAttribute('style', 'display:none')
+        btns[i].querySelector('i').setAttribute('class', 'fa fa-caret-down')
+      }
+    })
+  },
+  initQuirBtn: function() {
+    const quitBtn = document.querySelector('header #quitBtn')
+    quitBtn.addEventListener('click', function() {
+      window.location.href = this.getAttribute('data-url');
+    })
+  },
+  banBackSpace: function(event) {
+    var ev = event || window.event;
+    var obj = ev.target || ev.srcElement;
+    var t = obj.type || obj.getAttribute('type');
+    var vReadOnly = obj.getAttribute('readonly');
+    vReadOnly = (vReadOnly == '') ? false : vReadOnly;
+    var flag1 = (ev.keyCode == 8 && (t == 'password' || t == 'text' || t == 'number' || t =='textarea') && vReadOnly != undefined) ? true : false;
+    var flag2 = (ev.keyCode == 8 && t != 'password' && t != 'text' && t != 'number' && t != 'textarea') ? true : false;
+    if (flag2) {
+      return false;
+    }
+    if (flag1) {
+      return false;
+    }
+  },
   initDiscoutTypeSel: function(dataList, parentSelect) {
     var op0 = document.createElement('option');
     op0.setAttribute('value', 'TYPE');
