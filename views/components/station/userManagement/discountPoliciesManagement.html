@@ -1,5 +1,6 @@
+<input type="hidden" data-pageId="station_getAllDiscountPolicy">
 <input type="hidden" name="dict_api" value=<%= urls.api.dict%>>
-<input type="hidden" name="getAllDiscountPolicy_api" value=<%= urls.api.station.getAllDiscountPolicy%>>
+<input type="hidden" name="api_forTable" value=<%= urls.api.station.getAllDiscountPolicy%>>
 <input type="hidden" name="api_changeDiscountStatus" value=<%= urls.api.station.changeDiscountStatus%>>
 <section class="breadcrumb">
   <ul>
@@ -8,7 +9,7 @@
   </ul>
 </section>
 <hr>
-<form name="station_getAllDiscountPolicy" class="uk-grid-small fn_showTab" uk-grid method="post" data-showTab=<%= urls.api.station.getAllDiscountPolicy%>>
+<form id="dataForm" class="uk-grid-small" uk-grid>
   <div class="uk-width-1-4">
     <label class="uk-form-label" for="discountPolicyName">优惠政策名称</label>
     <input class="uk-input" type="text" name="discountPolicyName">
@@ -43,13 +44,13 @@
     </select>
   </div>
   <div class="uk-width-1-1 uk-flex uk-flex-center uk-margin">
-    <button class="button button-primary button-rounded uk-width-1-5" id='fn_getAllDiscountPolicy'>查询</button>
-    <button class="button button-highlight button-rounded uk-margin-small-left uk-width-1-5" id="toDiscountPolicies">新增优惠政策</button>
+    <button id="submitBtn" class="button button-primary button-rounded uk-width-1-5">查询</button>
+    <button id="toDiscountPolicies" class="button button-highlight button-rounded uk-margin-small-left uk-width-1-5">新增优惠政策</button>
   </div>
 </form>
 <hr>
-<table class="uk-table uk-table-small uk-table-divider uk-table-striped uk-table-hover" id="discountPoliciesTable">
+<table id="dataTable" class="uk-table uk-table-small uk-table-divider uk-table-striped uk-table-hover">
   <thead></thead>
   <tbody></tbody>
 </table>
-<ul class="uk-pagination uk-flex-center" data-for="discountPoliciesTable"></ul>
+<ul class="uk-pagination uk-flex-center" data-for="dataTable"></ul>

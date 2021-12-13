@@ -1,74 +1,20 @@
 function initSystem_getAllConsumer() {
-  // bind submit button:
-  var submitBtn = document.getElementById('submitBtn');
-  submitBtn.addEventListener('click', function(event){
-    event.preventDefault();
-    var $this = $(this);
-    var url = document.querySelector('input[name=api_getAllConsumer]').value;
-    var postData = $this.closest('form').serializeObject();
-    postData.pageNumber = '1';
-    postData.pageSize = '10';
-    $(this).fn_sys_getAllConsumer(url, postData);
-  });
-  submitBtn.click();
-
+   // bind submit button:
+  fn_initSubmitBtn(1, 10, fetch_sys_getAllConsumer);
   // bind export button:
-  var expoBtn = document.getElementById('exportBtn');
-  expoBtn.addEventListener('click', function(event) {
-    event.preventDefault();
-    var $this = $(this);
-    var url = document.querySelector('input[name=api_exportStationAllConsumer]').value;
-    var postData = $this.closest('form').serializeObject();
-    $(this).fn_sys_exportExcel(url, postData);
-  });
+  fn_initExportBtn(fetch_exportExcel);
 }
 function initSystem_systemQueryBill() {
   // bind submit button:
-  var submitBtn = document.getElementById('submitBtn');
-  submitBtn.addEventListener('click', function(event){
-    event.preventDefault();
-    var $this = $(this);
-    var url = document.querySelector('input[name=api_systemQueryBill]').value;
-    var postData = $this.closest('form').serializeObject();
-    postData.indexPage = '1';
-    postData.countPage = '10';
-    $(this).fn_sys_systemQueryBill(url, postData);
-  });
-  submitBtn.click();
-
+  fn_initSubmitBtn(1, 10, fetch_sys_systemQueryBill);
   // bind export button:
-  var expoBtn = document.getElementById('exportBtn');
-  expoBtn.addEventListener('click', function(event) {
-    event.preventDefault();
-    var $this = $(this);
-    var url = document.querySelector('input[name=api_systemBillExcel]').value;
-    var postData = $this.closest('form').serializeObject();
-    $(this).fn_sys_exportExcel(url, postData);
-  });
+  fn_initExportBtn(fetch_exportExcel);
 }
 function initSystem_systemQueryBillDetails() {
   // bind submit button:
-  var submitBtn = document.getElementById('submitBtn');
-  submitBtn.addEventListener('click', function(event){
-    event.preventDefault();
-    var $this = $(this);
-    var url = document.querySelector('input[name=api_systemQueryBillDetails]').value;
-    var postData = $this.closest('form').serializeObject();
-    postData.indexPage = '1';
-    postData.countPage = '10';
-    $(this).fn_sys_systemQueryBillDetails(url, postData);
-  });
-  submitBtn.click();
-
+  fn_initSubmitBtn(1, 10, fetch_sys_systemQueryBillDetails);
   // bind export button:
-  var expoBtn = document.getElementById('exportBtn');
-  expoBtn.addEventListener('click', function(event) {
-    event.preventDefault();
-    var $this = $(this);
-    var url = document.querySelector('input[name=api_systemBillDetailsExcel]').value;
-    var postData = $this.closest('form').serializeObject();
-    $(this).fn_sys_exportExcel(url, postData);
-  });
+  fn_initExportBtn(fetch_exportExcel);
 }
 function initSystem_getAllDiscountPolicy() {
   var api_getAllSupplier_url = document.querySelector('input[name=api_getAllSupplier]').value;
@@ -85,17 +31,7 @@ function initSystem_getAllDiscountPolicy() {
         var sel = document.getElementById('supplierId');
         Glob_fn.initSupplierSel(data, sel);
         // bind submit button:
-        var submitBtn = document.getElementById('submitBtn');
-        submitBtn.addEventListener('click', function(event){
-          event.preventDefault();
-          var $this = $(this);
-          var url = document.querySelector('input[name=api_getAllDiscountPolicy]').value;
-          var postData = $this.closest('form').serializeObject();
-          postData.pageNumber = '1';
-          postData.pageSize = '10';
-          $(this).fn_sys_getAllDiscountPolicy(url, postData);
-        });
-        submitBtn.click();
+        fn_initSubmitBtn(1, 10, fetch_sys_getAllDiscountPolicy);
       }
     });
   }); 
@@ -139,21 +75,22 @@ Sys_table.prototype.getTable_userInfo = function(res, pageNumber, pageSize) {
   thead.innerHTML = '';
   var trInThead = document.createElement('tr');
   thead.appendChild(trInThead);
-  Sys_table.setTh(trInThead, '序号');
-  Sys_table.setTh(trInThead, '客户代码');
-  Sys_table.setTh(trInThead, '货运公司全称');
-  Sys_table.setTh(trInThead, '状态');
-  Sys_table.setTh(trInThead, '用户状态');
-  Sys_table.setTh(trInThead, '结算方式');
-  Sys_table.setTh(trInThead, '操作');
+  Glob_fn.Table.setTh(trInThead, '序号');
+  Glob_fn.Table.setTh(trInThead, '客户代码');
+  Glob_fn.Table.setTh(trInThead, '货运公司全称');
+  Glob_fn.Table.setTh(trInThead, '状态');
+  Glob_fn.Table.setTh(trInThead, '用户状态');
+  Glob_fn.Table.setTh(trInThead, '结算方式');
+  Glob_fn.Table.setTh(trInThead, '操作');
 
   var tbody = table.querySelector('tbody');
   tbody.innerHTML = '';
   var data = res.data.consumerList;
 
-  if (data.length < 1) {
-    var tr0 = Glob_fn.Table.showNoData(7);
+  if (!data || data.length < 1) {
+    var tr0 = Glob_fn.Table.showNoData(trInThead.querySelectorAll('th').length);
     tbody.appendChild(tr0);
+    return;
   }
 
   for (var i = 0; i < data.length; i++) {
@@ -216,7 +153,7 @@ Sys_table.prototype.getTable_userInfo = function(res, pageNumber, pageSize) {
         var link = this;
         var url = document.querySelector('input[name=api_queryDiscountCustomer]').value;
         var data = {customerId: link.getAttribute('data-customerId')};
-        $(link).fn_queryDiscountCustomer(url, data);
+        fetch_sys_queryDiscountCustomer(url, data);
       });
     } else {
       td6.innerText = '-';
@@ -226,13 +163,7 @@ Sys_table.prototype.getTable_userInfo = function(res, pageNumber, pageSize) {
   }
 
   // 设置pagination
-  if (res.data.totalPage > 1) {
-    Sys_table.showPagnition_userInfo(res.data.totalPage, pageNumber, pageSize);
-  } else {
-    var wrap = document.querySelector('ul[data-for=dataTable]');
-    if (wrap)
-      wrap.innerHTML = '';
-  }
+  fn_initPaginate(res, pageNumber, pageSize, fetch_sys_getAllConsumer);
 };
 Sys_table.prototype.getTable_inModal = function(res) {
   var modal = document.getElementById('showDiscountPolicy');
@@ -279,28 +210,29 @@ Sys_table.prototype.getTable_queryBill = function(res, pageNumber, pageSize) {
   thead.innerHTML = '';
   var trInThead = document.createElement('tr');
   thead.appendChild(trInThead);
-  Sys_table.setTh(trInThead, '序号');
-  Sys_table.setTh(trInThead, '开始时间');
-  Sys_table.setTh(trInThead, '账期');
-  Sys_table.setTh(trInThead, '账单类型');
-  Sys_table.setTh(trInThead, '货运类型');
-  Sys_table.setTh(trInThead, '平台订单号');
-  Sys_table.setTh(trInThead, '总金额');
-  Sys_table.setTh(trInThead, '优惠后金额');
-  Sys_table.setTh(trInThead, '付款状态');
-  Sys_table.setTh(trInThead, '计费方式');
-  Sys_table.setTh(trInThead, '支付订单');
-  Sys_table.setTh(trInThead, '结算客户编码');
-  Sys_table.setTh(trInThead, '结算客户名称');
-  Sys_table.setTh(trInThead, '操作');
+  Glob_fn.Table.setTh(trInThead, '序号');
+  Glob_fn.Table.setTh(trInThead, '开始时间');
+  Glob_fn.Table.setTh(trInThead, '账期');
+  Glob_fn.Table.setTh(trInThead, '账单类型');
+  Glob_fn.Table.setTh(trInThead, '货运类型');
+  Glob_fn.Table.setTh(trInThead, '平台订单号');
+  Glob_fn.Table.setTh(trInThead, '总金额');
+  Glob_fn.Table.setTh(trInThead, '优惠后金额');
+  Glob_fn.Table.setTh(trInThead, '付款状态');
+  Glob_fn.Table.setTh(trInThead, '计费方式');
+  Glob_fn.Table.setTh(trInThead, '支付订单');
+  Glob_fn.Table.setTh(trInThead, '结算客户编码');
+  Glob_fn.Table.setTh(trInThead, '结算客户名称');
+  Glob_fn.Table.setTh(trInThead, '操作');
 
   var tbody = table.querySelector('tbody');
   tbody.innerHTML = '';
   var data = res.data.summaryList;
 
-  if (data.length < 1) {
-    var tr0 = Glob_fn.Table.showNoData(13);
+  if (!data || data.length < 1) {
+    var tr0 = Glob_fn.Table.showNoData(trInThead.querySelectorAll('th').length);
     tbody.appendChild(tr0);
+    return;
   }
 
   for (var i = 0; i < data.length; i++) {
@@ -375,13 +307,7 @@ Sys_table.prototype.getTable_queryBill = function(res, pageNumber, pageSize) {
   }
 
   // 设置pagination
-  if (res.data.totalPage > 1) {
-    Sys_table.showPagnition_queryBill(res.data.totalPage, pageNumber, pageSize);
-  } else {
-    var wrap = document.querySelector('ul[data-for=dataTable]');
-    if (wrap)
-      wrap.innerHTML = '';
-  }
+  fn_initPaginate(res, pageNumber, pageSize, fetch_sys_systemQueryBill);
 };
 Sys_table.prototype.getTable_queryDetails = function(res, pageNumber, pageSize) {
   var url_queryFeeItem = document.querySelector('input[name=api_queryFeeItem]').value;
@@ -399,33 +325,34 @@ Sys_table.prototype.getTable_queryDetails = function(res, pageNumber, pageSize) 
       var trInThead = document.createElement('tr');
       thead.appendChild(trInThead);
 
-      Sys_table.setTh(trInThead, '序号');
-      Sys_table.setTh(trInThead, '费用记录号');
-      Sys_table.setTh(trInThead, '运单详情');
-      Sys_table.setTh(trInThead, '运单号');
-      Sys_table.setTh(trInThead, '品名');
-      Sys_table.setTh(trInThead, '货运类型');
-      Sys_table.setTh(trInThead, '始发站');
-      Sys_table.setTh(trInThead, '目的站');
-      Sys_table.setTh(trInThead, '航班号');
-      Sys_table.setTh(trInThead, '件数');
-      Sys_table.setTh(trInThead, '重量');
-      Sys_table.setTh(trInThead, '计费重量');
-      Sys_table.setTh(trInThead, '计费时间');
-      Sys_table.setTh(trInThead, '计费营业点');
-      Sys_table.setTh(trInThead, '账单类型');
+      Glob_fn.Table.setTh(trInThead, '序号');
+      Glob_fn.Table.setTh(trInThead, '费用记录号');
+      Glob_fn.Table.setTh(trInThead, '运单详情');
+      Glob_fn.Table.setTh(trInThead, '运单号');
+      Glob_fn.Table.setTh(trInThead, '品名');
+      Glob_fn.Table.setTh(trInThead, '货运类型');
+      Glob_fn.Table.setTh(trInThead, '始发站');
+      Glob_fn.Table.setTh(trInThead, '目的站');
+      Glob_fn.Table.setTh(trInThead, '航班号');
+      Glob_fn.Table.setTh(trInThead, '件数');
+      Glob_fn.Table.setTh(trInThead, '重量');
+      Glob_fn.Table.setTh(trInThead, '计费重量');
+      Glob_fn.Table.setTh(trInThead, '计费时间');
+      Glob_fn.Table.setTh(trInThead, '计费营业点');
+      Glob_fn.Table.setTh(trInThead, '账单类型');
       var titleData = ajaxTitle.data;
       Glob_fn.Table.buildAjaxTitle(titleData, trInThead);
-      Sys_table.setTh(trInThead, '总价');
-      Sys_table.setTh(trInThead, '备注');
+      Glob_fn.Table.setTh(trInThead, '总价');
+      Glob_fn.Table.setTh(trInThead, '备注');
 
       var tbody = table.querySelector('tbody');
       tbody.innerHTML = '';
       var data = rawData.data.feeList;
 
-      if (data.length < 1) {
+      if (!data || data.length < 1) {
         var tr0 = Glob_fn.Table.showNoData(trInThead.querySelectorAll('th').length);
         tbody.appendChild(tr0);
+        return;
       }
       for (var i = 0; i < data.length; i++) {
         var tr = document.createElement('tr');
@@ -545,13 +472,7 @@ Sys_table.prototype.getTable_queryDetails = function(res, pageNumber, pageSize) 
       }
 
       // 设置pagination
-      if (rawData.data.totalPage > 1) {
-        Sys_table.showPagnition_queryDetails(rawData.data.totalPage, pageNumber, pageSize);
-      } else {
-        var wrap = document.querySelector('ul[data-for=dataTable]');
-        if (wrap)
-          wrap.innerHTML = '';
-      }
+      fn_initPaginate(res, pageNumber, pageSize, fetch_sys_systemQueryBillDetails);
     }
   });
 };
@@ -561,23 +482,24 @@ Sys_table.prototype.getTable_queryPolicies = function(res, pageNumber, pageSize)
   thead.innerHTML = '';
   var trInThead = document.createElement('tr');
   thead.appendChild(trInThead);
-  Sys_table.setTh(trInThead, '序号');
-  Sys_table.setTh(trInThead, '优惠政策名称');
-  Sys_table.setTh(trInThead, '优惠类型');
-  Sys_table.setTh(trInThead, '有效期');
-  Sys_table.setTh(trInThead, '设置时间');
-  Sys_table.setTh(trInThead, '状态');
-  Sys_table.setTh(trInThead, '所属货站');
-  Sys_table.setTh(trInThead, '操作');
+  Glob_fn.Table.setTh(trInThead, '序号');
+  Glob_fn.Table.setTh(trInThead, '优惠政策名称');
+  Glob_fn.Table.setTh(trInThead, '优惠类型');
+  Glob_fn.Table.setTh(trInThead, '有效期');
+  Glob_fn.Table.setTh(trInThead, '设置时间');
+  Glob_fn.Table.setTh(trInThead, '状态');
+  Glob_fn.Table.setTh(trInThead, '所属货站');
+  Glob_fn.Table.setTh(trInThead, '操作');
 
   var tbody = table.querySelector('tbody');
   tbody.innerHTML = '';
   var data = res.data.systemDiscountPolicyList;
   // console.log(data);
 
-  if (data.length < 1) {
-    var tr0 = Glob_fn.Table.showNoData(7);
+  if (!data || data.length < 1) {
+    var tr0 = Glob_fn.Table.showNoData(trInThead.querySelectorAll('th').length);
     tbody.appendChild(tr0);
+    return;
   }
 
   for (var i = 0; i < data.length; i++) {
@@ -643,212 +565,5 @@ Sys_table.prototype.getTable_queryPolicies = function(res, pageNumber, pageSize)
   }
 
   // 设置pagination
-  if (res.data.totalPage > 1) {
-    Sys_table.showPagnition_queryPolicies(res.data.totalPage, pageNumber, pageSize);
-  } else {
-    var wrap = document.querySelector('ul[data-for=dataTable]');
-    if (wrap)
-      wrap.innerHTML = '';
-  }
-};
-Sys_table.setTh = function(tr, title) {
-  var th = document.createElement('th');
-  th.innerText = title;
-  tr.appendChild(th);
-};
-Sys_table.showPagnition_userInfo = function(totalPage, pageNumber, pageSize) {
-  var totalPage = Number(totalPage);
-  var pageNumber = Number(pageNumber);
-  var pageSize = Number(pageSize);
-  var wrap = document.querySelector('ul[data-for=dataTable]');
-  wrap.innerHTML = '';
-  var url = document.querySelector('input[name=api_getAllConsumer]').value;
-  if ( pageNumber > 1 ) {
-    var link_pre = Glob_fn.getPagi_liPre(wrap);
-    link_pre.addEventListener('click', function(event) {
-      event.preventDefault();
-      var data = getPostData(pageNumber - 1);
-      $(this).fn_sys_getAllConsumer(url, data);
-    });
-  }
-  for (var i = 0; i < totalPage; i++) {
-    if ( i == pageNumber - 1) {
-      var li = Glob_fn.getPagi_liActive(pageNumber);
-    } else {
-      var obj = Glob_fn.getPagi_liNormal(i+1);
-      var link = obj.link;
-      var li = obj.li;
-      link.addEventListener('click', function(event) {
-        event.preventDefault();
-        var data = getPostData(this.innerText);
-        $(this).fn_sys_getAllConsumer(url, data);
-      });
-    }
-    wrap.appendChild(li);
-  }
-  if ( pageNumber < totalPage ) {
-    var link_nex = Glob_fn.getPagi_liNext(wrap);
-    link_nex.addEventListener('click', function(event) {
-      event.preventDefault();
-      var data = getPostData(pageNumber + 1);
-      $(this).fn_sys_getAllConsumer(url, data);
-    });
-  }
-
-  Glob_fn.getPagi_hidePage(10, wrap, pageNumber, totalPage);
-  
-  function getPostData(pageNumber) {
-    var form = document.getElementById('form_system_getAllConsumer');
-    var data = $(form).serializeObject();
-    data.pageNumber = pageNumber;
-    data.pageSize = pageSize; 
-    return data;
-  }
-};
-Sys_table.showPagnition_queryBill = function(totalPage, pageNumber, pageSize) {
-  var totalPage = Number(totalPage);
-  var pageNumber = Number(pageNumber);
-  var pageSize = Number(pageSize);
-  var wrap = document.querySelector('ul[data-for=dataTable]');
-  wrap.innerHTML = '';
-  var url = document.querySelector('input[name=api_systemQueryBill]').value;
-  if ( pageNumber > 1 ) {
-    var link_pre = Glob_fn.getPagi_liPre(wrap);
-    link_pre.addEventListener('click', function(event) {
-      event.preventDefault();
-      var data = getPostData(pageNumber - 1);
-      $(this).fn_sys_systemQueryBill(url, data);
-    });
-  }
-  for (var i = 0; i < totalPage; i++) {
-    if ( i == pageNumber - 1) {
-      var li = Glob_fn.getPagi_liActive(pageNumber);
-    } else {
-      var obj = Glob_fn.getPagi_liNormal(i+1);
-      var link = obj.link;
-      var li = obj.li;
-      link.addEventListener('click', function(event) {
-        event.preventDefault();
-        var data = getPostData(this.innerText);
-        $(this).fn_sys_systemQueryBill(url, data);
-      });
-    }
-    wrap.appendChild(li);
-  }
-  if ( pageNumber < totalPage ) {
-    var link_nex = Glob_fn.getPagi_liNext(wrap);
-    link_nex.addEventListener('click', function(event) {
-      event.preventDefault();
-      var data = getPostData(pageNumber + 1);
-      $(this).fn_sys_systemQueryBill(url, data);
-    });
-  }
-
-  Glob_fn.getPagi_hidePage(10, wrap, pageNumber, totalPage);
-  
-  function getPostData(pageNumber) {
-    var form = document.getElementById('form_system_systemQueryBill');
-    var data = $(form).serializeObject();
-    data.indexPage = pageNumber;
-    data.countPage = pageSize;
-    return data;
-  }
-};
-Sys_table.showPagnition_queryDetails = function(totalPage, pageNumber, pageSize) {
-  var totalPage = Number(totalPage);
-  var pageNumber = Number(pageNumber);
-  var pageSize = Number(pageSize);
-  var wrap = document.querySelector('ul[data-for=dataTable]');
-  wrap.innerHTML = '';
-  var url = document.querySelector('input[name=api_systemQueryBillDetails]').value;
-  if ( pageNumber > 1 ) {
-    var link_pre = Glob_fn.getPagi_liPre(wrap);
-    link_pre.addEventListener('click', function(event) {
-      event.preventDefault();
-      var data = getPostData(pageNumber - 1);
-      $(this).fn_sys_systemQueryBillDetails(url, data);
-    });
-  }
-  for (var i = 0; i < totalPage; i++) {
-    if ( i == pageNumber - 1) {
-      var li = Glob_fn.getPagi_liActive(pageNumber);
-    } else {
-      var obj = Glob_fn.getPagi_liNormal(i+1);
-      var link = obj.link;
-      var li = obj.li;
-      link.addEventListener('click', function(event) {
-        event.preventDefault();
-        var data = getPostData(this.innerText);
-        $(this).fn_sys_systemQueryBillDetails(url, data);
-      });
-    }
-    wrap.appendChild(li);
-  }
-  if ( pageNumber < totalPage ) {
-    var link_nex = Glob_fn.getPagi_liNext(wrap);
-    link_nex.addEventListener('click', function(event) {
-      event.preventDefault();
-      var data = getPostData(pageNumber + 1);
-      $(this).fn_sys_systemQueryBillDetails(url, data);
-    });
-  }
-
-  Glob_fn.getPagi_hidePage(10, wrap, pageNumber, totalPage);
-  
-  function getPostData(pageNumber) {
-    var form = document.getElementById('form_systemQueryBillDetails');
-    var data = $(form).serializeObject();
-    data.indexPage = pageNumber;
-    data.countPage = pageSize;
-    return data;
-  }
-};
-Sys_table.showPagnition_queryPolicies = function(totalPage, pageNumber, pageSize) {
-  var totalPage = Number(totalPage);
-  var pageNumber = Number(pageNumber);
-  var pageSize = Number(pageSize);
-  var wrap = document.querySelector('ul[data-for=dataTable]');
-  wrap.innerHTML = '';
-  var url = document.querySelector('input[name=api_getAllDiscountPolicy]').value;
-  if ( pageNumber > 1 ) {
-    var link_pre = Glob_fn.getPagi_liPre(wrap);
-    link_pre.addEventListener('click', function(event) {
-      event.preventDefault();
-      var data = getPostData(pageNumber - 1);
-      $(this).fn_sys_getAllDiscountPolicy(url, data);
-    });
-  }
-  for (var i = 0; i < totalPage; i++) {
-    if ( i == pageNumber - 1) {
-      var li = Glob_fn.getPagi_liActive(pageNumber);
-    } else {
-      var obj = Glob_fn.getPagi_liNormal(i+1);
-      var link = obj.link;
-      var li = obj.li;
-      link.addEventListener('click', function(event) {
-        event.preventDefault();
-        var data = getPostData(this.innerText);
-        $(this).fn_sys_getAllDiscountPolicy(url, data);
-      });
-    }
-    wrap.appendChild(li);
-  }
-  if ( pageNumber < totalPage ) {
-    var link_nex = Glob_fn.getPagi_liNext(wrap);
-    link_nex.addEventListener('click', function(event) {
-      event.preventDefault();
-      var data = getPostData(pageNumber + 1);
-      $(this).fn_sys_getAllDiscountPolicy(url, data);
-    });
-  }
-
-  Glob_fn.getPagi_hidePage(10, wrap, pageNumber, totalPage);
-  
-  function getPostData(pageNumber) {
-    var form = document.getElementById('form_system_getAllDiscountPolicy');
-    var data = $(form).serializeObject();
-    data.pageNumber = pageNumber;
-    data.pageSize = pageSize;
-    return data;
-  }
+  fn_initPaginate(res, pageNumber, pageSize, fetch_sys_getAllDiscountPolicy);
 };

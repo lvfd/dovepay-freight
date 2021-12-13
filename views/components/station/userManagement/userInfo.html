@@ -1,3 +1,10 @@
+﻿<input type="hidden" data-pageId="station_getStationAllConsumer">
+<input type="hidden" name="api_forDiscShow" value=<%= urls.api.station.queryDiscountCustomer%>>
+<input type="hidden" name="api_forDiscSet" value=<%= urls.api.station.queryDiscountPolicy%>>
+<input type="hidden" name="api_forDiscSorS" value=<%= urls.api.station.changeCustomerDiscountStatus%>>
+<input type="hidden" name="api_forDiscSettle" value=<%= urls.api.station.addDiscountCustomer%>>
+<input type="hidden" name="api_forTable" value=<%= urls.api.station.getStationAllConsumer%>>
+<input type="hidden" name="api_forExport" value=<%= urls.api.station.exportStationAllConsumer%>>
 <section class="breadcrumb">
   <ul>
     <li>用户管理</li>
@@ -5,11 +12,7 @@
   </ul>
 </section>
 <hr>
-<input type="hidden" name="fn_discShow_url" value=<%= urls.api.station.queryDiscountCustomer%>>
-<input type="hidden" name="fn_discSet_url" value=<%= urls.api.station.queryDiscountPolicy%>>
-<input type="hidden" name="fn_discSorS_url" value=<%= urls.api.station.changeCustomerDiscountStatus%>>
-<input type="hidden" name="fn_discSettle_url" value=<%= urls.api.station.addDiscountCustomer%>>
-<form name="station_getStationAllConsumer" class="uk-grid-small fn_showTab fn_quindex" uk-grid method="post" data-countPage="10" data-showTab=<%= urls.api.station.getStationAllConsumer%>>
+<form id="dataForm" class="uk-grid-small" uk-grid>
   <div class="uk-width-1-5">
     <label class="uk-form-label" for="customerId">客户代码</label>
     <input class="uk-input" type="text" name="customerId">
@@ -21,7 +24,7 @@
   <div class="uk-width-1-5">
     <label class="uk-form-label" for="status">状态</label>
     <select class="uk-select" name="status">
-      <option value="-1">请选择</option>
+      <option value="-1">全部</option>
       <option value="1">已注册</option>
       <option value="0">未注册</option>
     </select>
@@ -29,7 +32,7 @@
   <div class="uk-width-1-5">
     <label class="uk-form-label" for="feeWay">结算方式</label>
     <select class="uk-select" name="feeWay">
-      <option value="">请选择</option>
+      <option value="">全部</option>
       <option value="CS">现结</option>
       <option value="MP">月结</option>
     </select>
@@ -37,15 +40,15 @@
   <div class="uk-width-1-5">
     <label class="uk-form-label" for="canYes">用户状态</label>
     <select class="uk-select" name="canYes">
-      <option value="-1">请选择</option>
+      <option value="-1">全部</option>
       <option value="0">使用中</option>
       <option value="1">已作废</option>
     </select>
   </div>
   <section class="action-buttons">
-    <button class="button button-primary button-rounded fn_showTab">查询</button>
+    <button id="submitBtn" class="button button-primary button-rounded">查询</button>
     <input type="reset" class="button button-highlight button-rounded" value="清空">
-    <button class="button button-action button-rounded">导出数据</button>
+    <button id="exportBtn" class="button button-action button-rounded">导出数据</button>
   </section>
 </form>
 <hr>
@@ -72,10 +75,11 @@
       <span class="ttdValue data-res" data-res="csNumber"></span>
     </span>
   </section>
-  <table class="uk-table uk-table-small uk-table-divider">
+  <table id="dataTable" class="uk-table uk-table-small uk-table-divider">
     <thead></thead><tbody></tbody>
   </table>
 </div>
+<ul class="uk-pagination uk-flex-center" data-for="dataTable"></ul>
 <div id="discountSetting" class="uk-flex-top" uk-modal>
   <div class="uk-modal-dialog uk-margin-auto-vertical">
     <div class="uk-modal-header">
@@ -111,7 +115,7 @@
       <h2 class="uk-modal-title">参与优惠政策</h2>
     </div>
     <div class="uk-container uk-container-xsmall uk-margin">
-      <table class="uk-table uk-table-divider uk-table-hover uk-table-small" data-api=<%= urls.api.station.queryDiscountCustomer%>>
+      <table class="uk-table uk-table-divider uk-table-hover uk-table-small">
         <thead>
           <tr>
             <th>优惠政策名称</th>

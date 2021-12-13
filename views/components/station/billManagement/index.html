@@ -1,3 +1,7 @@
+<input type="hidden" data-pageId="station_stationQueryBill">
+<input type="hidden" name="api_forTable" value=<%= urls.api.station.stationQueryBill%>>
+<input type="hidden" name="api_forExport" value=<%= urls.api.station.stationBillExcel%>>
+<input type="hidden" name="api_stationBillPush" value=<%= urls.api.station.stationBillPush%> data-for="multiBtn">
 <section class="breadcrumb">
   <ul>
     <li>账单管理</li>
@@ -5,7 +9,7 @@
   </ul>
 </section>
 <hr>
-<form name="station_stationQueryBill" class="uk-grid-small fn_showTab fn_quindex" uk-grid method="post" data-showTab=<%= urls.api.station.stationQueryBill%> action=<%= urls.api.station.stationBillExcel%>>
+<form id="dataForm" class="uk-grid-small" uk-grid>
   <input type="hidden" name="type" value=<%= tType %>>
   <div class="uk-width-1-5">
     <label class="uk-form-label" for="staTime">开始时间</label>
@@ -19,8 +23,8 @@
     <label class="uk-form-label" for="status">付款状态</label>
     <select class="uk-select" id="form-stacked-select" name="status">
       <option value="-1">请选择</option>
-      <option value="1">已支付</option>
-      <option value="2">未支付</option>
+      <option value="1">未支付</option>
+      <option value="2">已支付</option>
       <option value="3">支付失败</option>
     </select>
   </div>
@@ -46,20 +50,22 @@
     <label class="uk-form-label" for="payMode">计费方式</label>
     <select class="uk-select" name="payMode">
       <option value="-1">请选择</option>
-      <option value="1">现结</option>
-      <option value="2">记账</option>
+      <option value="CS">现结</option>
+      <option value="MP">记账</option>
     </select>
   </div>
   <section class="action-buttons">
-    <button class="button button-primary button-rounded fn_showTab">查询</button>
+    <button id="submitBtn" class="button button-primary button-rounded">查询</button>
     <input type="reset" class="button button-highlight button-rounded" value="清空">
-    <button class="button button-action button-rounded fn_showExc">导出数据</button>
+    <button id="exportBtn" class="button button-action button-rounded">导出数据</button>
+    <button id="multiBtn" class="button button-royal button-rounded" disabled>批量推送</button>
   </section>
 </form>
 <hr>
 <div class="uk-overflow-auto">
-  <table class="uk-table uk-table-small uk-table-divider uk-table-striped uk-table-hover" data-details=<%= urls.station.billDetails %> data-pay=<%= urls.api.station.stationBillPush%>>
+  <table id="dataTable" class="uk-table uk-table-small uk-table-divider uk-table-striped uk-table-hover">
     <thead></thead>
     <tbody></tbody>
   </table>
 </div>
+<ul class="uk-pagination uk-flex-center" data-for="dataTable"></ul>

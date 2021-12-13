@@ -1,6 +1,6 @@
 <input type="hidden" data-pageId="system_getAllConsumer">
-<input type="hidden" name="api_getAllConsumer" value=<%= urls.api.system.getAllConsumer%>>
-<input type="hidden" name="api_exportStationAllConsumer" value=<%= urls.api.system.exportStationAllConsumer%>>
+<input type="hidden" name="api_forTable" value=<%= urls.api.system.getAllConsumer%>>
+<input type="hidden" name="api_forExport" value=<%= urls.api.system.exportStationAllConsumer%>>
 <input type="hidden" name="api_queryDiscountCustomer" value=<%= urls.api.system.queryDiscountCustomer%>>
 <section class="breadcrumb">
   <ul>
@@ -9,7 +9,7 @@
   </ul>
 </section>
 <hr>
-<form id="form_system_getAllConsumer" class="uk-grid-small" uk-grid>
+<form id="dataForm" class="uk-grid-small" uk-grid>
   <div class="uk-width-1-3">
     <label class="uk-form-label" for="customerId">客户代码</label>
     <input class="uk-input" type="text" name="customerId">

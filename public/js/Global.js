@@ -66,6 +66,22 @@ var Glob_fn = {
       return false;
     }
   },
+  submVirtForm: function(url, obj) {
+    var form = document.createElement('form');
+    form.style.display = 'none';
+    form.method = 'post';
+    form.action = url;
+    for ( var key in obj) {
+      var inp = document.createElement('input');
+      inp.type = 'hidden';
+      inp.name = key;
+      inp.value = obj[key];
+      form.appendChild(inp);
+    }
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
+  },
   initDiscoutTypeSel: function(dataList, parentSelect) {
     var op0 = document.createElement('option');
     op0.setAttribute('value', 'TYPE');
@@ -170,22 +186,6 @@ var Glob_fn = {
     }
   },
   Table: {
-    buildNormalThead: function(table, titleListArr) {
-      var thead = table.querySelector('thead');
-      thead.innerHTML = '';
-      var trInThead = document.createElement('tr');
-      thead.appendChild(trInThead);
-      
-      for(var i = 0; i < titleListArr; i++) {
-        setTh(trInThead, titleListArr[i])
-      }
-
-      function setTh(tr, title) {
-        var th = document.createElement('th');
-        th.innerText = title;
-        tr.appendChild(th);
-      }
-    },
     showNoData: function(colspan) {
       var tr0 = document.createElement('tr');
       var td0 = document.createElement('td');
@@ -194,6 +194,22 @@ var Glob_fn = {
       td0.setAttribute('class', 'uk-text-center');
       tr0.appendChild(td0);
       return tr0;
+    },
+    getThTr: function(table) {
+      var thead = table.querySelector('thead');
+      thead.innerHTML = '';
+      var trInThead = document.createElement('tr');
+      thead.appendChild(trInThead);
+      return trInThead;
+    },
+    setTh: function(parentTr, content) {
+      var th = document.createElement('th');
+      if (typeof content == 'object') {
+        th.appendChild(content);
+      } else {
+        th.innerText = content;
+      }
+      parentTr.appendChild(th);
     },
     buildAjaxTitle: function(titleData, parentNode) {
       for (var i = 0; i < titleData.length; i++) {
@@ -240,70 +256,86 @@ var Glob_fn = {
       }
       return arr;
     },
+    getAjaxTitleObject: function(feeIdArr, dataList) {
+      var arr = [];
+      for (var i = 0; i < feeIdArr.length; i++) {
+        var feeIdGroup = feeIdArr[i];
+        for (var j = 0; j < feeIdGroup.length; j++) {
+          var titleFeeId = feeIdGroup[j];
+          for (var k = 0; k < dataList.length; k++) {
+            var listFeeId = dataList[k].feeId;
+            if (titleFeeId == listFeeId) {
+              var obj = dataList[k];
+            }
+          }
+        }
+        if (obj !== null) {
+          arr.push(obj);
+          obj = null;
+        }       
+      }
+      return arr;
+    },
     buildValueWithAjaxTitle: function(data, parentNode) {
       for (var i = 0; i < data.length; i++) {
         var td = document.createElement('td');
         td.innerText = data[i];
         parentNode.appendChild(td);
       }
-    }
-  },
-  getPagi_liPre: function(parentUl) {
-    var li_pre = document.createElement('li');
-    li_pre.setAttribute('class','function');
-    parentUl.appendChild(li_pre);
-    var link_pre = document.createElement('a');
-    li_pre.appendChild(link_pre);
-    var span_pre = document.createElement('span');
-    span_pre.setAttribute('uk-pagination-previous', '');
-    link_pre.appendChild(span_pre);
-    return link_pre;
-  },
-  getPagi_liNext: function(parentUl) {
-    var li_nex = document.createElement('li');
-    li_nex.setAttribute('class','function');
-    parentUl.appendChild(li_nex);
-    var link_nex = document.createElement('a');
-    li_nex.appendChild(link_nex);
-    var span_nex = document.createElement('span');
-    span_nex.setAttribute('uk-pagination-next', '');
-    link_nex.appendChild(span_nex);
-    return link_nex;
-  },
-  getPagi_liActive: function(innerText) {
-    var li = document.createElement('li');
-    var span = document.createElement('span');
-    span.innerText = innerText;
-    li.setAttribute('class', 'uk-active');
-    li.appendChild(span);
-    return li;
-  },
-  getPagi_liNormal: function(innerText) {
-    var li = document.createElement('li');
-    var link = document.createElement('a');
-    link.innerText = innerText;
-    li.appendChild(link);
-    return {
-      li: li,
-      link: link
-    }
-  },
-  getPagi_hidePage: function(showNumber, parentNode, pageNumber, totalPage) {
-    var showPages = showNumber;
-    var liArr = parentNode.querySelectorAll('li:not(.function)');
-    if (Number(pageNumber) > showPages+2 ) {
-      for (var i = 1; i < Number(pageNumber)-showPages-1; i++) {
-        liArr[i].style.display = 'none';
+    },
+    getCheckbox: function(ifAll) {
+      var lab = document.createElement('label');
+      lab.setAttribute('class', 'void');
+      var chb = document.createElement('input');
+      lab.appendChild(chb);
+      chb.setAttribute('type', 'checkbox');
+      chb.setAttribute('class', 'uk-checkbox');
+      if (ifAll) {
+        chb.setAttribute('id', 'selectAll');
+        chb.setAttribute('disabled', '');
+      } else {
+        chb.setAttribute('class', 'cb_child');
       }
-      var li = this.getPagi_liActive('...');
-      parentNode.insertBefore(li, liArr[1]);
-    }
-    if (totalPage-pageNumber > showPages+1) {
-      for (var i = Number(pageNumber)+showPages; i < totalPage-1; i++) {
-        liArr[i].style.display = 'none';
+      chb.addEventListener('click', function(event) {
+        var btn = document.getElementById('multiBtn');
+        if (!btn) {
+          throw new Error('没有对应按键');
+          return;
+        }
+        if (this.checked) {
+          btn.removeAttribute('disabled');
+        } else {
+          btn.setAttribute('disabled', '');
+        }
+      });
+      return lab;
+    },
+    linkCheckboxes: function(selAll, selChildren) {
+      selAll.addEventListener('click', function(event) {
+        if (selAll.checked) {
+          for (var i = 0; i < selChildren.length; i++) {
+            if (!selChildren[i].checked) {
+              selChildren[i].click();
+            }
+          }
+        } else {
+          for (var i = 0; i < selChildren.length; i++) {
+            if (selChildren[i].checked) {
+              selChildren[i].click();
+            }
+          }
+        }
+      });
+    },
+    addCheckedToList: function(chb, list) {
+      for ( var i = 0; i < chb.length; i++) {
+        if (chb[i].checked) {
+          var data = chb[i].getAttribute('data-checked');
+          list.push(data);
+        } else {
+          continue;
+        }
       }
-      var li = this.getPagi_liActive('...');
-      parentNode.insertBefore(li, liArr[totalPage-1]);
     }
   }
 };

@@ -1,6 +1,6 @@
 <input type="hidden" data-pageId="system_systemQueryBillDetails">
-<input type="hidden" name="api_systemQueryBillDetails" value=<%= urls.api.system.systemQueryBillDetails%>>
-<input type="hidden" name="api_systemBillDetailsExcel" value=<%= urls.api.system.systemBillDetailsExcel%>>
+<input type="hidden" name="api_forTable" value=<%= urls.api.system.systemQueryBillDetails%>>
+<input type="hidden" name="api_forExport" value=<%= urls.api.system.systemBillDetailsExcel%>>
 <input type="hidden" name="api_queryFeeItem" value=<%= urls.api.queryFeeItem%>>
 <section class="breadcrumb">
   <ul>
@@ -9,7 +9,7 @@
   </ul>
 </section>
 <hr>
-<form id="form_systemQueryBillDetails" class="uk-grid-small" uk-grid>
+<form id="dataForm" class="uk-grid-small" uk-grid>
   <input type="hidden" name="orderNo" value=<%= orderNo%>>
   <div class="uk-width-1-4">
     <label class="uk-form-label" for="stockNo">运单号</label>
@@ -36,10 +36,8 @@
 <hr>
 <div class="uk-overflow-auto">
   <table id="dataTable" class="uk-table uk-table-small uk-table-divider">
-    <thead>
-    </thead>
-    <tbody>
-    </tbody>
+    <thead></thead>
+    <tbody></tbody>
   </table>
 </div>
 <ul class="uk-pagination uk-flex-center" data-for="dataTable"></ul>

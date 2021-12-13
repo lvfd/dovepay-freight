@@ -92,27 +92,22 @@ Listbox.prototype.getOptions_discountName = function(response, listboxEl, custom
     sel_sou.innerHTML = '';
     sel_des.innerHTML = '';
     sel_des.setAttribute('data-customerId', customerId);
-    try {
-        var data = response.data;
-        if (data.length < 1) { return; }
-        var optionArr = [];
-        for (var i = 0; i < data.length; i++) {
-            var op = document.createElement('option');
-            for ( var key in data[i]) {
-                if (key == 'discountPolicyName') { 
-                    op.innerText = data[i][key];
-                } else {
-                    op.setAttribute('data-' + key, data[i][key]);
-                }
+    var data = response.data;
+    if (data.length < 1) { return; }
+    var optionArr = [];
+    for (var i = 0; i < data.length; i++) {
+        var op = document.createElement('option');
+        for ( var key in data[i]) {
+            if (key == 'discountPolicyName') { 
+                op.innerText = data[i][key];
+            } else {
+                op.setAttribute('data-' + key, data[i][key]);
             }
-            optionArr.push[op];
-            sel_sou.appendChild(op);
         }
-        return optionArr;
-    } catch (err) {
-        alert(err);
-        console.error(err);
+        optionArr.push[op];
+        sel_sou.appendChild(op);
     }
+    return optionArr;
 };
 Listbox.prototype.postData_discountName = function() {
     var sel_sou = document.querySelector('#sourceSelect');

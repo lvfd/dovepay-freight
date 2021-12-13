@@ -1,3 +1,7 @@
+<input type="hidden" data-pageId="consumer_consumerQueryBillDetails">
+<input type="hidden" name="api_forTable" value=<%= urls.api.consumer.consumerQueryBillDetails%>>
+<input type="hidden" name="api_forExport" value=<%= urls.api.consumer.consumerBillDetailsExcel%>>
+<input type="hidden" name="api_queryFeeItem" value=<%= urls.api.queryFeeItem%>>
 <section class="breadcrumb">
   <ul>
     <li>账单管理</li>
@@ -5,7 +9,7 @@
   </ul>
 </section>
 <hr>
-<form name="consumer_consumerQueryBillDetails" class="uk-grid-small fn_showTab fn_details" uk-grid data-showTab=<%= urls.api.consumer.consumerQueryBillDetails%> action=<%= urls.api.consumer.consumerBillDetailsExcel%> data-queryFeeItemUrl=<%= urls.api.queryFeeItem%>>
+<form id="dataForm" class="uk-grid-small" uk-grid>
   <input type="hidden" name="orderNo" value=<%= orderNo %>>
   <div class="uk-width-1-4">
     <label class="uk-form-label" for="stockNo">运单号</label>
@@ -17,22 +21,23 @@
   </div>
   <div class="uk-width-1-4">
     <label class="uk-form-label" for="sAirPortid">始发站</label>
-    <input class="uk-input" type="text" name="sAirPortid">
+    <input class="uk-input" type="text" name="sAirPortDes">
   </div>
   <div class="uk-width-1-4">
     <label class="uk-form-label" for="eAirPortid">目的站</label>
-    <input class="uk-input" type="text" name="eAirPortid">
+    <input class="uk-input" type="text" name="eAirPortDes">
   </div>
   <section class="action-buttons">
-    <button class="button button-primary button-rounded fn_showTab">查询</button>
+    <button id="submitBtn" class="button button-primary button-rounded ">查询</button>
     <input type="reset" class="button button-highlight button-rounded" value="清空">
-    <button class="button button-action button-rounded fn_showExc">导出数据</button>
+    <button id="exportBtn" class="button button-action button-rounded">导出数据</button>
   </section>
 </form>
 <hr>
 <div class="uk-overflow-auto">
-  <table class="uk-table uk-table-middle uk-table-small uk-table-divider">
+  <table id="dataTable" class="uk-table uk-table-middle uk-table-small uk-table-divider">
     <thead></thead>
     <tbody></tbody>
   </table>
 </div>
+<ul class="uk-pagination uk-flex-center" data-for="dataTable"></ul>

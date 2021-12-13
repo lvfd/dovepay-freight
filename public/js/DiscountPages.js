@@ -1,42 +1,11 @@
-function initDiscountPoliciesManagementDetails() {
+function initStation_discountPoliciesManagementDetails() {
   var discountPolicyId = document.querySelector('input[name=discountPolicyId]').value;
   var url = document.querySelector('input[name=api_getDiscountPolicy]').value;
   var data = {
     discountPolicyId: discountPolicyId
   };
-  // console.log(url, JSON.stringify(data))
   //输出详情数据, 绑定启用/作废button
-  $.ajax({
-    url: url,
-    data: JSON.stringify(data),
-    success: function(res) {
-      if (checkRes(res) === false) return;
-      console.log(res);
-      var data = res.data;
-      if (data.length < 1) {
-        UIkit.modal.alert('无数据');
-      }
-      Glob_fn.initDiscountDetails(data);
-      var btn = document.getElementById('btnAction');
-      var status_changeToThis = null;
-      if (data.status == '1') {
-        btn.innerText = '作废';
-        status_changeToThis = 2;
-      } else {
-        btn.innerText = '启用';
-        status_changeToThis = 1;
-      }
-      btn.addEventListener('click', function(event) {
-        event.preventDefault();
-        var url = document.querySelector('input[name=api_changeDiscountStatus]').value;
-        var postData = {
-          discountPolicyId: data.discountPolicyId,
-          status: status_changeToThis
-        };
-        $(this).fn_changeDiscountStatus(url, postData);
-      });
-    }
-  });
+  fetch_sta_getDiscountPolicy(url, data);
   // 绑定返回button
   document.getElementById('btnBack').addEventListener('click', function(event){
     event.preventDefault();
@@ -44,51 +13,7 @@ function initDiscountPoliciesManagementDetails() {
     window.location.href = url;
   });
 }
-
-function initDiscountPoliciesManagement() {
-  // get select options:
-  fn_queryDict('DISCOUNT_TYPE', function(res) {
-    // set options:
-    var DISCOUNT_TYPE = res.data;
-    var form = document.querySelector('form[name=station_getAllDiscountPolicy]');
-    var selectType = form.querySelector('select[name=discountType]');
-    var op0 = document.createElement('option');
-    op0.value = 'TYPE';
-    op0.innerText = '全部';
-    selectType.appendChild(op0);
-    for (var i = 0; i < DISCOUNT_TYPE.length; i++) {
-      var op = document.createElement('option');
-      for (var key in DISCOUNT_TYPE[i]) {
-        if ( key == 'value') {
-          op.innerText = DISCOUNT_TYPE[i][key];
-        }
-        op.setAttribute('data-' + key, DISCOUNT_TYPE[i][key]);
-        selectType.appendChild(op);
-      }
-    }
-    // bind submit:
-    var submitBtn = document.querySelector('#fn_getAllDiscountPolicy');
-    submitBtn.addEventListener('click', function(event){
-      event.preventDefault();
-      var data = $(form).serializeObject();
-      data.discountType = selectType.options[selectType.selectedIndex].getAttribute('data-key');
-      data.pageNumber = '1';
-      data.pageSize = '10';
-      var url = document.querySelector('input[name=getAllDiscountPolicy_api]').value;
-      $(this).fn_getAllDiscountPolicy(url, data);
-    });
-    submitBtn.click();
-
-    // bind add new:
-    var newBtn = document.querySelector('#toDiscountPolicies');
-    newBtn.addEventListener('click', function(event) {
-      event.preventDefault();
-      window.location.href = 'discountPolicies';
-    })
-  });
-}
-
-function initTabs() {
+function initStation_initTabs() {
   var queryType = document.querySelector('input[name=dict_api_queryType]').value;
   if (!queryType) return;
   var callback = function(res) {
@@ -99,7 +24,6 @@ function initTabs() {
       createNodes(content, texts[i], i);
     }
     switchPage(0);
-    
   }
   fn_queryDict(queryType, callback);
   function createNodes(content, data, num) {
@@ -204,7 +128,7 @@ function initTabs() {
       btn.addEventListener('click', function(event) {
         event.preventDefault();
         var postData = document.querySelector('input[name=cargoNm]').value;
-        $(this).fn_queryCargo(url, postData, resultContainer);
+        fetch_sta_queryCargo(url, postData, resultContainer);
       });
       // 默认执行一次查询：
       btn.click();
@@ -240,7 +164,7 @@ function initTabs() {
         if (pageNum == '3')
           postData = submit.getP3PostData();
         // console.log(url, postData);
-        $(this).fn_submitDiscountPage(url, postData);
+        fetch_sta_submitDiscountPage(url, postData);
       });
     }
   }
@@ -724,178 +648,4 @@ DiscountPagesSubmit.getDiscountFeeRequestList = function() {
     });
   }
   return result;
-};
-
-function DiscountPoliciesTable() {}
-DiscountPoliciesTable.prototype.getTable = function(res, pageNumber, pageSize) {
-  var table = document.querySelector('#discountPoliciesTable');
-  
-  var thead = table.querySelector('thead');
-  thead.innerHTML = '';
-  var trInThead = document.createElement('tr');
-  thead.appendChild(trInThead);
-  DiscountPoliciesTable.setTh(trInThead, '序号');
-  DiscountPoliciesTable.setTh(trInThead, '优惠政策名称');
-  DiscountPoliciesTable.setTh(trInThead, '优惠类型');
-  DiscountPoliciesTable.setTh(trInThead, '有效期');
-  DiscountPoliciesTable.setTh(trInThead, '状态');
-  DiscountPoliciesTable.setTh(trInThead, '设置时间');
-  DiscountPoliciesTable.setTh(trInThead, '操作');
-
-  var tbody = table.querySelector('tbody');
-  tbody.innerHTML = '';
-  var data = res.data.discountPolicyList;
-  if (data.length < 1) {
-    var tr0 = document.createElement('tr');
-    var td0 = document.createElement('td');
-    td0.innerText = '无数据';
-    td0.setAttribute('colspan', 7);
-    td0.setAttribute('class', 'uk-text-center');
-    tr0.appendChild(td0);
-    tbody.appendChild(tr0);
-  }
-  for (var i = 0; i < data.length; i++) {
-    var tr = document.createElement('tr');
-    var tdSerial = document.createElement('td');
-    tr.appendChild(tdSerial);
-    tdSerial.innerText = i + 1 + (Number(pageNumber) - 1) * Number(pageSize);
-    var td1 = document.createElement('td');
-    tr.appendChild(td1);
-    var td2 = document.createElement('td');
-    tr.appendChild(td2);
-    var td3 = document.createElement('td');
-    tr.appendChild(td3);
-    var spanInTd3_1 = document.createElement('span');
-    td3.appendChild(spanInTd3_1);
-    var spanInTd3_2 = document.createElement('span');
-    spanInTd3_2.innerText = '至';
-    td3.appendChild(spanInTd3_2);
-    var spanInTd3_3 = document.createElement('span');
-    td3.appendChild(spanInTd3_3);
-    var td4 = document.createElement('td');
-    tr.appendChild(td4);
-    var td5 = document.createElement('td');
-    tr.appendChild(td5);
-    var td6 = document.createElement('td');
-    tr.appendChild(td6);
-    var toDetailsA = document.createElement('a');
-    toDetailsA.innerText = '查看详情';
-    toDetailsA.href = location.pathname + '/details/' + data[i].discountPolicyId;
-    td6.appendChild(toDetailsA); 
-    var toggleA = document.createElement('a');
-    toggleA.setAttribute('class', 'uk-margin-small-left');
-    var status_changeToThis = '';
-    for (var key in data[i]) {
-      if (key == 'discountPolicyId') {
-        toggleA.setAttribute('data-' + key, data[i][key]);
-      }
-      if (key == 'discountPolicyName') {
-        td1.innerText = data[i][key];
-      }
-      if (key == 'discountTypeDesc') {
-        td2.innerText = data[i][key];
-        td2.setAttribute('data-' + key, data[i][key]);
-      }
-      if (key == 'startTime') {
-        spanInTd3_1.innerText = data[i][key];
-      }
-      if (key == 'endTime') {
-        spanInTd3_3.innerText = data[i][key];
-      }
-      if (key == 'statusDesc') {
-        td4.innerText = data[i][key];
-      }
-      if (key == 'status') {
-        if (data[i][key] == '1') {
-          toggleA.innerText = '作废';
-          toggleA.setAttribute('data-status', '2');
-          td6.appendChild(toggleA);
-        }
-        if (data[i][key] == '0' || data[i][key] == '2') {
-          toggleA.innerText = '启用';
-          toggleA.setAttribute('data-status', '1');
-          td6.appendChild(toggleA);
-        }
-      }
-      if (key == 'setTime') {
-        td5.innerText = data[i][key];
-      }
-    }
-    toggleA.addEventListener('click', function(event) {
-      event.preventDefault();
-      var link = this;
-      var url = document.querySelector('input[name=api_changeDiscountStatus]').value;
-      var postData = {
-        discountPolicyId: link.getAttribute('data-discountPolicyId'),
-        status: link.getAttribute('data-status')
-      };
-      console.log(url, postData)
-      $(this).fn_changeDiscountStatus(url, postData);
-    });
-    tbody.appendChild(tr);
-  }
-  if (res.data.totalPage > 1) {
-    DiscountPoliciesTable.showPagnition(res.data.totalPage, pageNumber, pageSize);
-  } else {
-    var wrap = document.querySelector('ul[data-for=discountPoliciesTable]');
-    if (wrap)
-      wrap.innerHTML = '';
-  }
-};
-DiscountPoliciesTable.setTh = function(tr, title) {
-  var th = document.createElement('th');
-  th.innerText = '优惠政策名称';
-  th.innerText = title;
-  tr.appendChild(th);
-};
-DiscountPoliciesTable.showPagnition = function(totalPage, pageNumber, pageSize) {
-  var totalPage = Number(totalPage);
-  var pageNumber = Number(pageNumber);
-  var pageSize = Number(pageSize);
-  var wrap = document.querySelector('ul[data-for=discountPoliciesTable]');
-  wrap.innerHTML = '';
-  var url = document.querySelector('input[name=getAllDiscountPolicy_api]').value;
-  if ( pageNumber > 1 ) {
-    var link_pre = Glob_fn.getPagi_liPre(wrap);
-    link_pre.addEventListener('click', function(event) {
-      event.preventDefault();
-      var data = getPostData(pageNumber - 1);
-      $(this).fn_getAllDiscountPolicy(url, data);
-    });
-  }
-  for (var i = 0; i < Number(totalPage); i++) {
-    if ( i == pageNumber - 1) {
-      var li = Glob_fn.getPagi_liActive(pageNumber);
-    } else {
-      var obj = Glob_fn.getPagi_liNormal(i+1);
-      var link = obj.link;
-      var li = obj.li;
-      link.addEventListener('click', function(event) {
-        event.preventDefault();
-        var data = getPostData(this.innerText);
-        $(this).fn_getAllDiscountPolicy(url, data);
-      });
-    }
-    wrap.appendChild(li);
-  }
-  if ( pageNumber < totalPage ) {
-    var link_nex = Glob_fn.getPagi_liNext(wrap);
-    link_nex.addEventListener('click', function(event) {
-      event.preventDefault();
-      var data = getPostData(pageNumber + 1);
-      $(this).fn_getAllDiscountPolicy(url, data);
-    });
-  }
-
-  Glob_fn.getPagi_hidePage(10, wrap, pageNumber, totalPage);
-
-  function getPostData(pageNumber) {
-    var form = document.querySelector('form[name=station_getAllDiscountPolicy]');
-    var selectType = form.querySelector('select[name=discountType]');
-    var data = $(form).serializeObject();
-    data.discountType = selectType.options[selectType.selectedIndex].getAttribute('data-key');
-    data.pageNumber = pageNumber;
-    data.pageSize = pageSize; 
-    return data;
-  }
 };

@@ -1,3 +1,6 @@
+<input type="hidden" data-pageId="consumer_getBindConsumer">
+<input type="hidden" name="api_getBindConsumer" value=<%= urls.api.consumer.getBindConsumer%>>
+<input type="hidden" name="api_bindConsumer" value=<%= urls.api.consumer.bindConsumer%>>
 <section class="breadcrumb">
   <ul>
     <li>账户绑定</li>
@@ -5,7 +8,7 @@
   </ul>
 </section>
 <hr>
-<form class="uk-form-horizontal fn_getBind" action=<%= urls.api.consumer.bindConsumer%> data-getbind=<%= urls.api.consumer.getBindConsumer%>>
+<form id="form_consumer_getBindConsumer" class="uk-form-horizontal">
   <input type="hidden" name="status">
   <input type="hidden" name="customerId">
   <div class="uk-margin">
@@ -14,6 +17,6 @@
   </div>
   <div class="uk-margin">
     <label class="uk-form-label void"></label>
-    <button class="button button-primary button-rounded fn_setBind"></button>
+    <button id="setBindBtn" class="button button-primary button-rounded"></button>
   </div>
 </form>
