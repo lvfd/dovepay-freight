@@ -1,4 +1,10 @@
 var Glob_fn = {
+  errorHandler: function(error) {
+    if (console) {
+      console.error(error);
+    }
+    UIkit.modal.alert(error);
+  },
   inheritPrototype: function(superType, subType) {  // 继承函数：
     var prototype = Object(superType.prototype);  //创建对象
     prototype.constructor = subType;              //增强对象
@@ -336,6 +342,44 @@ var Glob_fn = {
           continue;
         }
       }
+    }
+  },
+  getDictArg_forQueryBills: function() {
+    var tType = document.querySelector('input[name=type]').value;
+    if (!tType) {
+      throw new Error('没有type参数');
+      return null;
+    }
+    if (tType == '1' || tType == '2') {
+      return 'EXPIMP';
+    } else if (tType  == '3') {
+      return 'DOMINT';
+    } else if (tType == '-1') {
+      return ''
+    }
+  },
+  setSelFromDict: function(select, data) {
+    for (var i = 0; i < data.length; i++) {
+      var option = document.createElement('option');
+      option.innerText = data[i].value;
+      option.value = data[i].key;
+      select.appendChild(option);
+    }
+  },
+  setInAndOut: function (res) {
+    var data = res.data;
+    if (data == null || data.length == 0) {
+      throw new Error('字典接口无数据');
+    }
+    var select = document.querySelector('select[name=inAndOut]');
+    var option0 = document.createElement('option');
+    option0.setAttribute('value', '-1');
+    option0.innerText = '全部';
+    select.appendChild(option0);
+    try {
+      this.setSelFromDict(select, data);
+    } catch(e) {
+      throw new Error(e);
     }
   }
 };

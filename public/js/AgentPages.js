@@ -1,24 +1,31 @@
 function initAgent_consumerQueryBill() {
-  // bind submit button:
-  fn_initSubmitBtn(1, 10, fetch_age_consumerQueryBill);
-  // bind export button:
-  fn_initExportBtn(fetch_exportExcel);
-  // bind multi button:
-  var multiBtn = document.getElementById('multiBtn');
-  multiBtn.addEventListener('click', function(event) {
-    event.preventDefault();
-    var url = document.querySelector('input[name=api_pay]').value
-    var chb = document.querySelectorAll('.cb_child');
-    var list = [];
-    Glob_fn.Table.addCheckedToList(chb, list);
-    if (list.length == 0) {
-      UIkit.modal.alert('请选择至少一项');
-      return;
-    }
-    // var postData = {orderNoList: list};
-    // console.log(url, postData);
-    // fetch_age_toPay(url, postData);
+  fn_queryDict(Glob_fn.getDictArg_forQueryBills(), function(res) {
+    if (checkRes(res) === false) return;
+    Glob_fn.setInAndOut(res);
+    initThisPage();
   });
+  function initThisPage() {
+    // bind submit button:
+    fn_initSubmitBtn(1, 10, fetch_age_consumerQueryBill);
+    // bind export button:
+    fn_initExportBtn(fetch_exportExcel);
+    // bind multi button:
+    var multiBtn = document.getElementById('multiBtn');
+    multiBtn.addEventListener('click', function(event) {
+      event.preventDefault();
+      var url = document.querySelector('input[name=api_pay]').value
+      var chb = document.querySelectorAll('.cb_child');
+      var list = [];
+      Glob_fn.Table.addCheckedToList(chb, list);
+      if (list.length == 0) {
+        UIkit.modal.alert('请选择至少一项');
+        return;
+      }
+      // var postData = {orderNoList: list};
+      // console.log(url, postData);
+      // fetch_age_toPay(url, postData);
+    });
+  }
 }
 function initAgent_consumerQueryBillDetails() {
   // bind submit button:

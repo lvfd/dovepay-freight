@@ -1,7 +1,8 @@
 <input type="hidden" data-pageId="station_stationQueryBill">
+<input type="hidden" name="dict_api" value=<%= urls.api.dict%>>
 <input type="hidden" name="api_forTable" value=<%= urls.api.station.stationQueryBill%>>
 <input type="hidden" name="api_forExport" value=<%= urls.api.station.stationBillExcel%>>
-<input type="hidden" name="api_stationBillPush" value=<%= urls.api.station.stationBillPush%> data-for="multiBtn">
+<input type="hidden" name="api_stationBillPush" value=<%= urls.api.station.stationBillPush%>>
 <section class="breadcrumb">
   <ul>
     <li>账单管理</li>
@@ -22,7 +23,7 @@
   <div class="uk-width-1-5">
     <label class="uk-form-label" for="status">付款状态</label>
     <select class="uk-select" id="form-stacked-select" name="status">
-      <option value="-1">请选择</option>
+      <option value="-1">全部</option>
       <option value="1">未支付</option>
       <option value="2">已支付</option>
       <option value="3">支付失败</option>
@@ -38,18 +39,12 @@
   </div>
   <div class="uk-width-1-5">
     <label class="uk-form-label" for="inAndOut">货运类型</label>
-    <select class="uk-select" name="inAndOut">
-      <option value="-1">请选择</option>
-      <option value="1">进港</option>
-      <option value="2">出港</option>
-      <option value="3">国际</option>
-      <option value="4">国内</option>
-    </select>
+    <select class="uk-select" name="inAndOut"></select>
   </div>
   <div class="uk-width-1-5">
     <label class="uk-form-label" for="payMode">计费方式</label>
     <select class="uk-select" name="payMode">
-      <option value="-1">请选择</option>
+      <option value="-1">全部</option>
       <option value="CS">现结</option>
       <option value="MP">记账</option>
     </select>

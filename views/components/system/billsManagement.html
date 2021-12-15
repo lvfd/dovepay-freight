@@ -1,4 +1,5 @@
 <input type="hidden" data-pageId="system_systemQueryBill">
+<input type="hidden" name="dict_api" value=<%= urls.api.dict%>>
 <input type="hidden" name="api_forTable" value=<%= urls.api.system.systemQueryBill%>>
 <input type="hidden" name="api_forExport" value=<%= urls.api.system.systemBillExcel%>>
 <section class="breadcrumb">
@@ -9,6 +10,7 @@
 </section>
 <hr>
 <form id="dataForm" class="uk-grid-small" uk-grid>
+  <input type="hidden" name="type" value=<%= tType %>>
   <div class="uk-width-1-5">
     <label class="uk-form-label" for="staTime">开始时间</label>
     <input class="uk-input date-time-picker" type="text" name="staTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" readonly>
@@ -35,23 +37,8 @@
     <input class="uk-input" type="text" name="customerName">
   </div>
   <div class="uk-width-1-5">
-    <label class="uk-form-label" for="type">账单类型</label>
-    <select class="uk-select" name="type">
-      <option value="-1">全部</option>
-      <option value="1">国际直达</option>
-      <option value="2">国内直达</option>
-      <option value="3">中转</option>
-    </select>
-  </div>
-  <div class="uk-width-1-5">
     <label class="uk-form-label" for="inAndOut">货运类型</label>
-    <select class="uk-select" name="inAndOut">
-      <option value="-1">全部</option>
-      <option value="1">进港</option>
-      <option value="2">出港</option>
-      <option value="3">国际</option>
-      <option value="4">国内</option>
-    </select>
+    <select class="uk-select" name="inAndOut"></select>
   </div>
   <div class="uk-width-1-5">
     <label class="uk-form-label" for="payMode">计费方式</label>

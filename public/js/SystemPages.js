@@ -5,10 +5,17 @@ function initSystem_getAllConsumer() {
   fn_initExportBtn(fetch_exportExcel);
 }
 function initSystem_systemQueryBill() {
-  // bind submit button:
-  fn_initSubmitBtn(1, 10, fetch_sys_systemQueryBill);
-  // bind export button:
-  fn_initExportBtn(fetch_exportExcel);
+  fn_queryDict(Glob_fn.getDictArg_forQueryBills(), function(res) {
+    if (checkRes(res) === false) return;
+    Glob_fn.setInAndOut(res);
+    initThisPage();
+  });
+  function initThisPage() {
+    // bind submit button:
+    fn_initSubmitBtn(1, 10, fetch_sys_systemQueryBill);
+    // bind export button:
+    fn_initExportBtn(fetch_exportExcel);
+  }
 }
 function initSystem_systemQueryBillDetails() {
   // bind submit button:
@@ -301,7 +308,7 @@ Sys_table.prototype.getTable_queryBill = function(res, pageNumber, pageSize) {
         td12.innerText = data[i][key] === null? '-': data[i][key];
     }
 
-    link.setAttribute('href', 'billsManagement/' + link.getAttribute('data-orderNo'));
+    link.setAttribute('href', 'billDetails/' + link.getAttribute('data-orderNo'));
 
     tbody.appendChild(tr);
   }

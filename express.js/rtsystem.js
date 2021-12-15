@@ -37,10 +37,19 @@ router.get(system.policiesDetails, (req, res) => {
   params.discountPolicyId = discountPolicyId
   res.render('frame', params)
 })
-router.get(system.billsManagement, (req, res) => {
+router.get(system.billManagement, (req, res) => {
+  const type = req.params.type
   let params = getParams(req, res)
-  params.title = '账单管理'
-  params.name = 'billsManagement'
+  let title = ''
+  if (type == '1')
+    title = '国际直达'
+  if (type == '2')
+    title = '国内直达'
+  if (type == '3')
+    title = '中转'
+  params.title = title
+  params.tType = type
+  params.name = 'billManagement'
   res.render('frame', params)
 })
 router.get(system.billDetails, (req, res) => {

@@ -10,25 +10,17 @@ $.ajaxSetup({
   contentType: 'application/json'
 });
 $(document).ajaxError(function(event, xhr, settings){
-  console.error('xhr: ', xhr, 'settings: ', settings);
-  // var text = '', mes = '',
-  //     main = document.querySelector('.maincontent'),
-  //     form = document.querySelector('form.fn_showTab');
-  // // for ( var p in settings) {
-  // //   text += p + ': ' + settings[p] + '<br>';
-  // // }
-  // mes = fn_getMes({title: xhr.status, text: xhr.statusText}, {style: 'danger'});
-  // if (form) {
-  //   main.insertBefore(mes, form.nextSibling);
-  // } else {
-  //   main.appendChild(mes);
-  // }
-  UIkit.modal.alert(xhr.statusText);
+  var reqUrl = settings.url;
+  var reqData = settings.data;
+  var res = xhr.status + xhr.statusText;
+  if (console)
+    console.error(reqUrl, reqData, res);
+  alert('Ajax Error: ' + xhr.status);
 });
 $(document).ajaxStart(function() {
   console.log('Requesting...');
   // $( "#loading" ).show();
- });
+});
 // 获取表格数据：
 $.fn.serializeObject = function() {
   var o = {};
@@ -48,7 +40,7 @@ $.fn.serializeObject = function() {
 // 检查response：
 function checkRes (res) {
   if (res.code != '200') {
-    alert(res.msg);
+    throw new Error('msg=' + res.msg);
     return false;
   }
 }
@@ -83,7 +75,7 @@ function fn_initExportBtn(fetchFn) {
 function fetch_exportExcel(url, data) {
   var postData = JSON.stringify(data);
   var fileName = '导出数据.xls';
-  console.log(url, postData);
+  // console.log(url, postData);
   $.ajax({
     dataType: '',
     xhrFields: {
@@ -105,7 +97,7 @@ function fetch_exportExcel(url, data) {
       }
     }
   });
-};
+}
 
 // sys:
 function fetch_sys_getAllConsumer(url, data) {
@@ -123,12 +115,11 @@ function fetch_sys_getAllConsumer(url, data) {
       try {
         table.getTable_userInfo(res, pageNumber, pageSize);
       } catch (err) {
-        console.error(err);
-        alert(err);
+        throw new Error(err);
       }
     }
   });
-};
+}
 function fetch_sys_queryDiscountCustomer(url, data) {
   var postData = JSON.stringify(data);
   $.ajax({
@@ -141,12 +132,11 @@ function fetch_sys_queryDiscountCustomer(url, data) {
       try {
         table.getTable_inModal(res);
       } catch (err) {
-        console.error(err);
-        alert(err);
+        throw new Error(err);
       }
     }
   });
-};
+}
 function fetch_sys_systemQueryBill(url, data) {
   var postData = JSON.stringify(data);
   var indexPage = data.indexPage;
@@ -162,12 +152,11 @@ function fetch_sys_systemQueryBill(url, data) {
       try {
         table.getTable_queryBill(res, indexPage, countPage);
       } catch (err) {
-        console.error(err);
-        alert(err);
+        throw new Error(err);
       }
     }
   });
-};
+}
 function fetch_sys_systemQueryBillDetails(url, data) {
   var postData = JSON.stringify(data);
   var indexPage = data.indexPage;
@@ -181,12 +170,11 @@ function fetch_sys_systemQueryBillDetails(url, data) {
       try {
         table.getTable_queryDetails(res, indexPage, countPage);
       } catch (err) {
-        console.error(err);
-        alert(err);
+        throw new Error(err);
       }
     }
   });
-};
+}
 function fetch_sys_getAllDiscountPolicy(url, data) {
   var postData = JSON.stringify(data);
   var pageNumber = data.pageNumber;
@@ -202,12 +190,11 @@ function fetch_sys_getAllDiscountPolicy(url, data) {
       try {
         table.getTable_queryPolicies(res, pageNumber, pageSize);
       } catch (err) {
-        console.error(err);
-        alert(err);
+        throw new Error(err);
       }
     }
   });
-};
+}
 
 // agent:
 // 账单查询：
@@ -226,12 +213,11 @@ function fetch_age_consumerQueryBill(url, data) {
       try {
         table.getTable_queryBill(res, indexPage, countPage);
       } catch (err) {
-        console.error(err);
-        alert(err);
+        throw new Error(err);
       }
     }
   });
-};
+}
 // 账单明细查询：
 function fetch_age_consumerQueryBillDetails(url, data) {
   var postData = JSON.stringify(data);
@@ -247,12 +233,11 @@ function fetch_age_consumerQueryBillDetails(url, data) {
       try {
         table.getTable_queryDetails(res, indexPage, countPage);
       } catch (err) {
-        console.error(err);
-        alert(err);
+        throw new Error(err);
       }
     }
   });
-};
+}
 // 提交支付：
 function fetch_age_toPay(url, data) {  // 去收银台
   var postData = JSON.stringify(data);
@@ -267,7 +252,7 @@ function fetch_age_toPay(url, data) {  // 去收银台
       Glob_fn.submVirtForm(payUrl, payData);
     }
   });
-};
+}
 // 获取账户绑定数据：
 function fetch_age_getBindConsumer(url) {  // 获取绑定信息
   $.ajax({
@@ -279,12 +264,11 @@ function fetch_age_getBindConsumer(url) {  // 获取绑定信息
       try {
         table.getPage_binding(res);
       } catch (err) {
-        console.error(err);
-        alert(err);
+        throw new Error(err);
       }
     }
   });
-};
+}
 // 提交绑定：
 function fetch_age_bindConsumer(url, data) {  // 绑定商户
   var postData = JSON.stringify(data);
@@ -314,7 +298,7 @@ function fetch_age_bindConsumer(url, data) {  // 绑定商户
       }
     }
   });
-};
+}
 
 // Station:
 // 账单查询：
@@ -333,8 +317,7 @@ function fetch_sta_stationQueryBill(url, data) {
       try {
         table.getTable_queryBill(res, indexPage, countPage);
       } catch (err) {
-        console.error(err);
-        alert(err);
+        throw new Error(err);
       }
     }
   });
@@ -349,13 +332,12 @@ function fetch_sta_stationQueryBillDetails(url, data) {
     data: postData,
     success: function(res) {
       if (checkRes(res) === false) return;
-      // console.log(res);
+      console.log(res);
       var table = new Sta_table();
       try {
         table.getTable_queryDetails(res, indexPage, countPage);
       } catch (err) {
-        console.error(err);
-        alert(err);
+        throw new Error(err);
       }
     }
   });
@@ -392,8 +374,7 @@ function fetch_sta_stationBillPush(url, data) {
           });
         }   
       } catch (e) {
-        alert(e);
-        console.error(e);
+        throw new Error(e);
       }
     }
   });
@@ -414,8 +395,7 @@ function fetch_sta_getStationAllConsumer(url, data) {
       try {
         table.getTable_getStationAllConsumer(res, pageNumber, pageSize);
       } catch (err) {
-        console.error(err);
-        alert(err);
+        throw new Error(err);
       }
     }
   });
@@ -433,8 +413,7 @@ function fetch_sta_queryDiscountPolicy(url, customerId) {
         listbox.getOptions_discountName(res, element, customerId);
         UIkit.modal(element).show();
       } catch(err) {
-        console.error(err);
-        alert(err);
+        throw new Error(err);
       }
     }
   });
@@ -459,8 +438,7 @@ function fetch_sta_addDiscountCustomer(url, data) {
           UIkit.modal.alert(res.msg);
         }
       } catch (e) {
-        alert(e);
-        console.error(e);
+        throw new Error(e);
       }
     }
   });
@@ -486,8 +464,7 @@ function fetch_sta_queryDiscountCustomer(url, data) {
         table.appendChild(tbody);
         UIkit.modal(element).show();
       } catch(e) {
-        alert(e);
-        console.error(e);
+        throw new Error(e);
       }
     }
   });
@@ -503,7 +480,7 @@ function fetch_sta_changeCustomerDiscountStatus(url, data) {
       if (res.msg == 'success') {
         UIkit.modal.alert('更改成功!');
       } else {
-        UIkit.modal.alert(res.msg);
+        throw new Error(res.msg);;
       }
     }
   });
@@ -549,7 +526,7 @@ function fetch_sta_getDiscountPolicy(url, data) {
     data: JSON.stringify(data),
     success: function(res) {
       if (checkRes(res) === false) return;
-      console.log(res);
+      // console.log(res);
       var data = res.data;
       if (data.length < 1) {
         UIkit.modal.alert('无数据');
@@ -588,8 +565,7 @@ function fetch_sta_queryCargo(url, data, resultContainer) {
       try {
         listbox.getOptions_cargoName(res, resultContainer);
       } catch(e) {
-        alert(e);
-        console.error(e);
+        throw new Error(e);
       }      
     }
   });
@@ -607,8 +583,8 @@ function fetch_sta_submitDiscountPage(url, data) {
           window.location.href = 'discountPoliciesManagement';
         });
       } else {
-        UIkit.modal.alert(res.msg);
+        throw new Error(res.msg);
       }
     }
   });
-};
+}

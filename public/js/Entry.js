@@ -1,4 +1,12 @@
 $(document).ready(function() {
+  try {
+    EntryJS();
+  } catch (error) {
+    Glob_fn.errorHandler(error);
+  }
+});
+
+function EntryJS() {
 
   // readonly禁用backspace:
   document.onkeydown = Glob_fn.banBackSpace;
@@ -77,5 +85,5 @@ $(document).ready(function() {
     initStation_discountPoliciesManagementDetails();
   }
 
-});
+}
 

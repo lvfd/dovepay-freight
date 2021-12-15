@@ -32,8 +32,11 @@ const urls = {
   system: {
     index: '/dovepay-freight/system',
     userInfoManagement: '/userInfoManagement',
-    billsManagement: '/billsManagement',
-    billDetails: '/billsManagement/:orderNo',
+    billManagement: '/billManagement/:type',
+    internationalBills: '/billManagement/1',
+    domesticBills: '/billManagement/2',
+    transferBills: '/billManagement/3',
+    billDetails: '/billManagement/billDetails/:orderNo',
     policiesManagement: '/policiesManagement',
     policiesDetails: '/policiesManagement/:discountPolicyId'
   },

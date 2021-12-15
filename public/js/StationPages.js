@@ -1,24 +1,31 @@
 function initStation_stationQueryBill() {
-  // bind submit button:
-  fn_initSubmitBtn(1, 10, fetch_sta_stationQueryBill);
-  // bind export button:
-  fn_initExportBtn(fetch_exportExcel);
-  // bind multi button:
-  var multiBtn = document.getElementById('multiBtn');
-  multiBtn.addEventListener('click', function(event) {
-    event.preventDefault();
-    var url = document.querySelector('input[name=api_stationBillPush]').value
-    var chb = document.querySelectorAll('.cb_child');
-    var list = [];
-    Glob_fn.Table.addCheckedToList(chb, list);
-    if (list.length == 0) {
-      UIkit.modal.alert('请选择至少一项');
-      return;
-    }
-    var postData = {orderNoList: list};
-    // console.log(url, postData);
-    fetch_sta_stationBillPush(url, postData);
+  fn_queryDict(Glob_fn.getDictArg_forQueryBills(), function(res) {
+    if (checkRes(res) === false) return;
+    Glob_fn.setInAndOut(res);
+    initThisPage();
   });
+  function initThisPage() {
+    // bind submit button:
+    fn_initSubmitBtn(1, 10, fetch_sta_stationQueryBill);
+    // bind export button:
+    fn_initExportBtn(fetch_exportExcel);
+    // bind multi button:
+    var multiBtn = document.getElementById('multiBtn');
+    multiBtn.addEventListener('click', function(event) {
+      event.preventDefault();
+      var url = document.querySelector('input[name=api_stationBillPush]').value
+      var chb = document.querySelectorAll('.cb_child');
+      var list = [];
+      Glob_fn.Table.addCheckedToList(chb, list);
+      if (list.length == 0) {
+        UIkit.modal.alert('请选择至少一项');
+        return;
+      }
+      var postData = {orderNoList: list};
+      // console.log(url, postData);
+      fetch_sta_stationBillPush(url, postData);
+    });
+  }
 }
 function initStation_stationQueryBillDetails() {
   // bind submit button:
@@ -186,7 +193,7 @@ Sta_table.prototype.getTable_queryBill = function(res, pageNumber, pageSize) {
       if (key == 'customerName')
         td11.innerText = data[i][key] === null? '-': data[i][key];
     }
-
+    
     if (data[i].confirm == 0 && data[i].bindingStatus == '1' && data[i].payMode != 'CS') {
       link.setAttribute('href', 'billDetails/' +  link.getAttribute('data-orderNo') + '/modify');
       if (checkAll.querySelector('input').getAttribute('disabled') === '') {
