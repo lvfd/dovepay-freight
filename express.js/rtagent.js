@@ -33,6 +33,8 @@ router.get(agent.billManagement, (req, res) => {
     title = '国内直达'
   if (type == '3')
     title = '中转'
+  if (type == '4')
+    title = '快件'
   params.pageUrl = getPageUrl(req, res)
   params.title = title
   params.tType = type

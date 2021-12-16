@@ -10,21 +10,21 @@ function initAgent_consumerQueryBill() {
     // bind export button:
     fn_initExportBtn(fetch_exportExcel);
     // bind multi button:
-    var multiBtn = document.getElementById('multiBtn');
-    multiBtn.addEventListener('click', function(event) {
-      event.preventDefault();
-      var url = document.querySelector('input[name=api_pay]').value
-      var chb = document.querySelectorAll('.cb_child');
-      var list = [];
-      Glob_fn.Table.addCheckedToList(chb, list);
-      if (list.length == 0) {
-        UIkit.modal.alert('请选择至少一项');
-        return;
-      }
-      // var postData = {orderNoList: list};
-      // console.log(url, postData);
-      // fetch_age_toPay(url, postData);
-    });
+    // var multiBtn = document.getElementById('multiBtn');
+    // multiBtn.addEventListener('click', function(event) {
+    //   event.preventDefault();
+    //   var url = document.querySelector('input[name=api_pay]').value
+    //   var chb = document.querySelectorAll('.cb_child');
+    //   var list = [];
+    //   Glob_fn.Table.addCheckedToList(chb, list);
+    //   if (list.length == 0) {
+    //     UIkit.modal.alert('请选择至少一项');
+    //     return;
+    //   }
+    //   // var postData = {orderNoList: list};
+    //   // console.log(url, postData);
+    //   // fetch_age_toPay(url, postData);
+    // });
   }
 }
 function initAgent_consumerQueryBillDetails() {
@@ -44,8 +44,8 @@ Age_table.prototype.getTable_queryBill = function(res, pageNumber, pageSize) {
   var table = document.querySelector('#dataTable');
 
   var trInThead = Glob_fn.Table.getThTr(table);
-  var checkAll = Glob_fn.Table.getCheckbox('all');
-  Glob_fn.Table.setTh(trInThead, checkAll);
+  // var checkAll = Glob_fn.Table.getCheckbox('all');
+  // Glob_fn.Table.setTh(trInThead, checkAll);
   Glob_fn.Table.setTh(trInThead, '序号');
   Glob_fn.Table.setTh(trInThead, '开始时间');
   Glob_fn.Table.setTh(trInThead, '账期');
@@ -131,10 +131,10 @@ Age_table.prototype.getTable_queryBill = function(res, pageNumber, pageSize) {
         td9.innerText = data[i][key] === null? '-': data[i][key];
     }
     if (data[i].status != 2 && data[i].payMode != 'CS') {
-      if (checkAll.querySelector('input').getAttribute('disabled') === '') {
-        checkAll.querySelector('input').removeAttribute('disabled');
-      }
-      tdCheckbox.appendChild(checkbox);
+      // if (checkAll.querySelector('input').getAttribute('disabled') === '') {
+      //   checkAll.querySelector('input').removeAttribute('disabled');
+      // }
+      // tdCheckbox.appendChild(checkbox);
       td10.appendChild(paylink);
       paylink.addEventListener('click', function(event) {
         event.preventDefault();

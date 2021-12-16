@@ -18,10 +18,17 @@ function initSystem_systemQueryBill() {
   }
 }
 function initSystem_systemQueryBillDetails() {
-  // bind submit button:
-  fn_initSubmitBtn(1, 10, fetch_sys_systemQueryBillDetails);
-  // bind export button:
-  fn_initExportBtn(fetch_exportExcel);
+  fn_queryDict('OPEDEPART', function(res) {
+    if (checkRes(res) === false) return;
+    Glob_fn.setOpedepartId(res);
+    initThisPage();
+  });
+  function initThisPage() {
+    // bind submit button:
+    fn_initSubmitBtn(1, 10, fetch_sys_systemQueryBillDetails);
+    // bind export button:
+    fn_initExportBtn(fetch_exportExcel);
+  }   
 }
 function initSystem_getAllDiscountPolicy() {
   var api_getAllSupplier_url = document.querySelector('input[name=api_getAllSupplier]').value;

@@ -18,6 +18,7 @@ const urls = {
     internationalBills: '/billManagement/1',
     domesticBills: '/billManagement/2',
     transferBills: '/billManagement/3',
+    expressBills: '/billManagement/4',
     billDetails: '/billManagement/billDetails/:orderNo/:modify'
   },
   agent: {
@@ -27,6 +28,7 @@ const urls = {
     internationalBills: '/billManagement/1',
     domesticBills: '/billManagement/2',
     transferBills: '/billManagement/3',
+    expressBills: '/billManagement/4',
     billDetails: '/billManagement/billDetails/:orderNo'
   },
   system: {
@@ -36,6 +38,7 @@ const urls = {
     internationalBills: '/billManagement/1',
     domesticBills: '/billManagement/2',
     transferBills: '/billManagement/3',
+    expressBills: '/billManagement/4',
     billDetails: '/billManagement/billDetails/:orderNo',
     policiesManagement: '/policiesManagement',
     policiesDetails: '/policiesManagement/:discountPolicyId'

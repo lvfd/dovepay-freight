@@ -28,10 +28,17 @@ function initStation_stationQueryBill() {
   }
 }
 function initStation_stationQueryBillDetails() {
-  // bind submit button:
-  fn_initSubmitBtn(1, 10, fetch_sta_stationQueryBillDetails);
-  // bind export button:
-  fn_initExportBtn(fetch_exportExcel);
+  fn_queryDict('OPEDEPART', function(res) {
+    if (checkRes(res) === false) return;
+    Glob_fn.setOpedepartId(res);
+    initThisPage();
+  });
+  function initThisPage() {
+    // bind submit button:
+    fn_initSubmitBtn(1, 10, fetch_sta_stationQueryBillDetails);
+    // bind export button:
+    fn_initExportBtn(fetch_exportExcel);
+  }
 }
 function initStation_getStationAllConsumer() {
   // bind submit button:

@@ -62,6 +62,8 @@ router.get(station.billManagement, (req, res) => {
     title = '国内直达'
   if (type == '3')
     title = '中转'
+  if (type == '4')
+    title = '快件'
   params.title = title
   params.tType = type
   params.name = 'billManagement'

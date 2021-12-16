@@ -351,12 +351,21 @@ var Glob_fn = {
       return null;
     }
     if (tType == '1' || tType == '2') {
+      // 直达时货运类型查询
       return 'EXPIMP';
     } else if (tType  == '3') {
-      return 'DOMINT';
-    } else if (tType == '-1') {
-      return ''
+      // 中转时货运类型
+      return 'TRANSFERTYPE';
+    } else if (tType == '4') {
+      // 快件货运类型
+      return 'EXPMAIL';
     }
+  },
+  setSelDefaultOption: function(select, text, value) {
+    var option0 = document.createElement('option');
+    option0.setAttribute('value', value);
+    option0.innerText = text;
+    select.appendChild(option0);
   },
   setSelFromDict: function(select, data) {
     for (var i = 0; i < data.length; i++) {
@@ -372,10 +381,20 @@ var Glob_fn = {
       throw new Error('字典接口无数据');
     }
     var select = document.querySelector('select[name=inAndOut]');
-    var option0 = document.createElement('option');
-    option0.setAttribute('value', '-1');
-    option0.innerText = '全部';
-    select.appendChild(option0);
+    this.setSelDefaultOption(select, '全部', '-1');
+    try {
+      this.setSelFromDict(select, data);
+    } catch(e) {
+      throw new Error(e);
+    }
+  },
+  setOpedepartId: function (res) {
+    var data = res.data;
+    if (data == null || data.length == 0) {
+      throw new Error('字典接口无数据');
+    }
+    var select = document.querySelector('select[name=opedepartId]');
+    this.setSelDefaultOption(select, '全部', '-1');
     try {
       this.setSelFromDict(select, data);
     } catch(e) {

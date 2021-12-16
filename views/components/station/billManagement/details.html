@@ -1,4 +1,5 @@
 <input type="hidden" data-pageId="station_stationQueryBillDetails">
+<input type="hidden" name="dict_api" value=<%= urls.api.dict%>>
 <input type="hidden" name="api_forTable" value=<%= urls.api.station.stationQueryBillDetails%>>
 <input type="hidden" name="api_forExport" value=<%= urls.api.station.stationBillDetailsExcel%>>
 <input type="hidden" name="api_queryFeeItem" value=<%= urls.api.queryFeeItem%>>
@@ -14,21 +15,25 @@
 <form id="dataForm" class="uk-grid-small" uk-grid>
   <input type="hidden" name="orderNo" value=<%= orderNo %>>
   
-  <div class="uk-width-1-4">
+  <div class="uk-width-1-5">
     <label class="uk-form-label" for="stockNo">运单号</label>
     <input class="uk-input" type="text" name="stockNo">
   </div>
-  <div class="uk-width-1-4">
+  <div class="uk-width-1-5">
     <label class="uk-form-label" for="flight">航班号</label>
     <input class="uk-input" type="text" name="flight">
   </div>
-  <div class="uk-width-1-4">
+  <div class="uk-width-1-5">
     <label class="uk-form-label" for="sAirPortid">始发站</label>
     <input class="uk-input" type="text" name="sAirPortDes">
   </div>
-  <div class="uk-width-1-4">
+  <div class="uk-width-1-5">
     <label class="uk-form-label" for="eAirPortid">目的站</label>
     <input class="uk-input" type="text" name="eAirPortDes">
+  </div>
+  <div class="uk-width-1-5">
+    <label class="uk-form-label" for="opedepartId">营业点</label>
+    <select class="uk-select" name="opedepartId"></select>
   </div>
   <section class="action-buttons">
     <button id="submitBtn" class="button button-primary button-rounded">查询</button>
