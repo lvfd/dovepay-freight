@@ -521,9 +521,11 @@ function fetch_sta_changeDiscountStatus(url, data) {
 }
 // 优惠政策管理：优惠政策详情
 function fetch_sta_getDiscountPolicy(url, data) {
+  var postData = JSON.stringify(data);
+  // console.log(url, postData);
   $.ajax({
     url: url,
-    data: JSON.stringify(data),
+    data: postData,
     success: function(res) {
       if (checkRes(res) === false) return;
       // console.log(res);

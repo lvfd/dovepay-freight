@@ -75,6 +75,9 @@ function initStation_getAllDiscountPolicy() {
         if ( key == 'value') {
           op.innerText = DISCOUNT_TYPE[i][key];
         }
+        if (key == 'key') {
+          op.setAttribute('value', DISCOUNT_TYPE[i][key]);
+        }
         op.setAttribute('data-' + key, DISCOUNT_TYPE[i][key]);
         selectType.appendChild(op);
       }
@@ -193,7 +196,7 @@ Sta_table.prototype.getTable_queryBill = function(res, pageNumber, pageSize) {
       if (key == 'customerName')
         td11.innerText = data[i][key] === null? '-': data[i][key];
     }
-    
+
     if (data[i].confirm == 0 && data[i].bindingStatus == '1' && data[i].payMode != 'CS') {
       link.setAttribute('href', 'billDetails/' +  link.getAttribute('data-orderNo') + '/modify');
       if (checkAll.querySelector('input').getAttribute('disabled') === '') {
