@@ -14,11 +14,11 @@
   <input type="hidden" name="type" value=<%= tType %>>
   <div class="uk-width-1-5">
     <label class="uk-form-label" for="staTime">开始时间</label>
-    <input class="uk-input date-time-picker" type="text" name="staTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" readonly>
+    <input id="staTime" class="uk-input" type="text" name="staTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" readonly>
   </div>
   <div class="uk-width-1-5">
     <label class="uk-form-label" for="endTime">终止时间</label>
-    <input class="uk-input date-time-picker" type="text" name="endTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" readonly>
+    <input id="endTime" class="uk-input" type="text" name="endTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'staTime\')}'})" readonly>
   </div>
   <div class="uk-width-1-5">
     <label class="uk-form-label" for="status">付款状态</label>

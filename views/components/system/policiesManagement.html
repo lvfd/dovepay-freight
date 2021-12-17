@@ -25,17 +25,17 @@
   <div class="uk-width-1-2">
     <label class="uk-form-label" for="startTime">有效期</label>
     <div class="uk-flex uk-flex-middle">
-      <input class="uk-input date-time-picker" type="text" name="startTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" readonly>
+      <input id="startTime" class="uk-input" type="text" name="startTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" readonly>
       <span class="uk-margin-small-left uk-margin-small-right">至</span>
-      <input class="uk-input date-time-picker" type="text" name="endTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" readonly>
+      <input id="endTime" class="uk-input" type="text" name="endTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" readonly>
     </div>
   </div>
   <div class="uk-width-1-2">
     <label class="uk-form-label" for="setStartTime">设置时间</label>
     <div class="uk-flex uk-flex-middle">
-      <input class="uk-input date-time-picker" type="text" name="setStartTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" readonly>
+      <input id="setStartTime" class="uk-input" type="text" name="setStartTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'setEndTime\')}'})" readonly>
       <span class="uk-margin-small-left uk-margin-small-right">至</span>
-      <input class="uk-input date-time-picker" type="text" name="setEndTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" readonly>
+      <input id="setEndTime" class="uk-input" type="text" name="setEndTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'setStartTime\')}'})" readonly>
     </div>
   </div>
   <div class="uk-width-1-1 uk-flex uk-flex-center uk-margin">
