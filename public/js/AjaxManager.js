@@ -9,6 +9,7 @@ $.ajaxSetup({
   dataType: 'json',
   contentType: 'application/json'
 });
+// Ajax错误处理：
 $(document).ajaxError(function(event, xhr, settings){
   var reqUrl = settings.url;
   var reqData = settings.data;
@@ -17,6 +18,7 @@ $(document).ajaxError(function(event, xhr, settings){
     console.error(reqUrl, reqData, res);
   alert('Ajax Error: ' + xhr.status);
 });
+// loading遮罩实现：
 $(document).ajaxStart(function() {
   Glob_fn.loading.show();
 });
@@ -308,7 +310,7 @@ function fetch_sta_stationQueryBill(url, data) {
   var postData = JSON.stringify(data);
   var indexPage = data.indexPage;
   var countPage = data.countPage;
-  // console.log(url, postData)
+  console.log(url, postData)
   $.ajax({
     url: url,
     data: postData,
@@ -329,6 +331,7 @@ function fetch_sta_stationQueryBillDetails(url, data) {
   var postData = JSON.stringify(data);
   var indexPage = data.indexPage;
   var countPage = data.countPage;
+  console.log(url, postData)
   $.ajax({
     url: url,
     data: postData,

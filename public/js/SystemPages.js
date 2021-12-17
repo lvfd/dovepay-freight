@@ -227,7 +227,7 @@ Sys_table.prototype.getTable_queryBill = function(res, pageNumber, pageSize) {
   Glob_fn.Table.setTh(trInThead, '序号');
   Glob_fn.Table.setTh(trInThead, '开始时间');
   Glob_fn.Table.setTh(trInThead, '账期');
-  Glob_fn.Table.setTh(trInThead, '账单类型');
+  // Glob_fn.Table.setTh(trInThead, '账单类型');
   Glob_fn.Table.setTh(trInThead, '货运类型');
   Glob_fn.Table.setTh(trInThead, '平台订单号');
   Glob_fn.Table.setTh(trInThead, '总金额');
@@ -262,8 +262,8 @@ Sys_table.prototype.getTable_queryBill = function(res, pageNumber, pageSize) {
     tr.appendChild(td2);
     var td3 = document.createElement('td');
     tr.appendChild(td3);
-    var td4 = document.createElement('td');
-    tr.appendChild(td4);
+    // var td4 = document.createElement('td');
+    // tr.appendChild(td4);
     var td5 = document.createElement('td');
     tr.appendChild(td5);
     var td6 = document.createElement('td');
@@ -293,8 +293,8 @@ Sys_table.prototype.getTable_queryBill = function(res, pageNumber, pageSize) {
         td2.innerText = data[i][key] === null? '-': data[i][key];
       if (key == 'type')
         td3.innerText = data[i][key] === null? '-': data[i][key];
-      if (key == 'transferType')  //
-        td4.innerText = data[i][key] === null? '-': data[i][key];
+      // if (key == 'transferType')  //
+      //   td4.innerText = data[i][key] === null? '-': data[i][key];
       if (key == 'orderNo') {
         td5.innerText = data[i][key] === null? '-': data[i][key];
         link.setAttribute('data-orderNo', data[i][key]);
