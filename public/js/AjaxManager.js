@@ -18,8 +18,10 @@ $(document).ajaxError(function(event, xhr, settings){
   alert('Ajax Error: ' + xhr.status);
 });
 $(document).ajaxStart(function() {
-  console.log('Requesting...');
-  // $( "#loading" ).show();
+  Glob_fn.loading.show();
+});
+$(document).ajaxStop(function() {
+  Glob_fn.loading.hide();
 });
 // 获取表格数据：
 $.fn.serializeObject = function() {

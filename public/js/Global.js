@@ -52,10 +52,33 @@ var Glob_fn = {
     })
   },
   initQuirBtn: function() {
-    const quitBtn = document.querySelector('header #quitBtn')
+    var quitBtn = document.querySelector('header #quitBtn');
     quitBtn.addEventListener('click', function() {
       window.location.href = this.getAttribute('data-url');
-    })
+    });
+  },
+  loading: {
+    show: function() {
+      var main = document.querySelector('main');
+      var div = document.createElement('div');
+      div.setAttribute('id', 'loadingOverlay');
+      div.setAttribute('class', 'uk-position-cover uk-overlay uk-overlay-default uk-flex uk-flex-center uk-flex-middle');
+      div.innerHTML = '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">Loading...</span>';
+      main.appendChild(div);
+      return div;
+    },
+    hide: function() {
+      var div = document.querySelectorAll('#loadingOverlay');
+      if (!div || div.length === 0) {
+        throw new Error('没有loading遮罩');
+      }
+      if (div.length > 1) {
+        throw new Error('存在多个loading遮罩');
+      }
+      for (var i = 0; i < div.length; i++) {
+        div[i].parentNode.removeChild(div[i]);
+      }
+    }
   },
   banBackSpace: function(event) {
     var ev = event || window.event;
@@ -199,6 +222,14 @@ var Glob_fn = {
       td0.setAttribute('colspan', colspan);
       td0.setAttribute('class', 'uk-text-center');
       tr0.appendChild(td0);
+      // 清空分页组件：
+      var pag = document.querySelector('ul[data-for=dataTable]');
+      var list = document.querySelector('ul[data-for=dataTable]').childNodes;
+      if (!!list &&list.length > 1) {
+        for (var i = 0; i < list.length; i++) {
+          pag.removeChild(list[i]);
+        }
+      }
       return tr0;
     },
     getThTr: function(table) {
