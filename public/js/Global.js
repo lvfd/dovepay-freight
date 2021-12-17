@@ -273,9 +273,9 @@ var Glob_fn = {
     getAjaxTitleData: function(title, feeIdArr, dataList) {
       var arr = [title];
       for (var i = 0; i < feeIdArr.length; i++) {
+        var data = '-';
         var feeIdGroup = feeIdArr[i];
         for (var j = 0; j < feeIdGroup.length; j++) {
-          var data = '-';
           var titleFeeId = feeIdGroup[j];
           for (var k = 0; k < dataList.length; k++) {
             var listFeeId = dataList[k].feeId;
