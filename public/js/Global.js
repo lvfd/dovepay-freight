@@ -224,12 +224,8 @@ var Glob_fn = {
       tr0.appendChild(td0);
       // 清空分页组件：
       var pag = document.querySelector('ul[data-for=dataTable]');
-      var list = document.querySelector('ul[data-for=dataTable]').childNodes;
-      if (!!list &&list.length > 1) {
-        for (var i = 0; i < list.length; i++) {
-          pag.removeChild(list[i]);
-        }
-      }
+      pag.innerHTML = '';
+
       return tr0;
     },
     getThTr: function(table) {
