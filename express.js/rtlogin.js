@@ -42,7 +42,7 @@ router.post('/login', urlencodedParser, (req, res) => {
     if (user.type == "station") {
       res.redirect('../station' + urls.station.userInfo)
     } else if (user.type == "agent") {
-      res.redirect('../agent' + urls.agent.internationalBills)
+      res.redirect('../agent' + urls.agent.accountBinding)
     } else if (user.type == "system") {
       res.redirect('../system' + urls.system.userInfoManagement)
     }
