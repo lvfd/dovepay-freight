@@ -5,6 +5,8 @@ function initStation_stationQueryBill() {
     initThisPage();
   });
   function initThisPage() {
+    // init Wdate:
+    Glob_fn.WdateInit('staTime', 'endTime');
     // bind submit button:
     fn_initSubmitBtn(1, 10, fetch_sta_stationQueryBill);
     // bind export button:
@@ -41,6 +43,7 @@ function initStation_stationQueryBillDetails() {
   }
 }
 function initStation_getStationAllConsumer() {
+
   // bind submit button:
   fn_initSubmitBtn(1, 10, fetch_sta_getStationAllConsumer);
   // bind export button:
@@ -89,6 +92,11 @@ function initStation_getAllDiscountPolicy() {
         selectType.appendChild(op);
       }
     }
+
+    // init Wdate:
+    Glob_fn.WdateInit('startTime', 'endTime');
+    Glob_fn.WdateInit('setStartTime', 'setEndTime');
+    
     // bind submit:
     fn_initSubmitBtn(1, 10, fetch_sta_getAllDiscountPolicy);
 
