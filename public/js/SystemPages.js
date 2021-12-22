@@ -11,6 +11,8 @@ function initSystem_systemQueryBill() {
     initThisPage();
   });
   function initThisPage() {
+    // init Wdate:
+    Glob_fn.WdateInit('staTime', 'endTime');
     // bind submit button:
     fn_initSubmitBtn(1, 10, fetch_sys_systemQueryBill);
     // bind export button:
@@ -44,6 +46,9 @@ function initSystem_getAllDiscountPolicy() {
         var data = res.data;
         var sel = document.getElementById('supplierId');
         Glob_fn.initSupplierSel(data, sel);
+        // init Wdate:
+        Glob_fn.WdateInit('startTime', 'endTime');
+        Glob_fn.WdateInit('setStartTime', 'setEndTime');
         // bind submit button:
         fn_initSubmitBtn(1, 10, fetch_sys_getAllDiscountPolicy);
       }

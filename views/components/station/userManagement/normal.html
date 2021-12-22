@@ -7,9 +7,9 @@
     <div class="uk-margin-left">
       <label class="uk-form-label" for="startTime">有效期</label>
       <div class="uk-flex uk-flex-middle">
-        <input id="startTime" class="uk-input uk-width-small" type="text" name="startTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endTime\')}'})" readonly>
+        <input id="startTime" class="uk-input uk-width-small" type="text" name="startTime" readonly>
         <span class="uk-margin-small-left uk-margin-small-right">至</span>
-        <input id="endTime" class="uk-input uk-width-small" type="text" name="endTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startTime\')}'})" readonly>
+        <input id="endTime" class="uk-input uk-width-small" type="text" name="endTime" readonly>
       </div>
     </div>
   </div>
