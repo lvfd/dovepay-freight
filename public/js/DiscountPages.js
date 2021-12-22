@@ -55,7 +55,9 @@ function initStation_initTabs() {
     });
   }
   function initPage_1() {
-
+    // init Wdate:
+    Glob_fn.WdateInit('startTime', 'endTime');
+    
     // 普通优惠，查询字典接口加载select的option:
     if (document.getElementById('normal_discount_type_select')){
       fn_queryDict('DISCOUNT_SUPPORT', function(res) {
