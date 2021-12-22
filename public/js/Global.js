@@ -80,6 +80,22 @@ var Glob_fn = {
       }
     }
   },
+  WdateInit: function(startTimeId, endTimeId) {
+    var sta = document.getElementById(startTimeId);
+    var end = document.getElementById(endTimeId);
+    sta.addEventListener('click', function() {
+      WdatePicker({
+        dateFmt: 'yyyy-MM-dd',
+        maxDate: '#F{$dp.$D(\'' + endTimeId + '\')}'
+      });
+    });
+    end.addEventListener('click', function() {
+      WdatePicker({
+        dateFmt: 'yyyy-MM-dd',
+        minDate: '#F{$dp.$D(\'' + startTimeId + '\')}'
+      });
+    });
+  },
   banBackSpace: function(event) {
     var ev = event || window.event;
     var obj = ev.target || ev.srcElement;
