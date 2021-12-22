@@ -5,6 +5,8 @@ function initAgent_consumerQueryBill() {
     initThisPage();
   });
   function initThisPage() {
+    // init Wdate:
+    Glob_fn.WdateInit('staTime', 'endTime');
     // bind submit button:
     fn_initSubmitBtn(1, 10, fetch_age_consumerQueryBill);
     // bind export button:
