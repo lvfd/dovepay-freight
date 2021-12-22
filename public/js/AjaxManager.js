@@ -44,7 +44,7 @@ $.fn.serializeObject = function() {
 // 检查response：
 function checkRes (res) {
   if (res.code != '200') {
-    throw new Error('msg=' + res.msg);
+    alert('发生错误! ' + res.code + ': ' + res.msg);
     return false;
   }
 }
@@ -88,7 +88,11 @@ function fetch_exportExcel(url, data) {
     url: url,
     data: postData,
     success: function(res, status, xhr) {
-      if (checkRes(res) === false) return;
+      // console.log(status, xhr);
+      if (xhr.status != 200) {
+        alert('发生错误! ' + xhr.status + ': ' +  xhr.statusText);
+        return;
+      }
       if (window.navigator.msSaveOrOpenBlob) {
         window.navigator.msSaveBlob(res, fileName);
       } else {
