@@ -59,12 +59,14 @@ var Glob_fn = {
   },
   loading: {
     show: function() {
+      var body = document.querySelector('body');
       var main = document.querySelector('main');
+      var parentNode = main? main: body;
       var div = document.createElement('div');
       div.setAttribute('id', 'loadingOverlay');
       div.setAttribute('class', 'uk-position-cover uk-overlay uk-overlay-default uk-flex uk-flex-center uk-flex-middle');
       div.innerHTML = '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">Loading...</span>';
-      main.appendChild(div);
+      parentNode.appendChild(div);
       return div;
     },
     hide: function() {
