@@ -12,7 +12,7 @@ router.all('/*', (req, res, next) => {
   if (haveUserId && haveAccountId && haveNiceType) {
     next()
   } else { 
-    res.redirect('../')
+    res.redirect('../mgr')
   }
 })
 
