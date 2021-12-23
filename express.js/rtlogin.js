@@ -15,6 +15,7 @@ router.post('/login', urlencodedParser, (req, res) => {
   let haveUserId = !!user.id
   let haveAccountId = !!user.accountId
   let haveNiceType = (user.type == 'station' || 'agent' || 'system')
+  // console.log(user.id, user.accountId, user.type)
   // Login action: 
   if (haveUserId && haveAccountId && haveNiceType) {
     // Create session: 
@@ -49,13 +50,18 @@ router.post('/login', urlencodedParser, (req, res) => {
   }
 })
 router.get('/logout', (req, res) => {
+  const userType = req.session.userType
   req.session.destroy(function(err) {
     if (err) {
       res.json({login_code: 500, login_msg: '退出失败', error: err})
       return
     }
     res.clearCookie('dovepay.connect.sid')
-    res.redirect('../')
+    if (userType === 'system') {
+      res.redirect('../mgr')
+    } else {
+      res.redirect('../')
+    }
   })
 })
 
