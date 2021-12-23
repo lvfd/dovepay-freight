@@ -3,15 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>选择用户类型</title>
+  <title>参数界面</title>
+  <link rel="icon" type="image/x-icon" href="/dovepay-freight/images/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="/dovepay-freight/css/plugins/font-awesome.css">
+  <link rel="stylesheet" type="text/css" href="/dovepay-freight/css/plugins/uikit.min.css">
 </head>
 <body>
-  <h1>参数设置界面</h1>
-  <form method="post" action="/dovepay-freight/log/login">
+  <input type="hidden" data-pageId="dovepay-freight_login">
+  <input type="hidden" name="api_role" value=<%= urls.api.role %>>
+  <input type="hidden" name="pagefor" value=<%= pagefor %>>
+  <h1><%= title %></h1>
+  <form id="form_login" method="post" action="/dovepay-freight/log/login">
     <label for="userId">登录ID</label>
-    <input type="text" name="userId" value="516171584@qq.com">
+    <input type="text" name="userId" value=<%= userId %>>
     <label for="accountId">M号</label>
-    <input type="text" name="accountId" value="M4280">
+    <input type="text" name="accountId" readonly>
     <label for="userType">登录类型</label>
     <select name="userType">
       <option value="agent">货代</option>
@@ -20,5 +26,11 @@
     </select>
     <input type="submit" name="" value="进入">
   </form>
+  <script type="text/javascript" src="/dovepay-freight/js/plugins/uikit.min.js"></script>
+  <script type="text/javascript" src="/dovepay-freight/js/plugins/jquery/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="/dovepay-freight/js/Global.js"></script>
+  <script type="text/javascript" src="/dovepay-freight/js/AjaxManager.js"></script>
+  <script type="text/javascript" src="/dovepay-freight/js/Login.js"></script>
+  <script type="text/javascript" src="/dovepay-freight/js/Entry.js"></script>
 </body>
 </html>
