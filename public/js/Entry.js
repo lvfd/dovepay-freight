@@ -11,6 +11,11 @@ function EntryJS() {
   // readonly禁用backspace:
   document.onkeydown = Glob_fn.banBackSpace;
 
+  // Login page:
+  if (document.querySelector('input[data-pageId=dovepay-freight_login]')) {
+    initLogin_page();
+  }
+
   // Init Main:
   if (document.getElementById('dpfMain')) {
     Glob_fn.initMain();
