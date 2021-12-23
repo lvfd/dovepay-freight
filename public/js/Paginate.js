@@ -52,8 +52,8 @@ Paginate.prototype.showPagnition = function (totalPage, pageNumber, pageSize, fe
   
   function getPostData(pageNumber) {
     var data = {};
-    // var form = document.getElementById('dataForm');
-    // var data = $(form).serializeObject();
+    var form = document.getElementById('dataForm');
+    var data = $(form).serializeObject();
     data.pageNumber = pageNumber;
     data.indexPage = pageNumber;
     data.pageSize = pageSize;
