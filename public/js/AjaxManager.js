@@ -107,6 +107,25 @@ function fetch_exportExcel(url, data) {
   });
 }
 
+// login:
+function fetch_login_getRole(url, data) {
+  var postData = JSON.stringify(data);
+  $.ajax({
+    url: url,
+    data: postData,
+    success: function(res) {
+      // console.log(res);
+      // if (checkRes(res) === false) return;
+      try {
+        var page = new Page_login();
+        page.setRole(res);
+      } catch (err) {
+        alert(err);
+      }
+    }
+  });
+}
+
 // sys:
 function fetch_sys_getAllConsumer(url, data) {
   var postData = JSON.stringify(data);
