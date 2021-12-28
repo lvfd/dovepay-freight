@@ -14,7 +14,7 @@ const api = {
     stationQueryBill: baseAPIUrl + '/station/stationQueryBill',
     stationBillExcel: baseAPIUrl + '/station/stationBillExcel',
     stationQueryBillDetails: baseAPIUrl + '/station/stationQueryBillDetails',
-    stationBillDetailsExcel: baseAPIUrl + 'station/stationBillDetailsExcel',
+    stationBillDetailsExcel: baseAPIUrl + '/station/stationBillDetailsExcel',
     stationFeeUpdate: baseAPIUrl + '/station/stationFeeUpdate',
     stationBillPush: baseAPIUrl + '/station/stationBillPush',
     getStationAllConsumer: baseAPIUrl + '/station/getStationAllConsumer',
