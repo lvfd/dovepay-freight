@@ -1,5 +1,9 @@
 const { api } = require('./api')
 const urls = {
+  dovepay: 'https://test.dovepay.com',
+  dovemgr: 'https://test.dovepay.com:8443/doveMgr/',
+  // dovepay: 'https://www.dovepay.com',
+  // dovemgr: 'https://www.dovepay.com:8443/doveMgr/',
   index: '/',
   log: {
     login: '/dovepay-freight/log/login',
