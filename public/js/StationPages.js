@@ -270,6 +270,7 @@ Sta_table.prototype.getTable_queryDetails = function(res, pageNumber, pageSize) 
       Glob_fn.Table.setTh(trInThead, '计费重量');
       Glob_fn.Table.setTh(trInThead, '计费时间');
       Glob_fn.Table.setTh(trInThead, '计费营业点');
+      Glob_fn.Table.setTh(trInThead, '计费营业点名称');
       Glob_fn.Table.setTh(trInThead, '账单类型');
       var titleData = ajaxTitle.data;
       Glob_fn.Table.buildAjaxTitle(titleData, trInThead);
@@ -338,6 +339,9 @@ Sta_table.prototype.getTable_queryDetails = function(res, pageNumber, pageSize) 
         tr.appendChild(td13);
         var td14 = document.createElement('td');
         td14.setAttribute('rowspan', '2');
+        var td_opedepartStr = document.createElement('td');
+        td_opedepartStr.setAttribute('rowspan', '2');
+        tr.appendChild(td_opedepartStr);
 
         var td15 = document.createElement('td');
         var td16 = document.createElement('td');
@@ -390,6 +394,9 @@ Sta_table.prototype.getTable_queryDetails = function(res, pageNumber, pageSize) 
           if (key == 'opedepartId') {
             td13.innerText = data[i][key] === null? '-': data[i][key];
           }
+          if (key == 'opedepartStr') {
+            td_opedepartStr.innerText = data[i][key] === null? '-': data[i][key];
+          }
           if (key == 'remark') {
             td14.innerText = data[i][key] === null? '-': data[i][key];
           }
@@ -410,6 +417,7 @@ Sta_table.prototype.getTable_queryDetails = function(res, pageNumber, pageSize) 
         var line1Data = Glob_fn.Table.getAjaxTitleData('原始账单', feeIdArr, JSON.parse(data[i].feeItemList));
         var line2Data = Glob_fn.Table.getAjaxTitleData('开账账单', feeIdArr, JSON.parse(data[i].realFeeItemList));
         var line2Object = Glob_fn.Table.getAjaxTitleObject(feeIdArr, JSON.parse(data[i].realFeeItemList));
+        linkmodify.setAttribute('data-feeItemList', JSON.stringify(line2Object));
         Glob_fn.Table.buildValueWithAjaxTitle(line1Data, tr);
         Glob_fn.Table.buildValueWithAjaxTitle(line2Data, trAdd);
 
@@ -422,8 +430,9 @@ Sta_table.prototype.getTable_queryDetails = function(res, pageNumber, pageSize) 
               "totalFee": this.getAttribute('data-totalFee'),
               "totalFeeStr": this.getAttribute('data-totalFeeStr'),
               "feeWt": this.getAttribute('data-feeWt'),
-              "feeItemList": line2Object
+              "feeItemList": this.getAttribute('data-feeItemList')
             };
+            // console.log(postData)
             var element = fn_getModal(postData, '账单收费项');
             UIkit.modal(element).show();
           });
@@ -439,7 +448,7 @@ Sta_table.prototype.getTable_queryDetails = function(res, pageNumber, pageSize) 
       }
 
       // 设置pagination
-      fn_initPaginate(res, pageNumber, pageSize, fetch_sta_stationQueryBillDetails);
+      fn_initPaginate(rawData, pageNumber, pageSize, fetch_sta_stationQueryBillDetails);
     }
   });
 };
@@ -762,7 +771,8 @@ Modal.prototype.create = function() {
 
   mform.setAttribute('data-stockNo', data.stockNo);
   mheader.appendChild(mtitle);
-  var feeItemList = data.feeItemList;
+  var feeItemList = JSON.parse(data.feeItemList);
+  // console.log(feeItemList);
   for ( var i = 0; i < feeItemList.length; i++) {
     var els = Modal.createInpList(feeItemList[i]);
     for ( var j = 0; j < els.length; j++) {
@@ -887,7 +897,7 @@ Modal.getTotalFeeInput = function(data, name, text) {
   var mDiv = document.createElement('div'),
       mLabel = document.createElement('label'),
       mInput = document.createElement('input'),
-      feeItemList = data.feeItemList,
+      feeItemList = JSON.parse(data.feeItemList),
       totalFee = 0;
   mDiv.setAttribute('class', 'uk-width-1-1');
   mLabel.setAttribute('class', 'uk-form-label');
@@ -910,7 +920,7 @@ Modal.createInpList = function(data) {
       fee = data.fee,
       feeId = data.feeId,
       feeShortNM = data.feeShortNM;
-  if (feerate) {
+  if (feeShortNM === '处置费') {
     var el1 = createInp('feerate'),
         el2 = createInp('spec');
     return [el1, el2];
