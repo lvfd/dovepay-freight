@@ -76,21 +76,29 @@ dovepay_freight.get('/mgr', (req, res) => {
 })
 
 // Link dovePay:
+const { sm4keys } = require('./config')
+const keys = sm4keys.test
+// const keys = sm4keys.prod
 const Jssm4 = require('jssm4')
 const bodyParser = require('body-parser')
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
-dovepay_freight.post('/', (req, res) => {
-  const key = 'FA171555405706F73D7B973DB89F0B47'
+// 前台跳转:
+dovepay_freight.post('/', urlencodedParser, (req, res) => {
+  const key = keys.freight_user
   const sm4 = new Jssm4(key)
+  let userId_raw = ''
   let userId = ''
   try {
-    const userId_raw = req.body.userId
+    userId_raw = req.body.userid
     userId = sm4.decryptData_ECB(userId_raw)
   } catch (error) {
-    console.log(error)
-    res.send(error)
+    console.error(error)
+    res.send(`无法解析userid, error: ${error}`)
   }
-  if (!userId) return;
+  if (!userId) {
+    console.error(`userid = ${userId}`)
+    res.send(`userid不合法, userid = ${userId}`)
+  }
   const params = {
     userId: userId,
     urls: urls,
@@ -99,18 +107,23 @@ dovepay_freight.post('/', (req, res) => {
   }
   res.render('demoindex', params)
 })
-dovepay_freight.post('/mgr', (req, res) => {
-  const key = 'FA171555405706F73D7B973DB89F0B47'
+// 后台跳转:
+dovepay_freight.post('/mgr', urlencodedParser, (req, res) => {
+  const key = keys.freight_system
   const sm4 = new Jssm4(key)
+  let userId_raw = ''
   let userId = ''
   try {
-    const userId_raw = req.body.userId
+    userId_raw = req.body.userid
     userId = sm4.decryptData_ECB(userId_raw)
   } catch (error) {
-    console.log(error)
-    res.send(error)
+    console.error(error)
+    res.send(`无法解析userid, error: ${error}`)
   }
-  if (!userId) return;
+  if (!userId) {
+    console.error(`userid = ${userId}`)
+    res.send(`userid不合法, userid = ${userId}`)
+  }
   const params = {
     userId: userId,
     urls: urls,
@@ -119,6 +132,8 @@ dovepay_freight.post('/mgr', (req, res) => {
   }
   res.render('demoindex', params)
 })
+
+// Other Routers:
 dovepay_freight.use('/log', rtlogin)
 dovepay_freight.use('/agent', rtagent)
 dovepay_freight.use('/station', rtstation)
