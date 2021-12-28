@@ -12,6 +12,7 @@ router.all('/*', (req, res, next) => {
   if (haveUserId && haveAccountId && haveNiceType) {
     next()
   } else { 
+    console.log(`agent logout: ${req.session}`)
     res.redirect('../')
   }
 })
