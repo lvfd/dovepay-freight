@@ -265,7 +265,7 @@ var Glob_fn = {
     buildAjaxTitle: function(titleData, parentNode) {
       for (var i = 0; i < titleData.length; i++) {
         var list = titleData[i];
-        if (list.feeId == '-1-2-') {
+        if (list.feeShortNm === '处置费') {
           var th0 = document.createElement('th');
           th0.innerText = '地面费率';
           parentNode.appendChild(th0);
@@ -280,6 +280,9 @@ var Glob_fn = {
       for (var i = 0; i < data.length; i++) {
         var value = data[i][key].toString().replace(/-/g, '#')
                   .match(/-?([1-9]\d*(\.\d*)*|0\.[1-9]\d*)/g);
+        if (data[i].feeShortNm === '处置费') {
+          arr.push(['specialPos']);
+        }
         arr.push(value);
       }
       return arr;
@@ -295,8 +298,10 @@ var Glob_fn = {
             var listFeeId = dataList[k].feeId;
             var listValue = dataList[k].fee === null? '-': dataList[k].fee;
             var listRate = dataList[k].feerate;
+            var listRateFlag = dataList[k].feeShortNM === '处置费';
             if (titleFeeId == listFeeId) {
-              if (listRate) {
+              if (listRateFlag) {
+                arr.pop();
                 arr.push(listRate);
               }
               data = listValue;
@@ -320,7 +325,7 @@ var Glob_fn = {
             }
           }
         }
-        if (obj !== null) {
+        if (obj !== null && obj !== undefined) {
           arr.push(obj);
           obj = null;
         }       
