@@ -59,8 +59,10 @@ router.get('/logout', (req, res) => {
     res.clearCookie('dovepay.connect.sid')
     if (userType === 'system') {
       res.redirect('../mgr')
+      // res.redirect(urls.dovemgr)
     } else {
       res.redirect('../')
+      // res.redirect(urls.dovepay)
     }
   })
 })
