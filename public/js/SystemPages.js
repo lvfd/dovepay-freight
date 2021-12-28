@@ -358,6 +358,7 @@ Sys_table.prototype.getTable_queryDetails = function(res, pageNumber, pageSize) 
       Glob_fn.Table.setTh(trInThead, '计费重量');
       Glob_fn.Table.setTh(trInThead, '计费时间');
       Glob_fn.Table.setTh(trInThead, '计费营业点');
+      Glob_fn.Table.setTh(trInThead, '计费营业点名称');
       Glob_fn.Table.setTh(trInThead, '账单类型');
       var titleData = ajaxTitle.data;
       Glob_fn.Table.buildAjaxTitle(titleData, trInThead);
@@ -423,6 +424,9 @@ Sys_table.prototype.getTable_queryDetails = function(res, pageNumber, pageSize) 
         var td13 = document.createElement('td');
         td13.setAttribute('rowspan', '2');
         tr.appendChild(td13);
+        var td_opedepartStr = document.createElement('td');
+        td_opedepartStr.setAttribute('rowspan', '2');
+        tr.appendChild(td_opedepartStr);
         var td14 = document.createElement('td');
         td14.setAttribute('rowspan', '2');
         var td15 = document.createElement('td');
@@ -469,6 +473,9 @@ Sys_table.prototype.getTable_queryDetails = function(res, pageNumber, pageSize) 
           if (key == 'opedepartId') {
             td13.innerText = data[i][key] === null? '-': data[i][key];
           }
+          if (key == 'opedepartStr') {
+            td_opedepartStr.innerText = data[i][key] === null? '-': data[i][key];
+          }
           if (key == 'remark') {
             td14.innerText = data[i][key] === null? '-': data[i][key];
           }
@@ -491,7 +498,7 @@ Sys_table.prototype.getTable_queryDetails = function(res, pageNumber, pageSize) 
       }
 
       // 设置pagination
-      fn_initPaginate(res, pageNumber, pageSize, fetch_sys_systemQueryBillDetails);
+      fn_initPaginate(rawData, pageNumber, pageSize, fetch_sys_systemQueryBillDetails);
     }
   });
 };
