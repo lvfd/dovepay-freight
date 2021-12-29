@@ -3,7 +3,8 @@
 $.ajaxSetup({
   headers: {
     accountId: $('header #accountId').text(),
-    userId: $('header #userId').text()
+    userId: $('header #userId').text(),
+    type: $('header #userType').text()
   },
   type: 'POST',  // for java api
   dataType: 'json',
@@ -16,7 +17,7 @@ $(document).ajaxError(function(event, xhr, settings){
   var res = xhr.status + xhr.statusText;
   if (console)
     console.error(reqUrl, reqData, res);
-  alert('Ajax Error: ' + xhr.status);
+  Glob_fn.errorHandler('Ajax Error: ' + xhr.status);
 });
 // loading遮罩实现：
 $(document).ajaxStart(function() {
@@ -44,7 +45,11 @@ $.fn.serializeObject = function() {
 // 检查response：
 function checkRes (res) {
   if (res.code != '200') {
-    alert('发生错误! ' + res.code + ': ' + res.msg);
+    var errmsg = '返回数据结果错误! ' + res.code + ': ' + res.msg;
+    Glob_fn.errorHandler(errmsg); 
+    if (console) {
+      console.error('response: ', res);
+    }
     return false;
   }
 }
@@ -90,7 +95,8 @@ function fetch_exportExcel(url, data) {
     success: function(res, status, xhr) {
       // console.log(status, xhr);
       if (xhr.status != 200) {
-        alert('发生错误! ' + xhr.status + ': ' +  xhr.statusText);
+        var errmsg = '导出错误! ' + xhr.status + ': ' +  xhr.statusText;
+        Glob_fn.errorHandler(errmsg);
         return;
       }
       if (window.navigator.msSaveOrOpenBlob) {
@@ -114,13 +120,15 @@ function fetch_login_getRole(url, data) {
     url: url,
     data: postData,
     success: function(res) {
-      // console.log(res);
-      // if (checkRes(res) === false) return;
+      // console.log(postData, res);
+      if (checkRes(res) === false) return;
       try {
         var page = new Page_login();
         page.setRole(res);
       } catch (err) {
-        alert(err);
+        Glob_fn.errorHandler(err);
+        if (console)
+          console.error(err, res)
       }
     }
   });
@@ -131,18 +139,18 @@ function fetch_sys_getAllConsumer(url, data) {
   var postData = JSON.stringify(data);
   var pageNumber = data.pageNumber;
   var pageSize = data.pageSize;
-  console.log(url, postData)
+  // console.log(url, postData)
   $.ajax({
     url: url,
     data: postData,
     success: function(res) {
       if (checkRes(res) === false) return;
-      console.log(res);
+      // console.log(res);
       var table = new Sys_table();
       try {
         table.getTable_userInfo(res, pageNumber, pageSize);
       } catch (err) {
-        throw new Error(err);
+        Glob_fn.errorHandler(err);
       }
     }
   });
@@ -159,7 +167,7 @@ function fetch_sys_queryDiscountCustomer(url, data) {
       try {
         table.getTable_inModal(res);
       } catch (err) {
-        throw new Error(err);
+        Glob_fn.errorHandler(err);
       }
     }
   });
@@ -179,7 +187,7 @@ function fetch_sys_systemQueryBill(url, data) {
       try {
         table.getTable_queryBill(res, indexPage, countPage);
       } catch (err) {
-        throw new Error(err);
+        Glob_fn.errorHandler(err);
       }
     }
   });
@@ -197,7 +205,7 @@ function fetch_sys_systemQueryBillDetails(url, data) {
       try {
         table.getTable_queryDetails(res, indexPage, countPage);
       } catch (err) {
-        throw new Error(err);
+        Glob_fn.errorHandler(err);
       }
     }
   });
@@ -217,7 +225,7 @@ function fetch_sys_getAllDiscountPolicy(url, data) {
       try {
         table.getTable_queryPolicies(res, pageNumber, pageSize);
       } catch (err) {
-        throw new Error(err);
+        Glob_fn.errorHandler(err);
       }
     }
   });
@@ -229,18 +237,18 @@ function fetch_age_consumerQueryBill(url, data) {
   var postData = JSON.stringify(data);
   var indexPage = data.indexPage;
   var countPage = data.countPage;
-  // console.log(url, postData)
+  console.log(url, postData)
   $.ajax({
     url: url,
     data: postData,
     success: function(res) {
       if (checkRes(res) === false) return;
-      // console.log(res);
+      console.log(res);
       var table = new Age_table();
       try {
         table.getTable_queryBill(res, indexPage, countPage);
       } catch (err) {
-        throw new Error(err);
+        Glob_fn.errorHandler(err);
       }
     }
   });
@@ -260,7 +268,7 @@ function fetch_age_consumerQueryBillDetails(url, data) {
       try {
         table.getTable_queryDetails(res, indexPage, countPage);
       } catch (err) {
-        throw new Error(err);
+        Glob_fn.errorHandler(err);
       }
     }
   });
@@ -291,7 +299,7 @@ function fetch_age_getBindConsumer(url) {  // 获取绑定信息
       try {
         table.getPage_binding(res);
       } catch (err) {
-        throw new Error(err);
+        Glob_fn.errorHandler(err);
       }
     }
   });
@@ -344,7 +352,7 @@ function fetch_sta_stationQueryBill(url, data) {
       try {
         table.getTable_queryBill(res, indexPage, countPage);
       } catch (err) {
-        throw new Error(err);
+        Glob_fn.errorHandler(err);
       }
     }
   });
@@ -365,7 +373,7 @@ function fetch_sta_stationQueryBillDetails(url, data) {
       try {
         table.getTable_queryDetails(res, indexPage, countPage);
       } catch (err) {
-        throw new Error(err);
+        Glob_fn.errorHandler(err);
       }
     }
   });
@@ -402,7 +410,7 @@ function fetch_sta_stationBillPush(url, data) {
           });
         }   
       } catch (e) {
-        throw new Error(e);
+        Glob_fn.errorHandler(e);
       }
     }
   });
@@ -423,7 +431,7 @@ function fetch_sta_getStationAllConsumer(url, data) {
       try {
         table.getTable_getStationAllConsumer(res, pageNumber, pageSize);
       } catch (err) {
-        throw new Error(err);
+        Glob_fn.errorHandler(err);
       }
     }
   });
@@ -441,7 +449,7 @@ function fetch_sta_queryDiscountPolicy(url, customerId) {
         listbox.getOptions_discountName(res, element, customerId);
         UIkit.modal(element).show();
       } catch(err) {
-        throw new Error(err);
+        Glob_fn.errorHandler(err);
       }
     }
   });
@@ -466,7 +474,7 @@ function fetch_sta_addDiscountCustomer(url, data) {
           UIkit.modal.alert(res.msg);
         }
       } catch (e) {
-        throw new Error(e);
+        Glob_fn.errorHandler(e);
       }
     }
   });
@@ -492,7 +500,7 @@ function fetch_sta_queryDiscountCustomer(url, data) {
         table.appendChild(tbody);
         UIkit.modal(element).show();
       } catch(e) {
-        throw new Error(e);
+        Glob_fn.errorHandler(e);
       }
     }
   });
@@ -508,7 +516,7 @@ function fetch_sta_changeCustomerDiscountStatus(url, data) {
       if (res.msg == 'success') {
         UIkit.modal.alert('更改成功!');
       } else {
-        throw new Error(res.msg);;
+        Glob_fn.errorHandler(res.msg);;
       }
     }
   });
@@ -595,7 +603,7 @@ function fetch_sta_queryCargo(url, data, resultContainer) {
       try {
         listbox.getOptions_cargoName(res, resultContainer);
       } catch(e) {
-        throw new Error(e);
+        Glob_fn.errorHandler(e);
       }      
     }
   });
@@ -613,7 +621,7 @@ function fetch_sta_submitDiscountPage(url, data) {
           window.location.href = 'discountPoliciesManagement';
         });
       } else {
-        throw new Error(res.msg);
+        Glob_fn.errorHandler(res.msg);
       }
     }
   });
