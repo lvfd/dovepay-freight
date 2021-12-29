@@ -212,7 +212,8 @@ Sta_table.prototype.getTable_queryBill = function(res, pageNumber, pageSize) {
         td11.innerText = data[i][key] === null? '-': data[i][key];
     }
 
-    if (data[i].confirm == 0 && data[i].bindingStatus == '1' && data[i].payMode != 'CS') {
+    // if (data[i].confirm == 0 && data[i].bindingStatus == '1' && data[i].payMode != 'CS') {
+    if (data[i].confirm == 0 && data[i].bindingStatus == '1') {
       link.setAttribute('href', 'billDetails/' +  link.getAttribute('data-orderNo') + '/modify');
       if (checkAll.querySelector('input').getAttribute('disabled') === '') {
         checkAll.querySelector('input').removeAttribute('disabled');
