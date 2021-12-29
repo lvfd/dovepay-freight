@@ -14,6 +14,6 @@ function fn_queryDict(name, cb) {
   try {
     qd.query(name, cb);
   } catch(err) {
-    alert(err);
+    Glob_fn.errorHandler(err);
   }
 }
