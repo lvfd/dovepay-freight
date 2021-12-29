@@ -104,9 +104,9 @@ Age_table.prototype.getTable_queryBill = function(res, pageNumber, pageSize) {
     var paylink = document.createElement('a');
     paylink.innerText = '付款';
     paylink.setAttribute('class', 'uk-margin-small-left');
-    var tdCheckbox = document.createElement('td');
-    tr.insertBefore(tdCheckbox, tdSerial);
-    var checkbox = Glob_fn.Table.getCheckbox();
+    // var tdCheckbox = document.createElement('td');
+    // tr.insertBefore(tdCheckbox, tdSerial);
+    // var checkbox = Glob_fn.Table.getCheckbox();
 
     for (var key in data[i]) {
       if (key == 'createTimeStr')
@@ -119,7 +119,7 @@ Age_table.prototype.getTable_queryBill = function(res, pageNumber, pageSize) {
         td4.innerText = data[i][key] === null? '-': data[i][key];
         link.setAttribute('data-orderNo', data[i][key]);
         paylink.setAttribute('data-orderNo', data[i][key]);
-        checkbox.setAttribute('data-checked', data[i][key]);
+        // checkbox.setAttribute('data-checked', data[i][key]);
       }
       if (key == 'totalFeeStr')
         td5.innerText = data[i][key] === null? '-': data[i][key];
@@ -151,9 +151,9 @@ Age_table.prototype.getTable_queryBill = function(res, pageNumber, pageSize) {
   }
 
   // 设置全选：
-  var selAll = document.getElementById('selectAll');
-  var selChildren = document.querySelectorAll('.cb_child');
-  Glob_fn.Table.linkCheckboxes(selAll, selChildren);
+  // var selAll = document.getElementById('selectAll');
+  // var selChildren = document.querySelectorAll('.cb_child');
+  // Glob_fn.Table.linkCheckboxes(selAll, selChildren);
 
   // 设置pagination
   fn_initPaginate(res, pageNumber, pageSize, fetch_age_consumerQueryBill);
