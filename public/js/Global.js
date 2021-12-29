@@ -1,9 +1,13 @@
 var Glob_fn = {
-  errorHandler: function(error) {
+  errorHandler: function(error, callback) {
     if (console) {
-      console.error(error);
+      console.error('错误信息IN_CONSOLE: ', error);
     }
-    UIkit.modal.alert(error);
+    if (UIkit) {
+      UIkit.modal.alert(error).then(callback);
+    } else {
+      alert(error);
+    }   
   },
   inheritPrototype: function(superType, subType) {  // 继承函数：
     var prototype = Object(superType.prototype);  //创建对象
