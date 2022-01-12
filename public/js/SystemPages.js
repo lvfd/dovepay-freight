@@ -27,7 +27,7 @@ function initSystem_systemQueryBillDetails() {
   });
   function initThisPage() {
     // bind submit button:
-    fn_initSubmitBtn(1, 10, fetch_sys_systemQueryBillDetails);
+    fn_initSubmitBtn(1, 5, fetch_sys_systemQueryBillDetails);
     // bind export button:
     fn_initExportBtn(fetch_exportExcel);
   }   
