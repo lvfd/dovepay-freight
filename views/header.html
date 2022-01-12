@@ -1,4 +1,7 @@
 <header id="dpfHeader" class="header fixtop">
+  <input type="hidden" id="userId" value=<%= userId %>>
+  <input type="hidden" id="accountId" value=<%= accountId %>>
+  <input type="hidden" id="userType" value=<%= type %>>
   <h1 class="hidden">header page</h1>
   <section class="header-container">
     <a class="dovepay-img-logo" href="https://www.dovepay.com/"></a>
@@ -6,9 +9,14 @@
       <i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp; 退出登录
     </span>
     <h2>
-      <i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;<span id="userType"><%= type %></span>商户
-      <span id="userId"><%= userId %></span>,&nbsp;
-      <span id="accountId"><%= accountId %></span>
+      <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+      <% if (type === 'station') { %>
+        &nbsp;货站用户: <%= userId %>
+      <% } else if (type === 'agent') { %>
+        &nbsp;货代用户: <%= userId %>
+      <% } else if (type === 'system') { %>
+        &nbsp;系统运营用户: <%= userId %>
+      <% } %>
     </h2>
   </section>
 </header>
