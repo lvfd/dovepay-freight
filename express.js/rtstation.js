@@ -2,20 +2,10 @@ const express = require('express')
 const router = express.Router()
 const { urls } = require('./config')
 const station = urls.station
+const { authenticate } = require('./mws')
 
 // Authentication: 
-router.all('/*', (req, res, next) => {
-  let sess = req.session
-  let haveUserId = !!sess.userId
-  let haveAccountId = !!sess.accountId
-  let haveNiceType = (sess.userType == 'station')
-  if (haveUserId && haveAccountId && haveNiceType) {
-    next()
-  } else {
-    console.log(`station logout`, req.session)
-    res.redirect('../')
-  }
-})
+router.use(authenticate('station'))
 
 // Routers:
 router.get(station.userInfo, (req, res) => {
@@ -85,9 +75,9 @@ router.get(station.billDetails, (req, res) => {
 function getParams(req, res, description) {
   const sess = req.session
   let user = {
-    id: sess.userId,
-    type: sess.userType,
-    accountId: sess.accountId
+    id: sess.station.userId,
+    type: sess.station.userType,
+    accountId: sess.station.accountId
   }
   let params = {
     urls: urls,
