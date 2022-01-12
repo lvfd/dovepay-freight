@@ -55,12 +55,6 @@ var Glob_fn = {
       }
     })
   },
-  initQuirBtn: function() {
-    var quitBtn = document.querySelector('header #quitBtn');
-    quitBtn.addEventListener('click', function() {
-      window.location.href = this.getAttribute('data-url');
-    });
-  },
   loading: {
     show: function() {
       var body = document.querySelector('body');
