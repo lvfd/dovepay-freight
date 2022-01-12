@@ -2,19 +2,10 @@ const express = require('express')
 const router = express.Router()
 const { urls } = require('./config')
 const system = urls.system
+const { authenticate } = require('./mws')
 
 // Authentication: 
-router.all('/*', (req, res, next) => {
-  let sess = req.session
-  let haveUserId = !!sess.userId
-  let haveAccountId = !!sess.accountId
-  let haveNiceType = (sess.userType == 'system')
-  if (haveUserId && haveAccountId && haveNiceType) {
-    next()
-  } else { 
-    res.redirect('../mgr')
-  }
-})
+router.use(authenticate('system'))
 
 // Routers: 
 router.get(system.userInfoManagement, (req, res) => {
@@ -68,9 +59,9 @@ router.get(system.billDetails, (req, res) => {
 function getParams(req, res) {
   const sess = req.session
   let user = {
-    id: sess.userId,
-    type: sess.userType,
-    accountId: sess.accountId
+    id: sess.system.userId,
+    type: sess.system.userType,
+    accountId: sess.system.accountId
   }
   let params = {
     urls: urls,
