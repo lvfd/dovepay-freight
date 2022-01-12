@@ -37,7 +37,7 @@ function initStation_stationQueryBillDetails() {
   });
   function initThisPage() {
     // bind submit button:
-    fn_initSubmitBtn(1, 10, fetch_sta_stationQueryBillDetails);
+    fn_initSubmitBtn(1, 5, fetch_sta_stationQueryBillDetails);
     // bind export button:
     fn_initExportBtn(fetch_exportExcel);
   }
@@ -213,7 +213,8 @@ Sta_table.prototype.getTable_queryBill = function(res, pageNumber, pageSize) {
     }
 
     // if (data[i].confirm == 0 && data[i].bindingStatus == '1' && data[i].payMode != 'CS') {
-    if (data[i].confirm == 0 && data[i].bindingStatus == '1') {
+    // if (data[i].confirm == 0 && data[i].bindingStatus == '1') {
+    if (data[i].confirm == 0) {
       link.setAttribute('href', 'billDetails/' +  link.getAttribute('data-orderNo') + '/modify');
       if (checkAll.querySelector('input').getAttribute('disabled') === '') {
         checkAll.querySelector('input').removeAttribute('disabled');
