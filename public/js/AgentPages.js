@@ -31,7 +31,7 @@ function initAgent_consumerQueryBill() {
 }
 function initAgent_consumerQueryBillDetails() {
   // bind submit button:
-  fn_initSubmitBtn(1, 10, fetch_age_consumerQueryBillDetails);
+  fn_initSubmitBtn(1, 5, fetch_age_consumerQueryBillDetails);
   // bind export button:
   fn_initExportBtn(fetch_exportExcel);
 }
