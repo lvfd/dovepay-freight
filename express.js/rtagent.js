@@ -2,20 +2,10 @@ const express = require('express')
 const router = express.Router()
 const { urls } = require('./config')
 const agent = urls.agent
+const { authenticate } = require('./mws')
 
 // Authentication: 
-router.all('/*', (req, res, next) => {
-  let sess = req.session
-  let haveUserId = !!sess.userId
-  let haveAccountId = !!sess.accountId
-  let haveNiceType = (sess.userType == 'agent')
-  if (haveUserId && haveAccountId && haveNiceType) {
-    next()
-  } else { 
-    console.log(`agent logout: ${req.session}`)
-    res.redirect('../')
-  }
-})
+router.use(authenticate('agent'))
 
 // Routers: 
 router.get(agent.accountBinding, (req, res) => {
@@ -55,9 +45,9 @@ router.get(agent.billDetails, (req, res) => {
 function getParams(req, res) {
   let sess = req.session
   let user = {
-    id: sess.userId,
-    type: sess.userType,
-    accountId: sess.accountId
+    id: sess.agent.userId,
+    type: sess.agent.userType,
+    accountId: sess.agent.accountId
   }
   let params = {
     urls: urls,
