@@ -28,7 +28,7 @@ function EntryJS() {
   
   // Init header:
   if (document.getElementById('dpfHeader')) {
-    Glob_fn.initQuirBtn();
+    initLogin_initQuirBtn();
   }
 
   // 初始化系统商：用户查询：
