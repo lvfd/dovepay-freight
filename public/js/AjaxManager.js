@@ -2,9 +2,9 @@
 // Ajax设置：
 $.ajaxSetup({
   headers: {
-    accountId: $('header #accountId').text(),
-    userId: $('header #userId').text(),
-    type: $('header #userType').text()
+    accountId: $('header #accountId').val(),
+    userId: $('header #userId').val(),
+    type: $('header #userType').val()
   },
   type: 'POST',  // for java api
   dataType: 'json',
@@ -129,6 +129,24 @@ function fetch_login_getRole(url, data) {
         Glob_fn.errorHandler(err);
         if (console)
           console.error(err, res)
+      }
+    }
+  });
+}
+
+// logout:
+function fetch_login_logout(url, data) {
+  var postData = JSON.stringify(data);
+  $.ajax({
+    url: url,
+    data: postData,
+    success: function(res) {
+      if (checkRes(res) === false) return;
+      try {
+        var url = res.data.redirect;
+        window.location.href = url;
+      } catch (err) {
+        Glob_fn.errorHandler(err);
       }
     }
   });
