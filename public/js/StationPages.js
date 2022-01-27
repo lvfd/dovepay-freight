@@ -214,8 +214,13 @@ Sta_table.prototype.getTable_queryBill = function(res, pageNumber, pageSize) {
 
     // if (data[i].confirm == 0 && data[i].bindingStatus == '1' && data[i].payMode != 'CS') {
     // if (data[i].confirm == 0 && data[i].bindingStatus == '1') {
-    if (data[i].confirm == 0) {
+    // if (data[i].confirm == 0) {
+    if (data[i].confirm == 0 && data[i].payMode != 'CS') {  // <- 用户可以修改的条件
       link.setAttribute('href', 'billDetails/' +  link.getAttribute('data-orderNo') + '/modify');
+    } else {
+      link.setAttribute('href', 'billDetails/' +  link.getAttribute('data-orderNo') + '/readonly');
+    }
+    if (data[i].confirm == 0) { // <- 用户可以推送的条件
       if (checkAll.querySelector('input').getAttribute('disabled') === '') {
         checkAll.querySelector('input').removeAttribute('disabled');
       }
@@ -230,8 +235,6 @@ Sta_table.prototype.getTable_queryBill = function(res, pageNumber, pageSize) {
         var data = { orderNoList: orderNoList };
         fetch_sta_stationBillPush(url, data);
       });
-    } else {
-      link.setAttribute('href', 'billDetails/' +  link.getAttribute('data-orderNo') + '/readonly');
     }
   }
 
@@ -831,8 +834,7 @@ Modal.setInpLinks = function(form, feeWt) {
   function getSpecFee(feeWt, oldValue) {
     var result = 0,
     result = Number(feeWt) * Number(oldValue);
-    // console.log(result)
-    return result;
+    return Math.round(result);
   }
 };
 Modal.getPostData = function(form) {
@@ -871,7 +873,7 @@ Modal.getButtonSection = function(form) {
     event.preventDefault();
     var url = document.querySelector('input[name=api_stationFeeUpdate]').value;
     var data = Modal.getPostData(form);
-    // console.log(url, JSON.stringify(data));
+    // console.log(url, data);
     fetch_sta_updateFee(url, data);
   })
   mCancelBtn.setAttribute('class', 'button button-rounded uk-modal-close');
@@ -890,7 +892,10 @@ Modal.getDescTextarea = function(name, text) {
   mLabel.setAttribute('for', name);
   mTextarea.setAttribute('class', 'uk-textarea');
   mTextarea.setAttribute('name', name);
-  mTextarea.setAttribute('rows', 3);
+  mTextarea.setAttribute('rows', 4);
+  mTextarea.setAttribute('placeholder', '备注信息最多可输入100字');
+  mTextarea.setAttribute('maxlength', 100);
+  mTextarea.setAttribute('style', 'resize: none');
   mDiv.appendChild(mLabel);
   mDiv.appendChild(mTextarea);
   return mDiv;
@@ -906,7 +911,7 @@ Modal.getTotalFeeInput = function(data, name, text) {
   mLabel.innerText = text;
   mLabel.setAttribute('for', name);
   mInput.setAttribute('class', 'uk-input');
-  mInput.setAttribute('type', 'text');
+  mInput.setAttribute('type', 'number');
   mInput.setAttribute('readonly', '');
   mInput.setAttribute('name', name);
   for (var i = 0; i < feeItemList.length; i++) {
@@ -935,21 +940,59 @@ Modal.createInpList = function(data) {
         formItem = document.createElement('div'),
         label = document.createElement('label'),
         input = document.createElement('input');
+    var inpMaxLength = 15;  // 最大输入字符数量
     formItem.setAttribute('class', 'uk-width-1-2');
     label.setAttribute('class', 'uk-form-label');
     input.setAttribute('class', 'uk-input');
-    input.setAttribute('type', 'text');
+    input.setAttribute('type', 'number');
+    input.setAttribute('min', 0);
     input.setAttribute('name', flag? 'feerate': feeId);
-    if (type === 'spec') {
+    if (type === 'spec') {  // 处置费不可编辑
       input.setAttribute('data-fee', 'spec');
       input.setAttribute('readonly', '');
+    } else {
+      // 其他可以编辑
+      if (!flag) {  // 除费率外其他费用限制字符
+        input.setAttribute('maxlength', inpMaxLength);
+      }
+      input.addEventListener('focus', function(event) {
+        event.preventDefault();
+        this.value = Number(this.value);
+        if (flag) {
+          // 费率初始化
+          this.value = Math.round(this.value * 100) / 100;
+        } else {
+          // 其他初始化
+          this.value = Math.round(this.value);
+        }
+        this.select();
+      });
+      input.addEventListener('blur', function(event) {
+        event.preventDefault();
+        this.value = Number(this.value);
+      });
     }
     label.setAttribute('for', input.name);
     label.innerText = flag? '地面费率': feeShortNM;
     if (!flag) {
       input.setAttribute('data-feeItemList', '');
+      // 非费率只能输入固定字符内整数
+      input.addEventListener('input', function(event) {
+        event.preventDefault();
+        this.value = this.value.replace(/\D/g,'');
+        if (this.value.length > inpMaxLength) {
+          this.value = this.value.slice(0, inpMaxLength);
+        }
+      });
+    } else {
+      // 费率只能输入两位小数
+      input.addEventListener('input', function(event) {
+        event.preventDefault();
+        this.value = this.value.match(/^\d+(?:\.\d{0,2})?/);
+      });
     }
     input.setAttribute('value', flag? feerate: fee);
+    input.setAttribute('step', flag? '0.01': '1');
     input.setAttribute('data-feeShortNM', feeShortNM);
     formItem.appendChild(label);
     formItem.appendChild(input);
