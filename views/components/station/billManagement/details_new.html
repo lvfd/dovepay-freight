@@ -1,0 +1,68 @@
+<input type="hidden" data-pageId="station_stationQueryBillDetails_new">
+<input type="hidden" name="dict_api" value=<%= urls.api.dict%>>
+<input type="hidden" name="api_forTable" value=<%= urls.api.station.stationQueryBillDetails%>>
+<input type="hidden" name="api_forExport" value=<%= urls.api.station.stationBillDetailsExcel%>>
+<input type="hidden" name="api_queryFeeItem" value=<%= urls.api.queryFeeItem%>>
+<input type="hidden" name="api_stationFeeUpdate" value=<%= urls.api.station.stationFeeUpdate%>>
+<input type="hidden" name="modify" value=<%= modify %>>
+<section class="breadcrumb">
+  <ul>
+    <li>账单管理</li>
+    <li><a href=<%- urls.station.index + urls.station.queryBills %>><%= title %></a></li>
+    <li><a href=''><%= subTitle %></a></li>
+    <li><%= thirdTitle %></li>
+  </ul>
+</section>
+<hr>
+<form id="dataForm" class="uk-grid-small uk-form-stacked" uk-grid>
+  <input type="hidden" name="orderNo" value=<%= orderNo %>>
+  <div>
+    <label class="uk-form-label" for="stockNo">运单号</label>
+    <input class="uk-input uk-form-width-medium" type="text" name="stockNo" placeholder="全部运单">
+  </div>
+  <div>
+    <label class="uk-form-label" for="">中转类型</label>
+    <select class="uk-select uk-form-width-medium" name="">
+      <option value="">全部类型</option>
+      <option value="">1</option>
+      <option value="">2</option>
+    </select>
+  </div>
+  <div>
+    <label class="uk-form-label" for="flight">航班号</label>
+    <input class="uk-input uk-form-width-medium" type="text" name="flight" placeholder="全部航班">
+  </div>
+  <div>
+    <label class="uk-form-label" for="sAirPortid">始发站</label>
+    <input class="uk-input uk-form-width-medium" type="text" name="sAirPortDes" placeholder="全部站点">
+  </div>
+  <div>
+    <label class="uk-form-label" for="eAirPortid">到达站</label>
+    <input class="uk-input uk-form-width-medium" type="text" name="eAirPortDes" placeholder="全部站点">
+  </div>
+  <div>
+    <label class="uk-form-label" for="opedepartId">营业点</label>
+    <select class="uk-select uk-form-width-medium" name="opedepartId"></select>
+  </div>
+  <div>
+    <label class="uk-form-label" for="">变更运单筛选</label>
+    <select class="uk-select uk-form-width-medium" name="">
+      <option value="">全部</option>
+      <option value="">1</option>
+      <option value="">2</option>
+    </select>
+  </div>
+  <div class="uk-width-1-1 uk-grid-small uk-flex-center uk-margin" uk-grid>
+    <div><button id="submitBtn" class="button button-primary button-rounded uk-width-small">查询</button></div>
+    <div><input type="reset" class="button button-highlight button-rounded uk-width-small" value="清空"></div>
+    <div><button id="exportBtn" class="button button-action button-rounded uk-width-small">导出数据</button></div>
+  </div>
+</form>
+<hr>
+<div class="uk-overflow-auto">
+  <table id="dataTable" class="uk-table uk-table-middle uk-table-small uk-table-divider">
+    <thead></thead>
+    <tbody></tbody>
+  </table>
+</div>
+<ul class="uk-pagination uk-flex-center" data-for="dataTable"></ul>

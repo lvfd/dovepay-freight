@@ -1,0 +1,50 @@
+<input type="hidden" data-pageId="station_billsSetting">
+<section class="breadcrumb">
+  <ul>
+    <li>账单设置</li>
+    <li><%= title %></li>
+  </ul>
+</section>
+<hr>
+<form id="dataForm" class="uk-form-stacked">
+  <div class="uk-flex">
+    <div>
+      <label class="uk-form-label">账单名称</label>
+      <input type="text" name="" class="uk-input uk-form-width-medium" placeholder="全部账单">
+    </div>
+    <div class="uk-margin-left">
+      <label class="uk-form-label">设置时间</label>
+      <input type="text" name="" class="uk-input uk-form-width-medium" placeholder="全部时间" readonly>
+    </div>
+    <div class="uk-margin-left">
+      <label class="uk-form-label">状态</label>
+      <select class="uk-select uk-form-width-medium" name="">
+        <option value="">所有状态</option>
+        <option value="">选项1</option>
+        <option value="">选项2</option>
+      </select>
+    </div>
+  </div>
+  <div class="uk-flex uk-flex-center uk-margin">
+    <button id="submitBtn" class="button button-rounded uk-width-small button-primary" type="button">查询</button>
+    <input type="reset" class="button button-rounded uk-width-small button-highlight uk-margin-small-left" value="重置">
+    <button title="点击新增账单规则" id="addRule" class="button button-rounded button-action uk-margin-small-left" type="button">新增账单规则</button>
+  </div>
+</form>
+<hr>
+<div class="uk-overflow-auto">
+  <table id="dataTable" class="uk-table uk-table-small uk-table-divider uk-table-striped uk-table-hover">
+    <thead>
+      <tr>
+        <th>标题1</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="uk-table-link">
+          <a class="deleteTr" title="删除此账单" href="">删除</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

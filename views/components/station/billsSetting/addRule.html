@@ -1,0 +1,121 @@
+<input type="hidden" data-pageId="station_billsSetting_addRule">
+<input type="hidden" name="url_station_billSetting" value=<%- urls.station.index + urls.station.billsSetting %>>
+<section class="breadcrumb">
+  <ul>
+    <li>账单设置</li>
+    <li><a href=<%- urls.station.index + urls.station.billsSetting %>> <%= title %></a></li>
+    <li><%= subTitle %></li>
+  </ul>
+</section>
+<hr>
+<form id="dataForm" data-vld="station_billsSetting_addRule" class="uk-form-stacked">
+  <div>
+    <label class="uk-form-label">账单名称</label>
+    <input type="text" id="billName" name="" class="uk-input uk-form-width-large">
+  </div>
+  <div class="uk-margin radioWrap">
+    <label class="uk-form-label">结算方式</label>
+    <div class="uk-form-controls uk-grid-small" uk-grid>
+      <div>
+        <label class="void button">
+          <input type="radio" name="radioSets" value="1" hidden checked>月结
+        </label>
+      </div>
+      <div>
+        <label class="void button">
+          <input type="radio" name="radioSets" value="2" hidden>现结
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="uk-margin">
+    <label class="uk-form-label">营业点设置</label>
+    <div class="uk-form-controls uk-grid-small" uk-grid>
+      <div>
+        <label class="void button">
+          <input type="checkbox" class="linkLabel" name="" value="" hidden>南区
+        </label>
+      </div>
+      <div>
+        <label class="void button">
+          <input type="checkbox" class="linkLabel" name="" value="" hidden>北区
+        </label>
+      </div>
+      <div>
+        <label class="void button">
+          <input type="checkbox" class="linkLabel" name="" value="" hidden>国际出港
+        </label>
+      </div>
+      <div>
+        <label class="void button newMonth uk-text-warning" uk-tooltip="次月">
+          <input type="checkbox" class="linkLabel" name="" value="" hidden>国际快件
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="uk-margin">
+    <label class="uk-form-label">地区</label>
+    <div class="uk-form-controls uk-grid-small" uk-grid>
+      <div>
+        <label class="void button">
+          <input type="checkbox" class="linkLabel" name="" value="" hidden>国际
+        </label>
+      </div>
+      <div>
+        <label class="void button">
+          <input type="checkbox" class="linkLabel" name="" value="" hidden>国内
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="uk-margin">
+    <label class="uk-form-label">进/出港类型</label>
+    <div class="uk-form-controls uk-grid-small" uk-grid>
+      <div>
+        <label class="void button">
+          <input type="checkbox" class="linkLabel" name="" value="" hidden>进港
+        </label>
+      </div>
+      <div>
+        <label class="void button">
+          <input type="checkbox" class="linkLabel" name="" value="" hidden>出港
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="uk-margin">
+    <label class="uk-form-label">运单类型</label>
+    <div class="uk-form-controls uk-grid-small" uk-grid>
+      <div>
+        <label class="void button">
+          <input type="checkbox" class="linkLabel" name="" value="" hidden>地空中转
+        </label>
+      </div>
+      <div>
+        <label class="void button">
+          <input type="checkbox" class="linkLabel" name="" value="" hidden>空空中转
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="uk-margin">
+    <label class="uk-form-label">是否为快件</label>
+    <div class="uk-form-controls uk-grid-small" uk-grid>
+      <div>
+        <label class="void button">
+          <input type="checkbox" class="linkLabel" name="" value="" hidden>快件
+        </label>
+      </div>
+      <div>
+        <label class="void button">
+          <input type="checkbox" class="linkLabel" name="" value="" hidden>非快件
+        </label>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="uk-padding uk-padding-remove-top uk-flex uk-flex-center">
+    <button id="createBill" class="button button-rounded button-primary" type="button">生成账单规则</button>
+    <a id="cancel" class="button button-rounded button-highlight uk-margin-small-left" href=<%- urls.station.index + urls.station.billsSetting %>>取消并返回</a>
+  </div> 
+</form>

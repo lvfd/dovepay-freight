@@ -65,12 +65,14 @@ function EntryJS() {
     initAgent_getBindConsumer();
   }
 
-  // 初始化station：查询账单：
-  if (document.querySelector('input[data-pageId=station_stationQueryBill]')) {
+  // 初始化station：查询账单：* 新旧需求合并
+  if (document.querySelector('input[data-pageId=station_stationQueryBill]')
+      || document.querySelector('input[data-pageId=station_stationQueryBill_new]')) {
     initStation_stationQueryBill();
   }
-  // 初始化station：查询账单详情：
-  if (document.querySelector('input[data-pageId=station_stationQueryBillDetails]')) {
+  // 初始化station：查询账单详情：* 新旧需求合并
+  if (document.querySelector('input[data-pageId=station_stationQueryBillDetails]')
+      || document.querySelector('input[data-pageId=station_stationQueryBillDetails_new]')) {
     initStation_stationQueryBillDetails();
   }
   // 初始化station：用户信息管理：
@@ -88,6 +90,18 @@ function EntryJS() {
   // 初始化station:优惠：政策名细页面：
   if (document.querySelector('input[data-pageId=discountPoliciesManagementDetails]')) {
     initStation_discountPoliciesManagementDetails();
+  }
+  // 初始化station: 基础数据页面:
+  if (document.querySelector('input[data-pageId=station_baseData]')) {
+    initStation_baseData();
+  }
+  // 初始化station: 账单规则查询页面:
+  if (document.querySelector('input[data-pageId=station_billsSetting]')) {
+    initStation_billsSetting();
+  }
+  // 初始化station: 新增账单规则页面:
+  if (document.querySelector('input[data-pageId=station_billsSetting_addRule]')) {
+    initStation_billsSetting_addRule();
   }
 
 }

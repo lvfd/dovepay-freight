@@ -10,10 +10,24 @@
         <%- include('components/station/userManagement/discountPoliciesManagement.html') %>
       <% } else if (name == 'discountPoliciesManagementDetails') { %>
         <%- include('components/station/userManagement/discountPoliciesManagementDetails.html') %>
+      <!-- 新需求替换: -->
       <% } else if (name == 'billManagement') { %>
         <%- include('components/station/billManagement/index.html') %>
       <% } else if (name == 'billDetails') { %>
         <%- include('components/station/billManagement/details.html') %>
+      <!-- 新需求新增: -->
+      <% } else if (name == 'billsSetting') { %>
+        <%- include('components/station/billsSetting/index.html') %>
+      <% } else if (name == 'billsSetting_addRule') { %>
+        <%- include('components/station/billsSetting/addRule.html') %>
+      <% } else if (name == 'baseData') { %>
+        <%- include('components/station/baseData.html') %>
+      <% } else if (name == 'queryBills') { %>
+        <%- include('components/station/billManagement/queryBills.html') %>
+      <% } else if (name == 'queryBills_bill') { %>
+        <%- include('components/station/billManagement/index_new.html') %>
+      <% } else if (name == 'queryBills_details') { %>
+        <%- include('components/station/billManagement/details_new.html') %>
       <% } %>
     <% } else if (type == 'agent') {%>
       <% if (name == 'accountBinding') { %>

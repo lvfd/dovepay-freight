@@ -108,6 +108,141 @@ function initStation_getAllDiscountPolicy() {
     })
   });
 }
+function initStation_baseData() {
+  var form = document.getElementById('dataForm');
+  var ruleSetsWrapDiv = document.getElementById('ruleSetsWrap');
+  var ruleRadios = ruleSetsWrapDiv.querySelectorAll('input[type=radio]');
+  var ruleLabels = ruleSetsWrapDiv.querySelectorAll('label');
+  // Bind radios:
+  for (var i = 0; i < ruleRadios.length; i++) {
+    var radio = ruleRadios[i];
+    var func = Glob_fn.checkboxAndRadio;
+    func.initActiveLabel(radio);
+    radio.addEventListener('change', func.setBindingLabels(ruleRadios));
+    radio.addEventListener('click', function(event) {
+      event.stopPropagation();  // 阻止事件上升到label
+    });
+  }
+  // Bind labels: 
+  for (var i = 1; i < ruleLabels.length; i++) {
+    var label = ruleLabels[i];
+    label.addEventListener('mousedown', function(event) {
+      event.preventDefault(); // 抵消drop控件副作用
+    });
+  }
+  // Bind reset button:
+  var resetBtn = document.querySelector('input[type=reset]');
+  var defaultRadio = ruleRadios[0];
+  resetBtn.addEventListener('click', function(event) {
+    defaultRadio.click(); // 重置为全部
+  });
+}
+function initStation_billsSetting() {
+  // Bind Delete links:
+  bindDeleteLinks();
+  function bindDeleteLinks() {
+    var deleteLinks = document.querySelectorAll('a.deleteTr');
+    if (deleteLinks.length < 1) {
+      return;
+    }
+    for (var i = 0; i < deleteLinks.length; i++) {
+      var link = deleteLinks[i];
+      link.addEventListener('click', function(event) {
+        event.preventDefault();
+        UIkit.modal.confirm('删除后不可恢复，确认删除吗？').then(function(){
+          // success
+          UIkit.notification("<span uk-icon='icon: check'></span> 删除成功", {
+            status: 'success',
+            timeout: 1000,
+          });
+        })
+      });
+    }
+  }
+  // Bind Add rule Button:
+  bindAddRuleBtn();
+  function bindAddRuleBtn() {
+    var btn = document.getElementById('addRule');
+    btn.addEventListener('click', function(event) {
+      event.preventDefault();
+      window.location.href = 'billsSetting/addRule';
+    });
+  } 
+}
+function initStation_billsSetting_addRule() {
+  var vld = new FormValidate();
+  var validator = vld.validator();
+  // vld: bindItems:
+  validator.bindFormItems();
+  var form = document.getElementById('dataForm');
+  // UI: Bind Radios:
+  bindAllRadios();
+  function bindAllRadios() {
+    var wraps = form.querySelectorAll('.radioWrap');
+    if (wraps.length < 1) {
+      throw new Error('没有定义div.radioWrap');
+    }
+    for (var j = 0; j < wraps.length; j++) {
+      var wrap = wraps[j];
+      bindRadios(wrap);
+    }
+    function bindRadios(wrap) {
+      var radios = wrap.querySelectorAll('input[type=radio]');
+      if (radios.length < 1) {
+        return;
+      }
+      for (var i = 0; i < radios.length; i++) {
+        var radio = radios[i];
+        var func = Glob_fn.checkboxAndRadio;
+        func.initActiveLabel(radio);
+        radio.addEventListener('change', func.setBindingLabels(radios));
+      }
+    }
+  }
+  // UI: Checkboxes:
+  cbxLinkLabel();
+  function cbxLinkLabel() {
+    var cbxs = form.querySelectorAll('input[type=checkbox].linkLabel');
+    if (cbxs.length < 1) {
+      return;
+    }
+    for (var i = 0; i < cbxs.length; i++) {
+      var cbx = cbxs[i];
+      cbx.addEventListener('change', function(event) {
+        var labClasses = Glob_fn.checkboxAndRadio.getBindingLabel(this).classList;
+        if (labClasses.contains('newMonth')) {
+          labClasses.toggle('button-highlight');
+          labClasses.toggle('uk-text-warning');
+        } else {
+          labClasses.toggle('button-primary');
+        }
+      });
+    }
+  }
+  // Submit:
+  submitAddRule();
+  function submitAddRule() {
+    var btn = document.getElementById('createBill');
+    var url = document.querySelector('input[name=url_station_billSetting]').value;
+    var not = "<span id='notification' uk-icon='icon: check'></span> 提交成功";
+    btn.addEventListener('click', function(event) {
+      event.preventDefault();
+      if (!validator.submitBoo()) {
+        return;
+      }
+      UIkit.modal.confirm('确定提交信息并生成账单规则?').then(function() {
+        // success
+        UIkit.notification(not, {
+          status: 'success',
+          timeout: 1000,
+        });
+        UIkit.util.on('.uk-notification', 'close', function() {
+          window.location.href = url;
+        });
+      });
+    });
+  }
+}
 
 function Sta_table(){}
 // 账单查看主表：

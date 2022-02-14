@@ -1,0 +1,67 @@
+<input type="hidden" data-pageId="station_stationQueryBill_new">
+<input type="hidden" name="dict_api" value=<%= urls.api.dict%>>
+<input type="hidden" name="api_forTable" value=<%= urls.api.station.stationQueryBill%>>
+<input type="hidden" name="api_forExport" value=<%= urls.api.station.stationBillExcel%>>
+<input type="hidden" name="api_stationBillPush" value=<%= urls.api.station.stationBillPush%>>
+<section class="breadcrumb">
+  <ul>
+    <li>账单管理</li>
+    <li><a href=<%- urls.station.index + urls.station.queryBills %>><%= title %></a></li>
+    <li><%= subTitle %></li>
+  </ul>
+</section>
+<hr>
+<form id="dataForm" class="uk-grid-small uk-form-stacked" uk-grid>
+  <input type="hidden" name="type" value=<%= tType %>>
+  <div>
+    <label class="uk-form-label">开账时间</label>
+    <div class="uk-form-controls uk-flex uk-flex-middle">
+      <input id="staTime" type="text" name="staTime" class="uk-input uk-form-width-medium" placeholder="开始时间" readonly>
+      <span class="uk-margin-small-left uk-margin-small-right">至</span>
+      <input id="endTime" type="text" name="endTime" class="uk-input uk-form-width-medium" placeholder="结束时间" readonly>
+    </div>
+  </div>
+  <div>
+    <label class="uk-form-label" for="status">付款状态</label>
+    <select class="uk-select uk-form-width-medium" id="form-stacked-select" name="status">
+      <option value="-1">全部</option>
+      <option value="1">未支付</option>
+      <option value="2">已支付</option>
+      <option value="3">支付失败</option>
+    </select>
+  </div>
+  <div>
+    <label class="uk-form-label" for="customerId">结算客户编码</label>
+    <input type="text" name="customerId" class="uk-input uk-form-width-medium" placeholder="全部">
+  </div>
+  <div>
+    <label class="uk-form-label" for="customerName">结算客户名称</label>
+    <input type="text" name="customerName" class="uk-input uk-form-width-medium" placeholder="全部">
+  </div>
+  <div>
+    <label class="uk-form-label" for="inAndOut">货运类型</label>
+    <select class="uk-select uk-form-width-medium" name="inAndOut"></select>
+  </div>
+  <div>
+    <label class="uk-form-label" for="payMode">计费方式</label>
+    <select class="uk-select uk-form-width-medium" name="payMode">
+      <option value="-1">全部</option>
+      <option value="CS">现结</option>
+      <option value="MP">记账</option>
+    </select>
+  </div>
+  <div class="uk-width-1-1 uk-grid-small uk-flex-center uk-margin" uk-grid>
+    <div><button id="submitBtn" class="button button-primary button-rounded uk-width-small">查询</button></div>
+    <div><input type="reset" class="button button-highlight button-rounded uk-width-small" value="清空"></div>
+    <div><button id="exportBtn" class="button button-action button-rounded uk-width-small">导出数据</button></div>
+    <div><button id="multiBtn" class="button button-royal button-rounded uk-width-small" disabled>批量推送</button></div>
+  </div>
+</form>
+<hr>
+<div class="uk-overflow-auto">
+  <table id="dataTable" class="uk-table uk-table-small uk-table-divider uk-table-striped uk-table-hover">
+    <thead></thead>
+    <tbody></tbody>
+  </table>
+</div>
+<ul class="uk-pagination uk-flex-center" data-for="dataTable"></ul>

@@ -1,0 +1,151 @@
+<input type="hidden" data-pageId="station_baseData">
+<section class="breadcrumb">
+  <ul>
+    <li>账单管理</li>
+    <li><%= title %></li>
+  </ul>
+</section>
+<hr>
+<form id="dataForm" class="uk-form-stacked">
+  <div class="uk-flex">
+    <div>
+      <label class="uk-form-label">时间</label>
+      <div class="uk-form-controls uk-flex uk-flex-middle">
+        <input type="text" name="" class="uk-input uk-form-width-medium" placeholder="全部时间" readonly>
+        <span class="uk-margin-small-left uk-margin-small-right">至</span>
+        <input type="text" name="" class="uk-input uk-form-width-medium" placeholder="全部时间" readonly>
+      </div>
+    </div>
+    <div class="uk-margin-left">
+      <label class="uk-form-label">运单号</label>
+      <input type="text" name="" class="uk-input uk-form-width-medium" placeholder="全部运单">
+    </div>
+  </div>
+  <div class="uk-margin">
+    <label class="uk-form-label">已生效账单规则</label>
+    <div id="ruleSetsWrap" class="uk-form-controls uk-grid-small" uk-grid>
+      <div>
+        <label class="void button" uk-tooltip="title: 选择全部账单; pos: bottom">
+          <input type="radio" name="ruleSets" value="0" hidden checked>全部
+        </label>
+      </div>
+      <div>
+        <label class="void button">
+          <input type="radio" name="ruleSets" value="1" hidden>国际XXX账单
+        </label>
+        <div uk-drop="delay-hide: 0">
+          <div class="uk-card uk-card-small uk-card-default">
+            <div class="uk-card-header">
+              <div class="uk-card-title">
+                <h5>国际XXX账单</h5>
+              </div>
+            </div>
+            <div class="uk-card-body uk-container uk-container-xsmall">
+              <span class="uk-label uk-margin-small-bottom">国际进港</span>
+              <span class="uk-label uk-margin-small-bottom">国际出港</span>
+              <span class="uk-label uk-margin-small-bottom">国内出港</span>
+              <span class="uk-label uk-margin-small-bottom">国内进港</span>
+              <span class="uk-label uk-margin-small-bottom">国内地空中转</span>
+              <span class="uk-label uk-margin-small-bottom">国内空空中转</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label class="void button">
+          <input type="radio" name="ruleSets" value="2" hidden>国内XXX账单
+        </label>
+        <div uk-drop="delay-hide: 0">
+          <div class="uk-card uk-card-small uk-card-default">
+            <div class="uk-card-header">
+              <div class="uk-card-title">
+                <h5>国内XXX账单</h5>
+              </div>
+            </div>
+            <div class="uk-card-body uk-container uk-container-xsmall">
+              <span class="uk-label uk-margin-small-bottom">国际进港</span>
+              <span class="uk-label uk-margin-small-bottom">国际出港</span>
+              <span class="uk-label uk-margin-small-bottom">国内出港</span>
+              <span class="uk-label uk-margin-small-bottom">国内进港</span>
+              <span class="uk-label uk-margin-small-bottom">国内地空中转</span>
+              <span class="uk-label uk-margin-small-bottom">国内空空中转</span>
+            </div>            
+          </div>
+        </div>
+      </div>
+      <div>
+        <label class="void button">
+          <input type="radio" name="ruleSets" value="3" hidden>中转XXX账单
+        </label>
+        <div uk-drop="delay-hide: 0">
+          <div class="uk-card uk-card-small uk-card-default">
+            <div class="uk-card-header">
+              <div class="uk-card-title">
+                <h5>中转XXX账单</h5>
+              </div>
+            </div>
+            <div class="uk-card-body uk-container uk-container-xsmall">
+              <span class="uk-label uk-margin-small-bottom">国际进港</span>
+              <span class="uk-label uk-margin-small-bottom">国际出港</span>
+              <span class="uk-label uk-margin-small-bottom">国内出港</span>
+              <span class="uk-label uk-margin-small-bottom">国内进港</span>
+              <span class="uk-label uk-margin-small-bottom">国内地空中转</span>
+              <span class="uk-label uk-margin-small-bottom">国内空空中转</span>
+            </div>            
+          </div>
+        </div>
+      </div>
+      <div>
+        <label class="void button">
+          <input type="radio" name="ruleSets" value="4" hidden>直达中转XXX账单
+        </label>
+        <div uk-drop="delay-hide: 0">
+          <div class="uk-card uk-card-small uk-card-default">
+            <div class="uk-card-header">
+              <div class="uk-card-title">
+                <h5>直达中转XXX账单</h5>
+              </div>
+            </div>
+            <div class="uk-card-body uk-container uk-container-xsmall">
+              <span class="uk-label uk-margin-small-bottom">国际进港</span>
+              <span class="uk-label uk-margin-small-bottom">国际出港</span>
+              <span class="uk-label uk-margin-small-bottom">国内出港</span>
+              <span class="uk-label uk-margin-small-bottom">国内进港</span>
+              <span class="uk-label uk-margin-small-bottom">国内地空中转</span>
+              <span class="uk-label uk-margin-small-bottom">国内空空中转</span>
+            </div>            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="uk-flex uk-flex-center">
+    <button id="submitBtn" class="button button-rounded uk-width-small button-primary" type="button">查询</button>
+    <input type="reset" class="button button-rounded uk-width-small button-highlight uk-margin-small-left" value="重置">
+    <button id="exportBtn" class="button button-rounded uk-width-small button-action uk-margin-small-left" type="button">导出数据</button>
+  </div>  
+</form>
+<hr>
+<div class="uk-overflow-auto">
+  <table id="dataTable" class="uk-table uk-table-small uk-table-divider uk-table-striped uk-table-hover">
+    <caption class="uk-margin-small">
+      <span class="uk-margin">数据总条数
+        <span class="uk-badge">100</span>
+      </span>
+      <span class="uk-margin-small-left">数据总条数
+        <span class="uk-badge">50</span>
+      </span>
+    </caption>
+    <thead>
+      <tr>
+        <th>标题1</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>内容1</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<ul class="uk-pagination uk-flex-center" data-for="dataTable"></ul>

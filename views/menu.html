@@ -12,7 +12,21 @@
       </ul>
     </section>
     <section class="menu-group-inline">
+      <button class="button button-primary">账单设置<i class="fa fa-caret-down" aria-hidden="true"></i></button>
+      <ul>
+        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + station.billsSetting %>>账单规则查询</a></li>
+        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + station.billsSetting_addRule %>>新增账单规则</a></li>
+      </ul>
+    </section>
+    <section class="menu-group-inline">
       <button class="button button-primary">账单管理<i class="fa fa-caret-down" aria-hidden="true"></i></button>
+      <ul>
+        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + station.baseData %>>基础数据</a></li>
+        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + station.queryBills %>>账单查看</a></li>
+      </ul>
+    </section>
+    <section class="menu-group-inline">
+      <button class="button button-primary">账单管理(旧)<i class="fa fa-caret-down" aria-hidden="true"></i></button>
       <ul>
         <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + station.internationalBills %>>国际直达</a></li>
         <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + station.domesticBills %>>国内直达</a></li>

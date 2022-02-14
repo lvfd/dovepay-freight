@@ -80,6 +80,58 @@ var Glob_fn = {
       }
     }
   },
+  checkboxAndRadio: {
+    getBindingLabel: function(childNode) {
+      var label = null;
+      var child = childNode;
+      var maxCount = 5;
+      do {
+        label = child.parentNode;
+        child = label;
+        maxCount--;
+      } while ( label.tagName !== 'LABEL' && maxCount > 0 )
+      if ( label.tagName !== 'LABEL' ) {
+        throw new Error('没有label节点');
+      }
+      return label;
+    },
+    setBindingLabels: function(radioSet) {
+      var parentProp = this;
+      // var labels = labelSet? labelSet: getLabelSet(radioSet);
+      return function (event) {
+        for (var i = 0; i < radioSet.length; i++) {
+          var radio = radioSet[i];
+          var label = parentProp.getBindingLabel(radio);
+          label.classList.remove('button-primary');
+        }
+        for (var i = 0; i < radioSet.length; i++) {
+          var radio = radioSet[i];
+          if (radio.checked) {
+            parentProp.getBindingLabel(radio).classList.add('button-primary');
+          }
+        }
+        // console.log(this.getRadioValue(radioSet))
+      };
+    },
+    initActiveLabel: function(radio) {
+      var parentProp = this;
+      if (radio.hasAttribute('checked')) {
+        parentProp.getBindingLabel(radio).classList.add('button-primary');
+      } else {
+        parentProp.getBindingLabel(radio).classList.remove('button-primary');
+      }
+    },
+    getRadioValue: function(radioSet) {
+      var value = null;
+      for (var i = 0; i < radioSet.length; i++) {
+        var radio = radioSet[i]
+        if (radio.checked) {
+          value = radio.value;
+        }
+      }
+      return value;
+    },
+  },
   WdateInit: function(startTimeId, endTimeId) {
     var sta = document.getElementById(startTimeId);
     var end = document.getElementById(endTimeId);

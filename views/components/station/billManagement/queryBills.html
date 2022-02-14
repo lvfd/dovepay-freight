@@ -1,0 +1,55 @@
+<input type="hidden" data-pageId="station_billMangement_queryBills">
+<section class="breadcrumb">
+  <ul>
+    <li>账单管理</li>
+    <li><%= title %></li>
+  </ul>
+</section>
+<hr>
+<form id="dataForm" class="uk-form-stacked uk-flex-bottom uk-grid-small" uk-grid>
+  <div>
+    <label class="uk-form-label">负责人</label>
+    <input type="text" name="" class="uk-input uk-form-width-medium" placeholder="全部负责人">
+  </div>
+  <div>
+    <label class="uk-form-label">账单名称</label>
+    <input type="text" name="" class="uk-input uk-form-width-medium" placeholder="全部账单">
+  </div>
+  <div>
+    <label class="uk-form-label">账期</label>
+    <select class="uk-select uk-form-width-medium">
+      <option value="">全部账期</option>
+      <option value="">1</option>
+      <option value="">2</option>
+    </select>
+  </div>
+  <div>
+    <button class="button button-primary button-rounded uk-form-width-small" type="button">查询</button>
+  </div>
+</form>
+<hr>
+<div class="uk-overflow-auto">
+  <table id="dataTable" class="uk-table uk-table-small uk-table-divider uk-table-striped uk-table-hover">
+    <thead>
+      <tr>
+        <th>序号</th>
+        <th>账单名称</th>
+        <th>开账时间</th>
+        <th>账期</th>
+        <th>总金额</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+        <td>5</td>
+        <td class="uk-table-link"><a href="/dovepay-freight/station/queryBills/1">查看账单</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<ul class="uk-pagination uk-flex-center" data-for="dataTable"></ul>

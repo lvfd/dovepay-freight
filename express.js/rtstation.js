@@ -18,7 +18,7 @@ router.get(station. discountPoliciesManagement, (req, res) => {
   let params = getParams(req, res)
   params.title = '优惠政策管理'
   params.name = 'discountPoliciesManagement'
-  res.render('frame', params);
+  res.render('frame', params)
 })
 router.get(station.discountPoliciesManagementDetails, (req, res) => {
   const discountPolicyId = req.params.discountPolicyId;
@@ -26,7 +26,7 @@ router.get(station.discountPoliciesManagementDetails, (req, res) => {
   params.title = '优惠政策详情'
   params.name = 'discountPoliciesManagementDetails'
   params.discountPolicyId = discountPolicyId
-  res.render('frame', params);
+  res.render('frame', params)
 })
 router.get(station.discountPolicies, (req, res) => {
   let params = getParams(req, res)
@@ -43,6 +43,7 @@ router.get(station.discountPolicies2, (req, res) => {
 router.get(station.discountPolicies3, (req, res) => {
   res.render('components/station/userManagement/normal')
 })
+// 替换路由:
 router.get(station.billManagement, (req, res) => {
   const type = req.params.type
   let params = getParams(req, res)
@@ -68,6 +69,51 @@ router.get(station.billDetails, (req, res) => {
   params.modify = modify
   params.title = '账单详情'
   params.name = 'billDetails'
+  res.render('frame', params)
+})
+
+// 新增路由:
+router.get(station.billsSetting, (req, res) => {  // 账单设置
+  let params = getParams(req, res)
+  params.title = '账单规则查询'
+  params.name = 'billsSetting'
+  res.render('frame', params)
+})
+router.get(station.billsSetting_addRule, (req, res) => {  // 新增账单规则
+  let params = getParams(req, res)
+  params.title = '账单规则查询'
+  params.subTitle = '新增账单规则'
+  params.name = 'billsSetting_addRule'
+  res.render('frame', params)
+})
+router.get(station.baseData, (req, res) => {  // 基础数据
+  let params = getParams(req, res)
+  params.title = '基础数据'
+  params.name = 'baseData'
+  res.render('frame', params)
+})
+router.get(station.queryBills, (req, res) => {  // 账单信息
+  let params = getParams(req, res)
+  params.title = '账单信息'
+  params.name = 'queryBills'
+  res.render('frame', params)
+})
+router.get(station.queryBills_bill, (req, res) => { // 账单信息-查看账单
+  let params = getParams(req, res)
+  params.title = '账单信息'
+  params.subTitle = '查看账单'
+  params.name = 'queryBills_bill'
+  params.tType = req.params.rule
+  res.render('frame', params)
+})
+router.get(station.queryBills_details, (req, res) => {
+  let params = getParams(req, res)
+  params.title = '账单信息'
+  params.subTitle = '查看账单'
+  params.thirdTitle = '账单详情'
+  params.orderNo = req.params.orderNo
+  params.modify = req.params.modify
+  params.name = 'queryBills_details'
   res.render('frame', params)
 })
 
