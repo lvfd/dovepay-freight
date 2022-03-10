@@ -1,0 +1,44 @@
+<input type="hidden" data-pageId="consumer_consumerQueryBillDetails_new">
+<input type="hidden" name="api_forTable" value=<%= urls.api.consumer.consumerQueryBillDetails%>>
+<input type="hidden" name="api_forExport" value=<%= urls.api.consumer.consumerBillDetailsExcel%>>
+<input type="hidden" name="api_queryFeeItem" value=<%= urls.api.queryFeeItem%>>
+<section class="breadcrumb">
+  <ul>
+    <li>账单管理</li>
+    <li><a href=<%- urls.agent.index + urls.agent.queryBills %>><%= title %></a></li>
+    <li><%= subTitle %></li>
+  </ul>
+</section>
+<hr>
+<form id="dataForm" class="uk-grid-small uk-form-stacked" uk-grid>
+  <input type="hidden" name="orderNo" value=<%= orderNo %>>
+  <div>
+    <label class="uk-form-label" for="stockNo">运单号</label>
+    <input class="uk-input uk-form-width-medium" type="text" name="stockNo" placeholder="全部运单">
+  </div>
+  <div>
+    <label class="uk-form-label" for="flight">航班号</label>
+    <input class="uk-input uk-form-width-medium" type="text" name="flight" placeholder="全部航班">
+  </div>
+  <div>
+    <label class="uk-form-label" for="sAirPortid">始发站</label>
+    <input class="uk-input uk-form-width-medium" type="text" name="sAirPortDes" placeholder="全部">
+  </div>
+  <div>
+    <label class="uk-form-label" for="eAirPortid">目的站</label>
+    <input class="uk-input uk-form-width-medium" type="text" name="eAirPortDes" placeholder="全部">
+  </div>
+  <div class="uk-width-1-1 uk-grid-small uk-flex-center uk-margin" uk-grid>
+    <div><button id="submitBtn" class="button button-primary button-rounded uk-width-small">查询</button></div>
+    <div><input type="reset" class="button button-highlight button-rounded uk-width-small" value="清空"></div>
+    <div><button id="exportBtn" class="button button-action button-rounded uk-width-small">导出数据</button></div>
+  </div>
+</form>
+<hr>
+<div class="uk-overflow-auto">
+  <table id="dataTable" class="uk-table uk-table-middle uk-table-small uk-table-divider">
+    <thead></thead>
+    <tbody></tbody>
+  </table>
+</div>
+<ul class="uk-pagination uk-flex-center" data-for="dataTable"></ul>

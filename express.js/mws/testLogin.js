@@ -15,10 +15,14 @@ module.exports = (type) => {
       userId = 'sys'
       pagefor = 'system'
       title = '系统商参数'
-    } else {
-      userId = 'cfz2lxc5@126.com'
+    } else if (type === 'station') {
+      userId = 'cfz2lxc5@126.com' // 货站用户
       pagefor = 'user'
-      title = '用户参数'
+      title = '货站用户'
+    } else if (type === 'agent') {
+      userId = 'cfz2lxc18@163.com' // 货代用户
+      pagefor = 'user'
+      title = '货代用户'
     }
     const params = {
       userId: userId,

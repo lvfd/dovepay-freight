@@ -1,6 +1,6 @@
-<input type="hidden" data-pageId="station_billMangement_queryBills">
-<input type="hidden" name="api_forTable" value=<%= urls.api.station.stationQuerySumBillByRule %>>
-<input type="hidden" name="url_forNext" value=<%- urls.station.index + urls.station.queryBills %>>
+<input type="hidden" data-pageId="system_billMangement_queryBills">
+<input type="hidden" name="api_forTable" value=<%= urls.api.system.systemQuerySumBillByRule %>>
+<input type="hidden" name="url_forNext" value=<%- urls.system.index + urls.system.queryBills %>>
 <section class="breadcrumb">
   <ul>
     <li>账单管理</li>
@@ -20,9 +20,9 @@
   <div>
     <label class="uk-form-label" for="orderTime">账期(限制之前36个月)</label>
     <div class="uk-form-controls uk-flex uk-flex-middle">
-      <input id="startTime" type="text" name="orderTimeStart" class="uk-input uk-form-width-medium" placeholder="全部时间" data-value="<%= orderTimeStart %>" readonly>
+      <input id="startTime" type="text" name="orderTimeStart" class="uk-input uk-form-width-medium" placeholder="全部时间" readonly>
       <span class="uk-margin-small-left uk-margin-small-right">至</span>
-      <input id="endTime" type="text" name="orderTimeEnd" class="uk-input uk-form-width-medium" placeholder="全部时间" data-value="<%= orderTimeEnd%>" readonly>
+      <input id="endTime" type="text" name="orderTimeEnd" class="uk-input uk-form-width-medium" placeholder="全部时间" readonly>
     </div>
   </div>
   <div>

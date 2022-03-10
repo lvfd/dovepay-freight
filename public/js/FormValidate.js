@@ -37,10 +37,25 @@ FormValidate.station_billsSetting_addRule = function() {
         FormValidate.inp_limitLength(this, maxWords);
       });
     },
+    checkCheckboxes: function(){
+      var boo = false;
+      var checkboxes = document.querySelectorAll('input[type=checkbox].linkLabel');
+      for (var i = 0; i < checkboxes.length; i++) {
+        var checkbox = checkboxes[i];
+        if (checkbox.checked) {
+          boo = true;
+          break;
+        }
+      }
+      if (!boo)
+        UIkit.notification("请在多选项目中选择至少一个类型", 'warning');
+      return boo;
+    },
     submitBoo: function() {
       FormValidate.inp_limitLength(inp_billName, inp_billName_maxWords);
       var boos = [];
       boos.push(FormValidate.inp_checkNull(inp_billName, inp_billName_maxWordsText));
+      boos.push(this.checkCheckboxes());
       return FormValidate.passToSubmit(boos);
     },
   }

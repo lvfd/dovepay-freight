@@ -57,7 +57,7 @@ function compileLessUIkit() {
 function watchLess(cb) {
   compileLessFontawesome()
   watch('src/less/font-awesome/*.less').on('change', compileLessFontawesome)
-  compileLessUIkit()
+  // compileLessUIkit()
   watch('src/less/UIkit/*.less').on('change', compileLessUIkit)
   cb()
 }

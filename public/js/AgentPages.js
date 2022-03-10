@@ -1,3 +1,10 @@
+function initAgent_userName() {
+  var span = document.getElementById('agentNameInHeader');
+  fetchData(document.querySelector('input[name=api_getAgentName]').value, '', setUserName, false);
+  function setUserName(res) {
+     span.innerHTML = '&nbsp;' + res.data.customerNameChn;
+  }
+}
 function initAgent_consumerQueryBill() {
   fn_queryDict(Glob_fn.getDictArg_forQueryBills(), function(res) {
     if (checkRes(res) === false) return;
@@ -29,11 +36,42 @@ function initAgent_consumerQueryBill() {
     // });
   }
 }
+function initAgent_consumerQueryBill_new() {
+  try {
+    initPage();
+  } catch(error) {
+    Glob_fn.errorHandler(error);
+    return;
+  }
+  function initPage() {
+    Glob_fn.WdateInit('startTime', 'endTime', {
+      dateFmt: 'yyyy年MM月',
+      minDate: '{%y-3}-%M-%d',
+      maxDate: 'today',
+      realDateFmt: 'yyyyMM',
+    });
+    fn_initSubmitBtn(1, 15, fetchData, new Age_table().getTable_queryBill_new);
+  }
+}
 function initAgent_consumerQueryBillDetails() {
   // bind submit button:
   fn_initSubmitBtn(1, 5, fetch_age_consumerQueryBillDetails);
   // bind export button:
   fn_initExportBtn(fetch_exportExcel);
+}
+function initAgent_consumerQueryBillDetails_new() {
+  try {
+    initPage();
+  } catch(error) {
+    Glob_fn.errorHandler(error);
+    return;
+  }
+  function initPage() {
+    // bind submit button:
+    fn_initSubmitBtn(1, 5, fetchData, new Age_table().getTable_queryDetails_new);
+    // bind export button:
+    fn_initExportBtn(fetch_exportExcel);
+  }
 }
 function initAgent_getBindConsumer() {
   var form = document.getElementById('form_consumer_getBindConsumer');
@@ -157,6 +195,95 @@ Age_table.prototype.getTable_queryBill = function(res, pageNumber, pageSize) {
 
   // 设置pagination
   fn_initPaginate(res, pageNumber, pageSize, fetch_age_consumerQueryBill);
+};
+Age_table.prototype.getTable_queryBill_new = function(res, pageNumber, pageSize) {
+  console.log(res)
+  try {
+    createTable(res);
+  } catch(error) {
+    throw new Error(error);
+    return;
+  }
+  function createTable(res) {
+    var table = document.getElementById('dataTable');
+    if (!res.data) throw new Error('远程数据非法: data未定义');
+    var trInThead = Glob_fn.Table.getThTr(table);
+    var checkAll = Glob_fn.Table.getCheckbox('all');
+    // getCaptionData();
+    setThead();
+    setTbody(res);
+    fn_initPaginate(res, pageNumber, pageSize, fetchData, new Age_table().getTable_queryBill_new);
+    function getCaptionData() {
+
+    }
+    function setCaption() {
+
+    }
+    function setThead() {
+      // Glob_fn.Table.setTh(trInThead, checkAll);
+      Glob_fn.Table.setTh(trInThead, '序号');
+      Glob_fn.Table.setTh(trInThead, '开账时间');
+      Glob_fn.Table.setTh(trInThead, '账期');
+      Glob_fn.Table.setTh(trInThead, '账单名称');
+      Glob_fn.Table.setTh(trInThead, '平台订单号');
+      Glob_fn.Table.setTh(trInThead, '总金额');
+      Glob_fn.Table.setTh(trInThead, '优惠后金额');
+      Glob_fn.Table.setTh(trInThead, '付款状态');
+      Glob_fn.Table.setTh(trInThead, '支付订单号');
+      Glob_fn.Table.setTh(trInThead, '操作');
+    }
+    function setTbody(res) {
+      var tbody = table.querySelector('tbody');
+      tbody.innerHTML = '';
+      var data = res.data.summaryList;
+      if (data === undefined) throw new Error('远程数据非法: data.summaryList未定义');
+      if (!data || data.length < 1) {
+        var tr0 = Glob_fn.Table.showNoData(trInThead.querySelectorAll('th').length);
+        tbody.appendChild(tr0);
+        return;
+      }
+      for (var i = 0; i < data.length; i++) {
+        var tr = document.createElement('tr');
+        tbody.appendChild(tr);
+        // var tdCheckbox = document.createElement('td');
+        // tr.appendChild(tdCheckbox);
+        // var checkbox = Glob_fn.Table.getCheckbox();
+        // checkbox.setAttribute('data-checked', data[i].orderNo);
+        var setTdSerial = Glob_fn.Table.setTdSerial(tr, i, pageNumber, pageSize);
+        Glob_fn.Table.setTd(tr, data[i].createTimeStr);
+        Glob_fn.Table.setTd(tr, data[i].orderTime);
+        Glob_fn.Table.setTd(tr, data[i].billRuleName);
+        Glob_fn.Table.setTd(tr, data[i].orderNo);
+        Glob_fn.Table.setTd(tr, data[i].totalFeeStr);
+        Glob_fn.Table.setTd(tr, data[i].realTotalFeeStr);
+        Glob_fn.Table.setTd(tr, data[i].statusStr);
+        Glob_fn.Table.setTd(tr, data[i].payNo);
+        Glob_fn.Table.setTd(tr, getLinks(data[i]));
+      }
+      function getLinks(data) {
+        var result = [];
+        var detailLink = document.createElement('a');
+        detailLink.innerText = '查看详情';
+        detailLink.setAttribute('href', document.querySelector('input[name=url_forNext]').value + '/' + data.orderNo);
+        result.push(detailLink);
+        if (Number(data.status) === 2) return result; // 已支付
+        var payLink = document.createElement('a');
+        payLink.setAttribute('class', 'uk-margin-small-left');
+        payLink.innerText = '付款';
+        payLink.setAttribute('data-orderNo', data.orderNo);
+        payLink.addEventListener('click', function(event) {
+          event.preventDefault();
+          var url = document.querySelector('input[name=api_pay]').value;
+          var pageUrl = document.querySelector('input[name=pageUrl]').value;
+          var orderNo = this.getAttribute('data-orderNo');
+          var data = { orderNo: orderNo, pageUrl: pageUrl };
+          fetch_age_toPay(url, data);
+        });
+        result.push(payLink);
+        return result;
+      }
+    }
+  }
 };
 Age_table.prototype.getTable_queryDetails = function(res, pageNumber, pageSize) {
   var url_queryFeeItem = document.querySelector('input[name=api_queryFeeItem]').value;
@@ -330,6 +457,84 @@ Age_table.prototype.getTable_queryDetails = function(res, pageNumber, pageSize) 
       fn_initPaginate(rawData, pageNumber, pageSize, fetch_age_consumerQueryBillDetails);
     }
   });
+};
+Age_table.prototype.getTable_queryDetails_new = function(res, pageNumber, pageSize) {
+  // console.log(res)
+  getFeeItem();
+  function getFeeItem() {
+    var url = document.querySelector('input[name=api_queryFeeItem]').value;
+    fetchData(url, '', createTable);
+  }
+  function createTable(feeItems) {
+    try {
+      var table = document.getElementById('dataTable');
+      if (!feeItems.data) throw new Error('远程数据非法: 费用列表项未定义');
+      var trInThead = Glob_fn.Table.getThTr(table);
+      setThead(feeItems.data);
+      setTbody(res, feeItems.data);
+      Glob_fn.Table.hideUnvalued();
+      fn_initPaginate(res, pageNumber, pageSize, fetchData, new Age_table().getTable_queryDetails_new);
+    } catch (error) {
+      throw new Error(error)
+      return;
+    }
+    function setThead(data) {
+      Glob_fn.Table.setTh(trInThead, '序号');
+      Glob_fn.Table.setTh(trInThead, '费用记录号');
+      Glob_fn.Table.setTh(trInThead, '运单前缀');
+      Glob_fn.Table.setTh(trInThead, '运单号');
+      Glob_fn.Table.setTh(trInThead, '品名');
+      Glob_fn.Table.setTh(trInThead, '始发站');
+      Glob_fn.Table.setTh(trInThead, '目的站');
+      Glob_fn.Table.setTh(trInThead, '航班号');
+      Glob_fn.Table.setTh(trInThead, '件数');
+      Glob_fn.Table.setTh(trInThead, '重量');
+      Glob_fn.Table.setTh(trInThead, '计费重量');
+      Glob_fn.Table.setTh(trInThead, '计费时间');
+      Glob_fn.Table.setTh(trInThead, '计费营业点');
+      Glob_fn.Table.setTh(trInThead, '账单类型');
+      Glob_fn.Table.buildAjaxTitle(data, trInThead);
+      Glob_fn.Table.setTh(trInThead, '金额');
+    }
+    function setTbody(rawData, ajaxTitle) {
+      var tbody = table.querySelector('tbody');
+      tbody.innerHTML = '';
+      var data = rawData.data.feeList;
+      if (!data || data.length < 1) {
+        var tr0 = Glob_fn.Table.showNoData(trInThead.querySelectorAll('th').length);
+        tbody.appendChild(tr0);
+        return;
+      }
+      for (var i = 0; i < data.length; i++) {
+        var tr = document.createElement('tr');
+        tbody.appendChild(tr);
+        var trAdd = document.createElement('tr');
+        tbody.appendChild(trAdd);
+        Glob_fn.Table.setTdSerial(tr, i, pageNumber, pageSize).setAttribute('rowspan', 2)
+        Glob_fn.Table.setTd(tr, data[i].feeRecId).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].stockPre).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].stockNo).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].cargoNm).setAttribute('rowspan', 2)
+        Glob_fn.Table.setTd(tr, data[i].sAirportDsc).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].eAirportDsc).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].flight).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].pcs).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].weight).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].feeWt).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].crtopeTimeStr).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].opedepartId).setAttribute('rowspan', 2);
+        var feeIdArr = Glob_fn.Table.getAjaxTitleValue(ajaxTitle, 'feeId');
+        var l1Data = Glob_fn.Table.getAjaxTitleData('原始账单', feeIdArr, JSON.parse(data[i].feeItemList));
+        var l2Data = Glob_fn.Table.getAjaxTitleData('开账账单', feeIdArr, JSON.parse(data[i].realFeeItemList));
+        var line2Object = Glob_fn.Table.getAjaxTitleObject(feeIdArr, JSON.parse(data[i].realFeeItemList));
+        Glob_fn.Table.buildValueWithAjaxTitle(l1Data, tr);
+        Glob_fn.Table.buildValueWithAjaxTitle(l2Data, trAdd);
+        Glob_fn.Table.setTd(tr, data[i].totalFeeStr);
+        Glob_fn.Table.setTd(trAdd, data[i].realTotalFeeStr);
+        Glob_fn.Table.trHideSome(tr);
+      }
+    }    
+  }
 };
 Age_table.prototype.getPage_binding = function(res) {
   var data = res.data,

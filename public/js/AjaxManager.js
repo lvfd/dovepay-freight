@@ -4,11 +4,12 @@ $.ajaxSetup({
   headers: {
     accountId: $('header #accountId').val(),
     userId: $('header #userId').val(),
-    type: $('header #userType').val()
+    type: $('header #userType').val(),
   },
   type: 'POST',  // for java api
   dataType: 'json',
-  contentType: 'application/json'
+  contentType: 'application/json',
+  timeout: 10000,
 });
 // Ajax错误处理：
 $(document).ajaxError(function(event, xhr, settings){
@@ -17,7 +18,13 @@ $(document).ajaxError(function(event, xhr, settings){
   var res = xhr.status + xhr.statusText;
   if (console)
     console.error(reqUrl, reqData, res);
-  Glob_fn.errorHandler('Ajax Error: ' + xhr.status);
+
+  Glob_fn.errorHandler('服务器数据获取失败: 错误码: ' + xhr.status + ';<br>错误描述: ' + getStatusText(xhr.statusText));
+  function getStatusText(statusStr) {
+    var text = statusStr;
+    if (statusStr === 'timeout') text = '请求超时';
+    return text;
+  }
 });
 // loading遮罩实现：
 $(document).ajaxStart(function() {
@@ -31,13 +38,14 @@ $.fn.serializeObject = function() {
   var o = {};
   var a = this.serializeArray();
   $.each(a, function() {
+    var value = Glob_fn.isJSON(this.value)? JSON.parse(this.value): this.value;
     if (o[this.name] !== undefined) {
       if (!o[this.name].push) {
         o[this.name] = [o[this.name]];
       }
-      o[this.name].push(this.value || '');
+      o[this.name].push(value || '');
     } else {
-      o[this.name] = this.value || '';
+      o[this.name] = value || '';
     }
   });
   return o;
@@ -54,18 +62,23 @@ function checkRes (res) {
   }
 }
 // Init submit button:
-function fn_initSubmitBtn(pageNumber, pageSize, fetchFn) {
+function fn_initSubmitBtn(pageNumber, pageSize, fetchFn, callback, postDataHandler) {
   var submitBtn = document.getElementById('submitBtn');
   submitBtn.addEventListener('click', function(event){
     event.preventDefault();
     var $this = $(this);
     var url = document.querySelector('input[name=api_forTable]').value;
     var postData = $this.closest('form').serializeObject();
+    if (typeof postDataHandler === 'function') postDataHandler.call(this, postData);
     postData.pageNumber = pageNumber;
     postData.indexPage = pageNumber;
     postData.pageSize = pageSize;
     postData.countPage = pageSize;
-    fetchFn.call(this, url, postData);
+    if (typeof callback === 'function') {
+      fetchFn.call(this, url, postData, callback);
+    } else {
+      fetchFn.call(this, url, postData);
+    }
   });
   submitBtn.click();
 }
@@ -111,6 +124,50 @@ function fetch_exportExcel(url, data) {
       }
     }
   });
+}
+// 提交数据并处理返回基本功能函数:
+function fetchData(url, data, callback, config) {
+  var postData = '';
+  if (data) {
+    try {
+      var rawData = Glob_fn.isJSON(data)? JSON.parse(data): data;
+      if (!rawData || typeof rawData !== 'object') throw new Error('传入的data参数不合法');
+      postData = Glob_fn.isJSON(data)? data: JSON.stringify(data);
+    } catch (error) {
+      Glob_fn.errorHandler(error);
+      return;
+    }
+  }
+  var ajaxConfig = {
+    url: url,
+    data: postData,
+    success: function(res) {
+      if (checkRes(res) === false) return;
+      if (res.msg == 'success') {
+        try {
+          if (rawData && rawData.pageNumber) {
+            callback.call(this, res, rawData.pageNumber, rawData.pageSize)
+          } else {
+            callback.call(this, res);
+          }
+        } catch(error) {
+          Glob_fn.errorHandler(error);
+          return;
+        }
+      } else {
+        Glob_fn.errorHandler(res.msg);
+        return;
+      }
+    },
+  };
+  if (config && typeof config === 'object') {
+    for (var key in config) {
+      ajaxConfig[key] = config[key];
+    }
+  } else if (config === false) {
+    ajaxConfig.global = false;
+  }
+  $.ajax(ajaxConfig);
 }
 
 // login:
@@ -644,3 +701,4 @@ function fetch_sta_submitDiscountPage(url, data) {
     }
   });
 }
+

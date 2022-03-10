@@ -1,4 +1,8 @@
 <input type="hidden" data-pageId="station_billsSetting">
+<!-- <input type="hidden" name="dict_api" value=''> -->
+<input type="hidden" name="api_forTable" value=<%= urls.api.station.queryBillRuleByPage %>>
+<input type="hidden" name="api_forExport" value=''>
+<input type="hidden" name="api_deleteRule" value=<%= urls.api.station.removeBillRule %>>
 <section class="breadcrumb">
   <ul>
     <li>账单设置</li>
@@ -9,19 +13,24 @@
 <form id="dataForm" class="uk-form-stacked">
   <div class="uk-flex">
     <div>
-      <label class="uk-form-label">账单名称</label>
-      <input type="text" name="" class="uk-input uk-form-width-medium" placeholder="全部账单">
+      <label class="uk-form-label" for="billRuleName">账单名称</label>
+      <input type="text" name="billRuleName" class="uk-input uk-form-width-medium" placeholder="全部账单">
     </div>
     <div class="uk-margin-left">
-      <label class="uk-form-label">设置时间</label>
-      <input type="text" name="" class="uk-input uk-form-width-medium" placeholder="全部时间" readonly>
+      <label class="uk-form-label" for="setStartTime">时间</label>
+      <div class="uk-form-controls uk-flex uk-flex-middle">
+        <input id="startTime" type="text" name="setStartTime" class="uk-input uk-form-width-medium" placeholder="开始时间" readonly>
+        <span class="uk-margin-small-left uk-margin-small-right">至</span>
+        <input id="endTime" type="text" name="setEndTime" class="uk-input uk-form-width-medium" placeholder="结束时间" readonly>
+      </div>
     </div>
     <div class="uk-margin-left">
-      <label class="uk-form-label">状态</label>
-      <select class="uk-select uk-form-width-medium" name="">
-        <option value="">所有状态</option>
-        <option value="">选项1</option>
-        <option value="">选项2</option>
+      <label class="uk-form-label" for="status">状态</label>
+      <select class="uk-select uk-form-width-medium" name="status">
+        <option value="-1">全部状态</option>
+        <option value="1">使用中</option>
+        <option value="2">待生效</option>
+        <option value="0">已作废</option>
       </select>
     </div>
   </div>
@@ -35,16 +44,9 @@
 <div class="uk-overflow-auto">
   <table id="dataTable" class="uk-table uk-table-small uk-table-divider uk-table-striped uk-table-hover">
     <thead>
-      <tr>
-        <th>标题1</th>
-      </tr>
     </thead>
     <tbody>
-      <tr>
-        <td class="uk-table-link">
-          <a class="deleteTr" title="删除此账单" href="">删除</a>
-        </td>
-      </tr>
     </tbody>
   </table>
 </div>
+<ul class="uk-pagination uk-flex-center" data-for="dataTable"></ul>

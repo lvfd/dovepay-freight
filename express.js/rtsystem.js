@@ -28,29 +28,61 @@ router.get(system.policiesDetails, (req, res) => {
   params.discountPolicyId = discountPolicyId
   res.render('frame', params)
 })
-router.get(system.billManagement, (req, res) => {
-  const type = req.params.type
+// 替换路由:
+    router.get(system.billManagement, (req, res) => {
+      const type = req.params.type
+      let params = getParams(req, res)
+      let title = ''
+      if (type == '1')
+        title = '国际直达'
+      if (type == '2')
+        title = '国内直达'
+      if (type == '3')
+        title = '中转'
+      if (type == '4')
+        title = '快件'
+      params.title = title
+      params.tType = type
+      params.name = 'billManagement'
+      res.render('frame', params)
+    })
+    router.get(system.billDetails, (req, res) => {
+      const orderNo = req.params.orderNo
+      let params = getParams(req, res)
+      params.title = '账单详情'
+      params.name = 'billDetails'
+      params.orderNo = orderNo
+      res.render('frame', params)
+    })
+// 新增路由:
+router.get(system.baseData, (req, res) => {  // 基础数据
   let params = getParams(req, res)
-  let title = ''
-  if (type == '1')
-    title = '国际直达'
-  if (type == '2')
-    title = '国内直达'
-  if (type == '3')
-    title = '中转'
-  if (type == '4')
-    title = '快件'
-  params.title = title
-  params.tType = type
-  params.name = 'billManagement'
+  params.title = '基础数据'
+  params.name = 'baseData'
   res.render('frame', params)
 })
-router.get(system.billDetails, (req, res) => {
-  const orderNo = req.params.orderNo
+router.get(system.queryBills, (req, res) => {  // 账单信息
   let params = getParams(req, res)
-  params.title = '账单详情'
-  params.name = 'billDetails'
-  params.orderNo = orderNo
+  params.title = '账单信息'
+  params.name = 'queryBills'
+  res.render('frame', params)
+})
+router.get(system.queryBills_bill, (req, res) => { // 账单信息-查看账单
+  let params = getParams(req, res)
+  params.title = '账单信息'
+  params.subTitle = '查看账单'
+  params.name = 'queryBills_bill'
+  params.tType = req.params.rule
+  res.render('frame', params)
+})
+router.get(system.queryBills_details, (req, res) => {
+  let params = getParams(req, res)
+  params.title = '账单信息'
+  params.subTitle = '查看账单'
+  params.thirdTitle = '账单详情'
+  params.rule = req.params.rule
+  params.orderNo = req.params.orderNo
+  params.name = 'queryBills_details'
   res.render('frame', params)
 })
 

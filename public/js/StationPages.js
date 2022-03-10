@@ -1,21 +1,48 @@
-function initStation_stationQueryBill() {
-  fn_queryDict(Glob_fn.getDictArg_forQueryBills(), function(res) {
-    if (checkRes(res) === false) return;
-    Glob_fn.setInAndOut(res);
-    initThisPage();
-  });
-  function initThisPage() {
-    // init Wdate:
-    Glob_fn.WdateInit('staTime', 'endTime');
-    // bind submit button:
-    fn_initSubmitBtn(1, 10, fetch_sta_stationQueryBill);
-    // bind export button:
+    function initStation_stationQueryBill() {
+      queryDict();
+      function queryDict() {
+        fn_queryDict(Glob_fn.getDictArg_forQueryBills(), function(res) {
+          if (checkRes(res) === false) return;
+          Glob_fn.setInAndOut(res);
+          initThisPage();
+        });
+      }
+      function initThisPage() {
+        // init Wdate:
+        Glob_fn.WdateInit('staTime', 'endTime');
+        // bind submit button:
+        fn_initSubmitBtn(1, 10, fetch_sta_stationQueryBill);
+        // bind export button:
+        fn_initExportBtn(fetch_exportExcel);
+        // bind multi button:
+        var multiBtn = document.getElementById('multiBtn');
+        multiBtn.addEventListener('click', function(event) {
+          event.preventDefault();
+          var url = document.querySelector('input[name=api_stationBillPush]').value;
+          var chb = document.querySelectorAll('.cb_child');
+          var list = [];
+          Glob_fn.Table.addCheckedToList(chb, list);
+          if (list.length == 0) {
+            UIkit.modal.alert('请选择至少一项');
+            return;
+          }
+          var postData = {orderNoList: list};
+          // console.log(url, postData);
+          fetch_sta_stationBillPush(url, postData);
+        });
+      }
+    }
+function initStation_stationQueryBill_new() {
+  initNewPage();
+  function initNewPage() {
+    // Glob_fn.WdateInit('staTime', 'endTime');
+    Glob_fn.setPostLink(document.querySelectorAll('.postDataLink'), Glob_fn.getOrderTime());
+    fn_initSubmitBtn(1, 15, fetchData, new Sta_table().getTable_queryBill_new);
     fn_initExportBtn(fetch_exportExcel);
-    // bind multi button:
     var multiBtn = document.getElementById('multiBtn');
     multiBtn.addEventListener('click', function(event) {
       event.preventDefault();
-      var url = document.querySelector('input[name=api_stationBillPush]').value
+      var url = document.querySelector('input[name=api_stationBillPush]').value;
       var chb = document.querySelectorAll('.cb_child');
       var list = [];
       Glob_fn.Table.addCheckedToList(chb, list);
@@ -29,15 +56,29 @@ function initStation_stationQueryBill() {
     });
   }
 }
-function initStation_stationQueryBillDetails() {
+    function initStation_stationQueryBillDetails() {
+      fn_queryDict('OPEDEPART', function(res) {
+        if (checkRes(res) === false) return;
+        Glob_fn.setOpedepartId(res);
+        initThisPage();
+      });
+      function initThisPage() {
+        // bind submit button:
+        fn_initSubmitBtn(1, 5, fetch_sta_stationQueryBillDetails);
+        // bind export button:
+        fn_initExportBtn(fetch_exportExcel);
+      }
+    }
+function initStation_stationQueryBillDetails_new() {
   fn_queryDict('OPEDEPART', function(res) {
     if (checkRes(res) === false) return;
     Glob_fn.setOpedepartId(res);
     initThisPage();
   });
   function initThisPage() {
+    Glob_fn.setPostLink(document.querySelectorAll('.postDataLink'), Glob_fn.getOrderTime());
     // bind submit button:
-    fn_initSubmitBtn(1, 5, fetch_sta_stationQueryBillDetails);
+    fn_initSubmitBtn(1, 5, fetchData, new Sta_table().getTable_queryDetails_new);
     // bind export button:
     fn_initExportBtn(fetch_exportExcel);
   }
@@ -110,55 +151,165 @@ function initStation_getAllDiscountPolicy() {
 }
 function initStation_baseData() {
   var form = document.getElementById('dataForm');
-  var ruleSetsWrapDiv = document.getElementById('ruleSetsWrap');
-  var ruleRadios = ruleSetsWrapDiv.querySelectorAll('input[type=radio]');
-  var ruleLabels = ruleSetsWrapDiv.querySelectorAll('label');
-  // Bind radios:
-  for (var i = 0; i < ruleRadios.length; i++) {
-    var radio = ruleRadios[i];
-    var func = Glob_fn.checkboxAndRadio;
-    func.initActiveLabel(radio);
-    radio.addEventListener('change', func.setBindingLabels(ruleRadios));
-    radio.addEventListener('click', function(event) {
-      event.stopPropagation();  // 阻止事件上升到label
-    });
-  }
-  // Bind labels: 
-  for (var i = 1; i < ruleLabels.length; i++) {
-    var label = ruleLabels[i];
-    label.addEventListener('mousedown', function(event) {
-      event.preventDefault(); // 抵消drop控件副作用
-    });
-  }
-  // Bind reset button:
-  var resetBtn = document.querySelector('input[type=reset]');
-  var defaultRadio = ruleRadios[0];
-  resetBtn.addEventListener('click', function(event) {
-    defaultRadio.click(); // 重置为全部
+  Glob_fn.WdateInit('startTime', 'endTime', {
+    dateFmt: 'yyyy年MM月',
+    minDate: '{%y-1}-{%M+9}-%d',
+    maxDate: 'today',
   });
-}
-function initStation_billsSetting() {
-  // Bind Delete links:
-  bindDeleteLinks();
-  function bindDeleteLinks() {
-    var deleteLinks = document.querySelectorAll('a.deleteTr');
-    if (deleteLinks.length < 1) {
+  fetchPayMode();
+  function fetchPayMode() {
+    fn_queryDict('PAY_MODE', function(res) {
+      if (checkRes(res) === false) return;
+      try {
+        if (res.data === undefined) throw new Error('远程数据非法: 数据没有data属性');
+        if (!Array.isArray(res.data)) throw new Error('远程数据非法: data属性不是数组');
+        if (res.data.length < 1) throw new Error('远程数据非法: 结算类型为空');
+        setPayMode(res.data);
+        fetchEffectiveBillRules();
+      } catch (error) {
+        Glob_fn.errorHandler(error);
+        return;
+      }
+    });
+    function setPayMode(arr) {
+      var sel = document.querySelector('select[name=payMode]');
+      for (var i = 0; i < arr.length; i++) {
+        var op = document.createElement('option');
+        op.setAttribute('value', arr[i].key);
+        op.innerText = arr[i].value;
+        sel.appendChild(op);
+      }
+    }
+  }
+  function fetchEffectiveBillRules() {
+    var url = document.querySelector('input[name=api_stationQueryEffectiveBillRule').value;
+    fetchData(url, '', createEffectiveBillRules);
+  }
+  function createEffectiveBillRules(res) {
+    var data = res.data || res.date;
+    if (data === undefined) throw new Error('远程数据格式非法: 没有data属性');
+    if (!Array.isArray(data)) throw new Error('远程数据格式非法: data属性不是数组');
+    if (data.length < 1) throw new Error('没有已生效的账单规则');
+    for (var i = 0; i < data.length; i++) {
+      createBillRuleButtons(data[i]);
+    }
+    try {
+      renderEffectiveBillRules();
+      initPage();
+    } catch (error) {
+      Glob_fn.errorHandler(error);
       return;
     }
-    for (var i = 0; i < deleteLinks.length; i++) {
-      var link = deleteLinks[i];
-      link.addEventListener('click', function(event) {
-        event.preventDefault();
-        UIkit.modal.confirm('删除后不可恢复，确认删除吗？').then(function(){
-          // success
-          UIkit.notification("<span uk-icon='icon: check'></span> 删除成功", {
-            status: 'success',
-            timeout: 1000,
-          });
-        })
-      });
+    function createBillRuleButtons(data) {
+      var rule = data.billRule? data.billRule: 'NULL';
+      var desc = data.billRuleDesc? data.billRuleDesc: 'NULL';
+      var id = data.billRuleId? data.billRuleId: 'NULL';
+      var name = data.billRuleName? data.billRuleName: 'NULL';
+      var position = document.getElementById('ruleSetsWrap');
+      var wrap = document.createElement('div');
+      position.appendChild(wrap);
+      wrap.appendChild(getLabel());
+      wrap.appendChild(getDrop());
+      function getLabel() {
+        var label = document.createElement('label');
+        label.setAttribute('class', 'void button');
+        label.innerText = name;
+        var input = document.createElement('input');
+        label.appendChild(input);
+        input.setAttribute('type', 'radio');
+        input.setAttribute('name', 'billRule');
+        input.setAttribute('hidden', '');
+        input.setAttribute('value', rule);
+        input.setAttribute('id', id);
+        return label;
+      }
+      function getDrop() {
+        var drop = document.createElement('div');
+        drop.setAttribute('uk-drop', 'delay-hide:0');
+        var cardFrame = document.createElement('div');
+        drop.appendChild(cardFrame);
+        cardFrame.setAttribute('class', 'uk-card uk-card-small uk-card-default');
+        cardFrame.appendChild(getCardHeader());
+        cardFrame.appendChild(getCardBody());
+        return drop;
+        function getCardHeader() {
+          var header = document.createElement('div');
+          header.setAttribute('class', 'uk-card-header');
+          var title = document.createElement('div');
+          title.setAttribute('class', 'uk-card-title');
+          header.appendChild(title);
+          var h = document.createElement('h5');
+          title.appendChild(h);
+          h.innerText = name;
+          return header;
+        }
+        function getCardBody() {
+          var div = document.createElement('div');
+          div.setAttribute('class', 'uk-card-body uk-container uk-container-xsmall');
+          if (desc === 'NULL') {
+            div.innerText = '无数据';
+          }
+          try {
+            var array = [];
+            if (desc.indexOf(',') !== -1) array = desc.split(',');
+            else if (desc.indexOf('，') !== -1) array = desc.split('，');
+            if (array.length < 1) div.innerText('无数据');
+            for (var j = 0; j < array.length; j++) {
+              var span = document.createElement('span');
+              span.setAttribute('class', 'uk-label uk-margin-small-bottom uk-margin-small-right');
+              span.innerText = $.trim(array[j]);
+              div.appendChild(span);
+            }
+          } catch(error) {
+            div.innerText = error;
+          }
+          return div;
+        }
+      }
     }
   }
+  function renderEffectiveBillRules() {
+    var ruleSetsWrapDiv = document.getElementById('ruleSetsWrap');
+    var ruleRadios = ruleSetsWrapDiv.querySelectorAll('input[type=radio]');
+    var ruleLabels = ruleSetsWrapDiv.querySelectorAll('label');
+    // Bind radios:
+    for (var i = 0; i < ruleRadios.length; i++) {
+      var radio = ruleRadios[i];
+      var func = Glob_fn.checkboxAndRadio;
+      func.initActiveLabel(radio);
+      radio.addEventListener('change', func.setBindingLabels(ruleRadios));
+      radio.addEventListener('click', function(event) {
+        event.stopPropagation();  // 阻止事件上升到label
+      });
+    }
+    // Bind labels: 
+    for (var i = 1; i < ruleLabels.length; i++) {
+      var label = ruleLabels[i];
+      label.addEventListener('mousedown', function(event) {
+        event.preventDefault(); // 抵消drop控件副作用
+      });
+    }
+    // Bind reset button:
+    var resetBtn = document.querySelector('input[type=reset]');
+    var defaultRadio = ruleRadios[0];
+    resetBtn.addEventListener('click', function(event) {
+      defaultRadio.click(); // 重置为全部
+    });
+  }
+  function initPage() {
+    fn_initSubmitBtn(1, 15, fetchData, new Sta_table().getTable_queryOriginalWaybill, function(data) {
+      if (data.billRule === '') 
+        data.billRule = null;
+    });
+    fn_initExportBtn(fetch_exportExcel);
+  }
+}
+function initStation_billsSetting() {
+  Glob_fn.WdateInit('startTime', 'endTime', {
+    // dateFmt: 'yyyy年MM月',
+    // minDate: '{%y-1}-{%M+9}-%d',
+    // maxDate: 'today',
+  });
   // Bind Add rule Button:
   bindAddRuleBtn();
   function bindAddRuleBtn() {
@@ -167,71 +318,312 @@ function initStation_billsSetting() {
       event.preventDefault();
       window.location.href = 'billsSetting/addRule';
     });
-  } 
+  }
+  // Bind Submit:
+  fn_initSubmitBtn(1, 10, fetchData, new Sta_table().getTable_queryBillRuleByPage);
 }
 function initStation_billsSetting_addRule() {
+  var form = document.getElementById('dataForm');
   var vld = new FormValidate();
   var validator = vld.validator();
-  // vld: bindItems:
-  validator.bindFormItems();
-  var form = document.getElementById('dataForm');
-  // UI: Bind Radios:
-  bindAllRadios();
-  function bindAllRadios() {
-    var wraps = form.querySelectorAll('.radioWrap');
-    if (wraps.length < 1) {
-      throw new Error('没有定义div.radioWrap');
-    }
-    for (var j = 0; j < wraps.length; j++) {
-      var wrap = wraps[j];
-      bindRadios(wrap);
-    }
-    function bindRadios(wrap) {
-      var radios = wrap.querySelectorAll('input[type=radio]');
-      if (radios.length < 1) {
+  // fetch data:
+  fetchBillRule();
+  function fetchBillRule() {
+    fn_queryDict('BILL_RULE', function(res) {
+      if (checkRes(res) === false) return;
+      try {
+        if (res.data === undefined) throw new Error('远程数据非法: 数据没有data属性');
+        if (!Array.isArray(res.data)) throw new Error('远程数据非法: data属性不是数组');
+        if (res.data.length != 1) throw new Error('远程数据非法: data数组长度不为1');
+        if (!Glob_fn.isJSON(res.data[0].value)) throw new Error('远程数据非法: 数据不是JSON格式');
+        showValueFrom(JSON.parse(res.data[0].value));
+        initPage();
+      } catch (error) {
+        Glob_fn.errorHandler(error);
         return;
       }
-      for (var i = 0; i < radios.length; i++) {
-        var radio = radios[i];
-        var func = Glob_fn.checkboxAndRadio;
-        func.initActiveLabel(radio);
-        radio.addEventListener('change', func.setBindingLabels(radios));
+    });
+  }
+  function showValueFrom(fetchValue) {
+    // console.log(fetchValue);
+    if (!Array.isArray(fetchValue)) throw new Error('远程数据非法: JSON数据不是数组');
+    if (fetchValue.length < 1) throw new Error('无规则可选');
+    var radiosHeading = document.getElementById('radiosHeading');
+    var checkboxesHeading = document.getElementById('checkboxesHeading');
+    var checkAllWrap = document.getElementById('checkAllWrap');
+    var checkboxesCount = 0;
+    for (var i = 0; i < fetchValue.length; i++) {
+      var ruleProps = fetchValue[i];
+      if (ruleProps.checkBox) {
+        if (checkboxesHeading.hasAttribute('hidden')) {
+          checkboxesHeading.removeAttribute('hidden');
+        }
+        checkboxesCount++;
+      } else {
+        if (radiosHeading.hasAttribute('hidden')) {
+          radiosHeading.removeAttribute('hidden');
+        }
+      }
+      setRule(ruleProps);
+    }
+    if (checkboxesCount > 1 && checkAllWrap.hasAttribute('hidden')) {
+      checkAllWrap.removeAttribute('hidden');
+    }
+    function setRule(data) {
+      var name = data.name? data.name: 'NULL';
+      var type = data.type? data.type: 'NULL';
+      var wrap = data.checkBox? document.getElementById('checkboxesWrap'):
+        document.getElementById('radiosWrap');
+      var frame = getFrame();
+      wrap.appendChild(frame);
+      var label = getLabel();
+      var contentDiv = getContentDiv();
+      frame.appendChild(label);
+      frame.appendChild(contentDiv);
+      if (!Array.isArray(data.content)) throw new Error('远程数据非法: content不是数组');
+      if (data.content.length < 1) throw new Error(data.name + '类型下无数据');
+      for (var j = 0; j < data.content.length; j++) {
+        var key = data.content[j].key? data.content[j].key: '';
+        var value = data.content[j].value? data.content[j].value: 'NULL';
+        var content = getContent(key, value);
+        contentDiv.appendChild(content);
+      }
+      function getFrame() {
+        var frame = document.createElement('div');
+        frame.setAttribute('class', 'uk-margin');
+        if (!data.checkBox) frame.classList.add('radioWrap');
+        return frame;
+      }
+      function getLabel() {
+        var label = document.createElement('label');
+        label.setAttribute('class', 'uk-form-label');
+        label.setAttribute('data-ruleType', type);
+        label.setAttribute('data-ruleName', name);
+        label.innerText = name;
+        return label;
+      }
+      function getContentDiv() {
+        var contentWrap = document.createElement('div');
+        contentWrap.setAttribute('class', 'uk-form-controls uk-grid-small');
+        contentWrap.setAttribute('uk-grid', '');
+        return contentWrap;
+      }
+      function getContent(key, value) {
+        var div = document.createElement('div');
+        var label = document.createElement('label');
+        label.setAttribute('class', 'void button');
+        div.appendChild(label);
+        var input = document.createElement('input');
+        input.setAttribute('type', data.checkBox? 'checkbox': 'radio');
+        input.setAttribute('class', data.checkBox? 'linkLabel': '');
+        input.setAttribute('name', type);
+        input.setAttribute('hidden', '');
+        input.setAttribute('value', key);
+        input.setAttribute('data-ruleDesc', value);
+        if (input.getAttribute('type') === 'radio' && input.value === 'MP')
+          input.setAttribute('checked', '');
+        label.appendChild(input);
+        var span = document.createElement('span');
+        span.innerText = value;
+        label.appendChild(span);
+        return div;
       }
     }
   }
-  // UI: Checkboxes:
-  cbxLinkLabel();
-  function cbxLinkLabel() {
-    var cbxs = form.querySelectorAll('input[type=checkbox].linkLabel');
-    if (cbxs.length < 1) {
-      return;
+  function initPage() {
+    // vld: bindItems:
+    validator.bindFormItems();
+    // UI: Bind Radios:
+    bindAllRadios();
+    function bindAllRadios() {
+      var wraps = form.querySelectorAll('.radioWrap');
+      if (wraps.length < 1) {
+        throw new Error('没有定义div.radioWrap');
+      }
+      for (var j = 0; j < wraps.length; j++) {
+        var wrap = wraps[j];
+        bindRadios(wrap);
+      }
+      function bindRadios(wrap) {
+        var radios = wrap.querySelectorAll('input[type=radio]');
+        if (radios.length < 1) {
+          return;
+        }
+        for (var i = 0; i < radios.length; i++) {
+          var radio = radios[i];
+          var func = Glob_fn.checkboxAndRadio;
+          func.initActiveLabel(radio);
+          radio.addEventListener('change', func.setBindingLabels(radios));
+        }
+      }
     }
-    for (var i = 0; i < cbxs.length; i++) {
-      var cbx = cbxs[i];
-      cbx.addEventListener('change', function(event) {
-        var labClasses = Glob_fn.checkboxAndRadio.getBindingLabel(this).classList;
+    // UI: Checkboxes:
+    checkboxes();
+    function checkboxes() {
+      var cbx_all = document.getElementById('checkAllRules');
+      var cbxs = form.querySelectorAll('input[type=checkbox].linkLabel');
+      // UI: checkbox绑定样式:
+      cbxLinkLabel();
+      function cbxLinkLabel() {
+        if (cbxs.length < 1) {
+          return;
+        }
+        for (var i = 0; i < cbxs.length; i++) {
+          var cbx = cbxs[i];
+          cbx.addEventListener('change', function(event) {
+            changeStyle(this);
+            if (cbx_all.checked) {
+              cbx_all.checked = false;
+            }
+          });
+        }
+      }
+      // UI: 全选功能实现:
+      complyCheckAll();
+      function complyCheckAll() {
+        if (!cbx_all) {
+          return;
+        }
+        if (cbxs.length < 1) {
+          return;
+        }
+        cbx_all.addEventListener('change', function(event) {
+          if (this.checked) {
+            // 全选
+            setAllChecked(cbxs, true);
+          } else {
+            // 全不选
+            setAllChecked(cbxs, false);
+          }
+        });
+        function setAllChecked(checkboxes, boo) {
+          if (!checkboxes || checkboxes.length < 1) {
+            throw new Error('没有找到将要对应的checkbox');
+          }
+          for (var i = 0; i < checkboxes.length; i++) {
+            var checkbox = checkboxes[i];
+            if (boo && checkbox.checked) {
+              // 不处理
+            } else {
+              checkbox.checked = boo
+              changeStyle(checkbox);
+            }
+          }
+        }
+      }
+      // UI: checkbox按钮样式规则:
+      function changeStyle(checkbox) {
+        var labClasses = Glob_fn.checkboxAndRadio.getBindingLabel(checkbox).classList;
         if (labClasses.contains('newMonth')) {
           labClasses.toggle('button-highlight');
           labClasses.toggle('uk-text-warning');
         } else {
           labClasses.toggle('button-primary');
         }
-      });
-    }
-  }
-  // Submit:
-  submitAddRule();
-  function submitAddRule() {
-    var btn = document.getElementById('createBill');
-    var url = document.querySelector('input[name=url_station_billSetting]').value;
-    var not = "<span id='notification' uk-icon='icon: check'></span> 提交成功";
-    btn.addEventListener('click', function(event) {
-      event.preventDefault();
-      if (!validator.submitBoo()) {
-        return;
       }
-      UIkit.modal.confirm('确定提交信息并生成账单规则?').then(function() {
-        // success
+    }
+    // Submit Binding:
+    submitAddRule();
+    function submitAddRule() {
+      var btn = document.getElementById('createBill');
+      var url = document.querySelector('input[name=url_station_billSetting]').value;
+      var not = "<span id='notification' uk-icon='icon: check'></span> 提交成功";
+      btn.addEventListener('click', function(event) {
+        event.preventDefault();
+        if (!validator.submitBoo()) {
+          return;
+        }
+        UIkit.modal.confirm('确定提交信息并生成账单规则?').then(function() {
+          try {
+            var postData = getPostData();
+            var postUrl = document.querySelector('input[name=api_stationCreateBillRule]').value;
+            fetchData(postUrl, postData, successCallback);
+          } catch (error) {
+            Glob_fn.errorHandler(error);
+            return;
+          }
+        });
+      });
+      function getPostData() {
+        return JSON.stringify({
+          billRuleName: getName(),
+          billRule: getRule().rule,
+          billRuleDesc: getRule().desc,
+        });
+      }
+      function getName() {
+        var name = document.getElementById('billName').value;
+        if (!name) throw new Error('表单错误: 请重新填写账单规则名称');
+        return name;
+      }
+      function getRule() {
+        try {
+          var rs = document.getElementById('radiosWrap').querySelectorAll('input[type=radio]');
+          var cs = document.getElementById('checkboxesWrap').querySelectorAll('input[type=checkbox]');
+          var checkedInputs = getCheckedInputs();
+          if (checkedInputs.length < 1) throw new Error('表单错误: 未选择规则');
+          var rulesInfo = getRulesInfo(checkedInputs);
+          return {
+            rule: getResults(rulesInfo).rule,
+            desc: getResults(rulesInfo).desc,
+          }
+        } catch (error) {
+          throw new Error(error);
+        }
+        function getCheckedInputs() {
+          var array = [];
+          putCheckedInpIn(rs, array);
+          putCheckedInpIn(cs, array);
+          return array;
+        }
+        function putCheckedInpIn(inputs, array) {
+          for (var i = 0; i < inputs.length; i++) {
+            if (inputs[i].checked) 
+              array.push(inputs[i]);
+          }
+        }
+        function getRulesInfo(inputs) {
+          var array = [];
+          for (var i = 0; i < inputs.length; i++) {
+            var inp = inputs[i];
+            array.push({
+              name: inp.name,
+              value: inp.value,
+              desc: inp.getAttribute('data-ruleDesc'),
+            });
+          }
+          return array;
+        }
+        function getResults(rawArray) {
+          var result = {};
+          var desc = [];
+          var tmpName = '';
+          for (var i = 0; i < rawArray.length; i++) {
+            if (rawArray[i].name === tmpName) {
+              result[rawArray[i].name].push(rawArray[i].value);
+            } else {
+              result[rawArray[i].name] = [rawArray[i].value];
+              tmpName = rawArray[i].name;
+            }
+            desc.push(rawArray[i].desc);
+          }
+          return {
+            rule: JSON.stringify(result),
+            desc: parseDesc(desc),
+          }
+          function parseDesc(array) {
+            var result = '';
+            for (var i = 0; i < array.length; i++) {
+              result += array[i].toString();
+              if (i < array.length -1)
+                result += ', ';
+            }
+            return result;
+          }
+        }
+      }
+      function successCallback(res) {
+        // alert(JSON.stringify(res))
         UIkit.notification(not, {
           status: 'success',
           timeout: 1000,
@@ -239,163 +631,536 @@ function initStation_billsSetting_addRule() {
         UIkit.util.on('.uk-notification', 'close', function() {
           window.location.href = url;
         });
-      });
-    });
+      }
+    }
   }
+}
+function initStation_billMangement_queryBills() {
+  var form = document.getElementById('dataForm');
+  Glob_fn.WdateInit('startTime', 'endTime', {
+    dateFmt: 'yyyy年MM月',
+    minDate: '{%y-3}-%M-%d',
+    maxDate: 'today',
+    realDateFmt: 'yyyyMM',
+  });
+  fn_initSubmitBtn(1, 15, fetchData, new Sta_table().getTable_querySumBillByRule);
 }
 
 function Sta_table(){}
-// 账单查看主表：
-Sta_table.prototype.getTable_queryBill = function(res, pageNumber, pageSize) {
-  var table = document.querySelector('#dataTable');
-
-  var trInThead = Glob_fn.Table.getThTr(table);
-  var checkAll = Glob_fn.Table.getCheckbox('all');
-  Glob_fn.Table.setTh(trInThead, checkAll);
-  Glob_fn.Table.setTh(trInThead, '序号');
-  Glob_fn.Table.setTh(trInThead, '开账时间');
-  Glob_fn.Table.setTh(trInThead, '账期');
-  Glob_fn.Table.setTh(trInThead, '货运类型');
-  Glob_fn.Table.setTh(trInThead, '平台订单号');
-  Glob_fn.Table.setTh(trInThead, '总金额');
-  Glob_fn.Table.setTh(trInThead, '优惠后金额');
-  Glob_fn.Table.setTh(trInThead, '付款状态');
-  Glob_fn.Table.setTh(trInThead, '计费方式');
-  Glob_fn.Table.setTh(trInThead, '支付订单');
-  Glob_fn.Table.setTh(trInThead, '结算客户编码');
-  Glob_fn.Table.setTh(trInThead, '结算客户名称');
-  Glob_fn.Table.setTh(trInThead, '操作');
-
-  var tbody = table.querySelector('tbody');
-  tbody.innerHTML = '';
-  var data = res.data.summaryList;
-
-  if (!data || data.length < 1) {
-    var tr0 = Glob_fn.Table.showNoData(trInThead.querySelectorAll('th').length);
-    tbody.appendChild(tr0);
-    return;
-  }
-
-  for (var i = 0; i < data.length; i++) {
-    var tr = document.createElement('tr');
-    tbody.appendChild(tr);
-
-    var tdSerial = document.createElement('td');
-    tr.appendChild(tdSerial);
-    tdSerial.innerText = i + 1 + (Number(pageNumber) - 1) * Number(pageSize);
-
-    var td1 = document.createElement('td');
-    tr.appendChild(td1);
-    var td2 = document.createElement('td');
-    tr.appendChild(td2);
-    var td3 = document.createElement('td');
-    tr.appendChild(td3);
-    var td4 = document.createElement('td');
-    tr.appendChild(td4);
-    var td5 = document.createElement('td');
-    tr.appendChild(td5);
-    var td6 = document.createElement('td');
-    tr.appendChild(td6);
-    var td7 = document.createElement('td');
-    tr.appendChild(td7);
-    var td8 = document.createElement('td');
-    tr.appendChild(td8);
-    var td9 = document.createElement('td');
-    tr.appendChild(td9);
-    var td10 = document.createElement('td');
-    tr.appendChild(td10);
-    var td11 = document.createElement('td');
-    tr.appendChild(td11);
-    var td12 = document.createElement('td');
-    tr.appendChild(td12);
-    var link = document.createElement('a');
-    td12.appendChild(link);
-    link.innerText = '查看详情';
-    var pushlink = document.createElement('a');
-    pushlink.innerText = '推送';
-    pushlink.setAttribute('class', 'uk-margin-small-left');
-    var tdCheckbox = document.createElement('td');
-    tr.insertBefore(tdCheckbox, tdSerial);
-    var checkbox = Glob_fn.Table.getCheckbox();
-
-    for (var key in data[i]) {
-      if (key == 'createTimeStr')
-        td1.innerText = data[i][key] === null? '-': data[i][key];
-      if (key == 'time')
-        td2.innerText = data[i][key] === null? '-': data[i][key];
-      if (key == 'type')
-        td3.innerText = data[i][key] === null? '-': data[i][key];
-      if (key == 'orderNo') {
-        td4.innerText = data[i][key] === null? '-': data[i][key];
-        link.setAttribute('data-orderNo', data[i][key]);
-        pushlink.setAttribute('data-orderNo', data[i][key]);
-        checkbox.setAttribute('data-checked', data[i][key]);
-      }
-      if (key == 'totalFeeStr')
-        td5.innerText = data[i][key] === null? '-': data[i][key];
-      if (key == 'realTotalFeeStr')
-        td6.innerText = data[i][key] === null? '-': data[i][key];
-      if (key == 'statusStr')
-        td7.innerText = data[i][key] === null? '-': data[i][key];
-      if (key == 'payModeStr')
-        td8.innerText = data[i][key] === null? '-': data[i][key];
-      if (key == 'payNo')
-        td9.innerText = data[i][key] === null? '-': data[i][key];
-      if (key == 'customerId')
-        td10.innerText = data[i][key] === null? '-': data[i][key];
-      if (key == 'customerName')
-        td11.innerText = data[i][key] === null? '-': data[i][key];
-    }
-
-    // if (data[i].confirm == 0 && data[i].bindingStatus == '1' && data[i].payMode != 'CS') {
-    // if (data[i].confirm == 0 && data[i].bindingStatus == '1') {
-    // if (data[i].confirm == 0) {
-    if (data[i].confirm == 0 && data[i].payMode != 'CS') {  // <- 用户可以修改的条件
-      link.setAttribute('href', 'billDetails/' +  link.getAttribute('data-orderNo') + '/modify');
-    } else {
-      link.setAttribute('href', 'billDetails/' +  link.getAttribute('data-orderNo') + '/readonly');
-    }
-    if (data[i].confirm == 0) { // <- 用户可以推送的条件
-      if (checkAll.querySelector('input').getAttribute('disabled') === '') {
-        checkAll.querySelector('input').removeAttribute('disabled');
-      }
-      tdCheckbox.appendChild(checkbox); 
-      td12.appendChild(pushlink);
-      pushlink.addEventListener('click', function(event) {
-        event.preventDefault();
-        var url = document.querySelector('input[name=api_stationBillPush]').value;
-        var orderNo = this.getAttribute('data-orderNo');
-        var orderNoList = [];
-        orderNoList.push(orderNo);
-        var data = { orderNoList: orderNoList };
-        fetch_sta_stationBillPush(url, data);
-      });
-    }
-  }
-
-  // 设置全选：
-  var selAll = document.getElementById('selectAll');
-  var selChildren = document.querySelectorAll('.cb_child');
-  Glob_fn.Table.linkCheckboxes(selAll, selChildren);
-
-  // 设置pagination
-  fn_initPaginate(res, pageNumber, pageSize, fetch_sta_stationQueryBill);
-};
-// 账单明细主表：
-Sta_table.prototype.getTable_queryDetails = function(res, pageNumber, pageSize) {
-  var url_queryFeeItem = document.querySelector('input[name=api_queryFeeItem]').value;
-  var rawData = res;
-  var pageNumber = pageNumber;
-  var pageSize = pageSize;
-  $.ajax({
-    url: url_queryFeeItem,
-    success: function(res) {
-      if (checkRes(res) === false) return;
-      var ajaxTitle = res;
+    // 账单查看主表：
+    Sta_table.prototype.getTable_queryBill = function(res, pageNumber, pageSize) {
       var table = document.querySelector('#dataTable');
 
       var trInThead = Glob_fn.Table.getThTr(table);
+      var checkAll = Glob_fn.Table.getCheckbox('all');
+      Glob_fn.Table.setTh(trInThead, checkAll);
+      Glob_fn.Table.setTh(trInThead, '序号');
+      Glob_fn.Table.setTh(trInThead, '开账时间');
+      Glob_fn.Table.setTh(trInThead, '账期');
+      Glob_fn.Table.setTh(trInThead, '货运类型');
+      Glob_fn.Table.setTh(trInThead, '平台订单号');
+      Glob_fn.Table.setTh(trInThead, '总金额');
+      Glob_fn.Table.setTh(trInThead, '优惠后金额');
+      Glob_fn.Table.setTh(trInThead, '付款状态');
+      Glob_fn.Table.setTh(trInThead, '计费方式');
+      Glob_fn.Table.setTh(trInThead, '支付订单');
+      Glob_fn.Table.setTh(trInThead, '结算客户编码');
+      Glob_fn.Table.setTh(trInThead, '结算客户名称');
+      Glob_fn.Table.setTh(trInThead, '操作');
 
+      var tbody = table.querySelector('tbody');
+      tbody.innerHTML = '';
+      var data = res.data.summaryList;
+
+      if (!data || data.length < 1) {
+        var tr0 = Glob_fn.Table.showNoData(trInThead.querySelectorAll('th').length);
+        tbody.appendChild(tr0);
+        return;
+      }
+
+      for (var i = 0; i < data.length; i++) {
+        var tr = document.createElement('tr');
+        tbody.appendChild(tr);
+
+        var tdSerial = document.createElement('td');
+        tr.appendChild(tdSerial);
+        tdSerial.innerText = i + 1 + (Number(pageNumber) - 1) * Number(pageSize);
+
+        var td1 = document.createElement('td');
+        tr.appendChild(td1);
+        var td2 = document.createElement('td');
+        tr.appendChild(td2);
+        var td3 = document.createElement('td');
+        tr.appendChild(td3);
+        var td4 = document.createElement('td');
+        tr.appendChild(td4);
+        var td5 = document.createElement('td');
+        tr.appendChild(td5);
+        var td6 = document.createElement('td');
+        tr.appendChild(td6);
+        var td7 = document.createElement('td');
+        tr.appendChild(td7);
+        var td8 = document.createElement('td');
+        tr.appendChild(td8);
+        var td9 = document.createElement('td');
+        tr.appendChild(td9);
+        var td10 = document.createElement('td');
+        tr.appendChild(td10);
+        var td11 = document.createElement('td');
+        tr.appendChild(td11);
+        var td12 = document.createElement('td');
+        tr.appendChild(td12);
+        var link = document.createElement('a');
+        td12.appendChild(link);
+        link.innerText = '查看详情';
+        var pushlink = document.createElement('a');
+        pushlink.innerText = '推送';
+        pushlink.setAttribute('class', 'uk-margin-small-left');
+        var tdCheckbox = document.createElement('td');
+        tr.insertBefore(tdCheckbox, tdSerial);
+        var checkbox = Glob_fn.Table.getCheckbox();
+
+        for (var key in data[i]) {
+          if (key == 'createTimeStr')
+            td1.innerText = data[i][key] === null? '-': data[i][key];
+          if (key == 'time')
+            td2.innerText = data[i][key] === null? '-': data[i][key];
+          if (key == 'type')
+            td3.innerText = data[i][key] === null? '-': data[i][key];
+          if (key == 'orderNo') {
+            td4.innerText = data[i][key] === null? '-': data[i][key];
+            link.setAttribute('data-orderNo', data[i][key]);
+            pushlink.setAttribute('data-orderNo', data[i][key]);
+            checkbox.setAttribute('data-checked', data[i][key]);
+          }
+          if (key == 'totalFeeStr')
+            td5.innerText = data[i][key] === null? '-': data[i][key];
+          if (key == 'realTotalFeeStr')
+            td6.innerText = data[i][key] === null? '-': data[i][key];
+          if (key == 'statusStr')
+            td7.innerText = data[i][key] === null? '-': data[i][key];
+          if (key == 'payModeStr')
+            td8.innerText = data[i][key] === null? '-': data[i][key];
+          if (key == 'payNo')
+            td9.innerText = data[i][key] === null? '-': data[i][key];
+          if (key == 'customerId')
+            td10.innerText = data[i][key] === null? '-': data[i][key];
+          if (key == 'customerName')
+            td11.innerText = data[i][key] === null? '-': data[i][key];
+        }
+
+        // if (data[i].confirm == 0 && data[i].bindingStatus == '1' && data[i].payMode != 'CS') {
+        // if (data[i].confirm == 0 && data[i].bindingStatus == '1') {
+        // if (data[i].confirm == 0) {
+        if (data[i].confirm == 0 && data[i].payMode != 'CS') {  // <- 用户可以修改的条件
+          link.setAttribute('href', 'billDetails/' +  link.getAttribute('data-orderNo') + '/modify');
+        } else {
+          link.setAttribute('href', 'billDetails/' +  link.getAttribute('data-orderNo') + '/readonly');
+        }
+        if (data[i].confirm == 0) { // <- 用户可以推送的条件
+          if (checkAll.querySelector('input').getAttribute('disabled') === '') {
+            checkAll.querySelector('input').removeAttribute('disabled');
+          }
+          tdCheckbox.appendChild(checkbox); 
+          td12.appendChild(pushlink);
+          pushlink.addEventListener('click', function(event) {
+            event.preventDefault();
+            var url = document.querySelector('input[name=api_stationBillPush]').value;
+            var orderNo = this.getAttribute('data-orderNo');
+            var orderNoList = [];
+            orderNoList.push(orderNo);
+            var data = { orderNoList: orderNoList };
+            fetch_sta_stationBillPush(url, data);
+          });
+        }
+      }
+
+      // 设置全选：
+      var selAll = document.getElementById('selectAll');
+      var selChildren = document.querySelectorAll('.cb_child');
+      Glob_fn.Table.linkCheckboxes(selAll, selChildren);
+
+      // 设置pagination
+      fn_initPaginate(res, pageNumber, pageSize, fetch_sta_stationQueryBill);
+    };
+// 账单查看主表(新需求)：
+Sta_table.prototype.getTable_queryBill_new = function(res, pageNumber, pageSize) {
+  try {
+    createTable(res);
+  } catch(error) {
+    throw new Error(error);
+    return;
+  }
+  function createTable(res) {
+    // console.log(res)
+    var table = document.getElementById('dataTable');
+    if (!res.data) throw new Error('远程数据非法: data未定义');
+    var trInThead = Glob_fn.Table.getThTr(table);
+    var checkAll = Glob_fn.Table.getCheckbox('all');
+    setThead();
+    setTbody(res);
+    setCheckAll(checkAll);
+    fn_initPaginate(res, pageNumber, pageSize, fetchData, new Sta_table().getTable_queryBill_new);
+    function setThead() {
+      Glob_fn.Table.setTh(trInThead, checkAll);
+      Glob_fn.Table.setTh(trInThead, '序号');
+      Glob_fn.Table.setTh(trInThead, '开账时间');
+      Glob_fn.Table.setTh(trInThead, '账期');
+      Glob_fn.Table.setTh(trInThead, '货运类型', false);
+      // Glob_fn.Table.setTh(trInThead, '操作人');
+      Glob_fn.Table.setTh(trInThead, '总金额');
+      Glob_fn.Table.setTh(trInThead, '状态');
+      Glob_fn.Table.setTh(trInThead, '优惠金额');
+      Glob_fn.Table.setTh(trInThead, '平台订单号');
+      Glob_fn.Table.setTh(trInThead, '交易流水号');
+      Glob_fn.Table.setTh(trInThead, '结算客户编码');
+      Glob_fn.Table.setTh(trInThead, '结算客户名称');
+      Glob_fn.Table.setTh(trInThead, 'bindingStatus', false);
+      Glob_fn.Table.setTh(trInThead, '操作');
+    }
+    function setTbody(res) {
+      var tbody = table.querySelector('tbody');
+      tbody.innerHTML = '';
+      var data = res.data.summaryList;
+      if (data === undefined) throw new Error('远程数据非法: data.summaryList未定义');
+      if (!data || data.length < 1) {
+        var tr0 = Glob_fn.Table.showNoData(trInThead.querySelectorAll('th').length);
+        tbody.appendChild(tr0);
+        return;
+      }
+      for (var i = 0; i < data.length; i++) {
+        var tr = document.createElement('tr');
+        tbody.appendChild(tr);
+        var tdCheckbox = document.createElement('td');
+        tr.appendChild(tdCheckbox);
+        var checkbox = Glob_fn.Table.getCheckbox();
+        checkbox.querySelector('input').setAttribute('data-checked', data[i].orderNo);
+        var setTdSerial = Glob_fn.Table.setTdSerial(tr, i, pageNumber, pageSize);
+        Glob_fn.Table.setTd(tr, data[i].createTimeStr);
+        Glob_fn.Table.setTd(tr, data[i].orderTime);
+        Glob_fn.Table.setTd(tr, data[i].type, false);
+        Glob_fn.Table.setTd(tr, data[i].totalFeeStr);
+        Glob_fn.Table.setTd(tr, data[i].statusStr);
+        Glob_fn.Table.setTd(tr, data[i].realTotalFeeStr);
+        Glob_fn.Table.setTd(tr, data[i].orderNo);
+        Glob_fn.Table.setTd(tr, data[i].payNo);
+        Glob_fn.Table.setTd(tr, data[i].customerId);
+        Glob_fn.Table.setTd(tr, data[i].customerName);
+        Glob_fn.Table.setTd(tr, data[i].bindingStatus, false);
+        Glob_fn.Table.setTd(tr, getLinks(data[i]));
+      }
+      function getLinks(data) {
+        var orderNo = data.orderNo;
+        if (orderNo === undefined) throw new Error('远程数据非法: orderNo未定义');
+        var links = [];
+        var detailLink = getDetailLink();
+        var pushlink = getPushLink();
+        if (detailLink) links.push(detailLink);
+        if (pushlink) links.push(pushlink);
+        return links;
+        function getDetailLink() {
+          var modifyCondition = Number(data.status) === 0 && Number(data.confirm) === 0;          
+          var link = document.createElement('a');
+          link.innerText = '查看详情';
+          link.setAttribute('data-orderNo', orderNo);
+          var url = document.querySelector('input[name=url_forQueryDetails]').value + '/' + orderNo;
+          var postData = Glob_fn.getOrderTime();
+          postData.modify = modifyCondition;
+          link.addEventListener('click', function(event) {
+            event.preventDefault();
+            Glob_fn.submVirtForm(url, postData);
+          });
+          return link;
+        }
+        function getPushLink() {
+          if (Number(data.confirm) !== 0) return false;
+          if (checkAll.querySelector('input').getAttribute('disabled') === '') {
+            checkAll.querySelector('input').removeAttribute('disabled');
+          }
+          tdCheckbox.appendChild(checkbox);
+          var pushlink = document.createElement('a');
+          pushlink.innerText = '推送';
+          pushlink.setAttribute('class', 'uk-margin-small-left');
+          pushlink.setAttribute('data-orderNo', orderNo);
+          pushlink.addEventListener('click', function(event) {
+            event.preventDefault();
+            var url = document.querySelector('input[name=api_stationBillPush]').value;
+            var orderNo = this.getAttribute('data-orderNo');
+            var orderNoList = [];
+            orderNoList.push(orderNo);
+            var data = { orderNoList: orderNoList };
+            fetch_sta_stationBillPush(url, data);
+          });
+          return pushlink;
+        }
+      }
+    }
+    function setCheckAll(checkAll) {
+      checkAll.addEventListener('click', function(event) {
+        var children = document.querySelector('input.cb_child');
+        if (this.querySelector('input').checked)
+          setChildren(true);
+        else
+          setChildren(false);
+      });
+      function setChildren(status) {
+        var children = document.querySelectorAll('input.cb_child');
+        for (var i = 0; i < children.length; i++) {
+          if (children[i].checked === !status) children[i].click();
+        }
+      }
+    }
+  }
+};
+// 账单明细主表：
+    Sta_table.prototype.getTable_queryDetails = function(res, pageNumber, pageSize) {
+      var url_queryFeeItem = document.querySelector('input[name=api_queryFeeItem]').value;
+      var rawData = res;
+      var pageNumber = pageNumber;
+      var pageSize = pageSize;
+      $.ajax({
+        url: url_queryFeeItem,
+        success: function(res) {
+          if (checkRes(res) === false) return;
+          var ajaxTitle = res;
+          var table = document.querySelector('#dataTable');
+
+          var trInThead = Glob_fn.Table.getThTr(table);
+
+          Glob_fn.Table.setTh(trInThead, '序号');
+          Glob_fn.Table.setTh(trInThead, '费用记录号');
+          Glob_fn.Table.setTh(trInThead, '运单前缀');
+          Glob_fn.Table.setTh(trInThead, '运单号');
+          Glob_fn.Table.setTh(trInThead, '品名');
+          Glob_fn.Table.setTh(trInThead, '货运类型');
+          Glob_fn.Table.setTh(trInThead, '始发站');
+          Glob_fn.Table.setTh(trInThead, '目的站');
+          Glob_fn.Table.setTh(trInThead, '航班号');
+          Glob_fn.Table.setTh(trInThead, '件数');
+          Glob_fn.Table.setTh(trInThead, '重量');
+          Glob_fn.Table.setTh(trInThead, '计费重量');
+          Glob_fn.Table.setTh(trInThead, '计费时间');
+          Glob_fn.Table.setTh(trInThead, '计费营业点');
+          Glob_fn.Table.setTh(trInThead, '计费营业点名称');
+          Glob_fn.Table.setTh(trInThead, '账单类型');
+          var titleData = ajaxTitle.data;
+          Glob_fn.Table.buildAjaxTitle(titleData, trInThead);
+          Glob_fn.Table.setTh(trInThead, '总价');
+          Glob_fn.Table.setTh(trInThead, '操作');
+          Glob_fn.Table.setTh(trInThead, '备注');
+
+          var tbody = table.querySelector('tbody');
+          tbody.innerHTML = '';
+          var data = rawData.data.feeList;
+
+          if (!data || data.length < 1) {
+            var tr0 = Glob_fn.Table.showNoData(trInThead.querySelectorAll('th').length);
+            tbody.appendChild(tr0);
+            return;
+          }
+          for (var i = 0; i < data.length; i++) {
+            var tr = document.createElement('tr');
+            var trAdd = document.createElement('tr');
+            tbody.appendChild(tr);
+            tbody.appendChild(trAdd);
+            
+            var tdSerial = document.createElement('td');
+            tdSerial.setAttribute('rowspan', '2');
+            tr.appendChild(tdSerial);
+            tdSerial.innerText = i + 1 + (Number(pageNumber) - 1) * Number(pageSize);
+
+            var td1 = document.createElement('td');
+            td1.setAttribute('rowspan', '2');
+            tr.appendChild(td1);
+            var td2 = document.createElement('td');
+            td2.setAttribute('rowspan', '2');
+            tr.appendChild(td2);
+            var td3 = document.createElement('td');
+            td3.setAttribute('rowspan', '2');
+            tr.appendChild(td3);
+            var td4 = document.createElement('td');
+            td4.setAttribute('rowspan', '2');
+            tr.appendChild(td4);
+            var td5 = document.createElement('td');
+            td5.setAttribute('rowspan', '2');
+            tr.appendChild(td5);
+            var td6 = document.createElement('td');
+            td6.setAttribute('rowspan', '2');
+            tr.appendChild(td6);
+            var td7 = document.createElement('td');
+            td7.setAttribute('rowspan', '2');
+            tr.appendChild(td7);
+            var td8 = document.createElement('td');
+            td8.setAttribute('rowspan', '2');
+            tr.appendChild(td8);
+            var td9 = document.createElement('td');
+            td9.setAttribute('rowspan', '2');
+            tr.appendChild(td9);
+            var td10 = document.createElement('td');
+            td10.setAttribute('rowspan', '2');
+            tr.appendChild(td10);
+            var td11 = document.createElement('td');
+            td11.setAttribute('rowspan', '2');
+            tr.appendChild(td11);
+            var td12 = document.createElement('td');
+            td12.setAttribute('rowspan', '2');
+            tr.appendChild(td12);
+            var td13 = document.createElement('td');
+            td13.setAttribute('rowspan', '2');
+            tr.appendChild(td13);
+            var td14 = document.createElement('td');
+            td14.setAttribute('rowspan', '2');
+            var td_opedepartStr = document.createElement('td');
+            td_opedepartStr.setAttribute('rowspan', '2');
+            tr.appendChild(td_opedepartStr);
+
+            var td15 = document.createElement('td');
+            var td16 = document.createElement('td');
+            var tdAction1 = document.createElement('td');
+            tdAction1.innerText = '-';
+            var tdAction2 = document.createElement('td');
+            var modifyFlag = document.querySelector('input[name=modify]').value;
+            var linkmodify = document.createElement('a');
+            linkmodify.innerText = '修改';
+
+            for ( var key in data[i]) {
+              if (key == 'feeRecId') {
+                td1.innerText = data[i][key] === null? '-': data[i][key];
+              }
+              if (key == 'stockPre') {
+                td2.innerText = data[i][key] === null? '-': data[i][key];
+              }
+              if (key == 'stockNo') {
+                td3.innerText = data[i][key] === null? '-': data[i][key];
+                linkmodify.setAttribute('data-' + key, data[i][key]);
+              }
+              if (key == 'cargoNm') {
+                td4.innerText = data[i][key] === null? '-': data[i][key];
+              }
+              if (key == 'type') {
+                td5.innerText = data[i][key] === null? '-': data[i][key];
+              }
+              if (key == 'sAirportDsc') {
+                td6.innerText = data[i][key] === null? '-': data[i][key];
+              }
+              if (key == 'eAirportDsc') {
+                td7.innerText = data[i][key] === null? '-': data[i][key];
+              }
+              if (key == 'flight') {
+                td8.innerText = data[i][key] === null? '-': data[i][key];
+              }
+              if (key == 'pcs') {
+                td9.innerText = data[i][key] === null? '-': data[i][key];
+              }
+              if (key == 'weight') {
+                td10.innerText = data[i][key] === null? '-': data[i][key];
+              }
+              if (key == 'feeWt') {
+                td11.innerText = data[i][key] === null? '-': data[i][key];
+                linkmodify.setAttribute('data-' + key, data[i][key]);
+              }
+              if (key == 'crtopeTimeStr') {
+                td12.innerText = data[i][key] === null? '-': data[i][key];
+              }
+              if (key == 'opedepartId') {
+                td13.innerText = data[i][key] === null? '-': data[i][key];
+              }
+              if (key == 'opedepartStr') {
+                td_opedepartStr.innerText = data[i][key] === null? '-': data[i][key];
+              }
+              if (key == 'remark') {
+                td14.innerText = data[i][key] === null? '-': data[i][key];
+              }
+              if (key == 'totalFeeStr') {
+                td15.innerText = data[i][key] === null? '-': data[i][key];
+                linkmodify.setAttribute('data-' + key, data[i][key]);
+              }
+              if (key == 'totalFee') {
+                td15.innerText = data[i][key] === null? '-': data[i][key];
+                linkmodify.setAttribute('data-' + key, data[i][key]);
+              }
+              if (key == 'realTotalFeeStr') {
+                td16.innerText = data[i][key] === null? '-': data[i][key];
+              }
+            }
+
+            var feeIdArr = Glob_fn.Table.getAjaxTitleValue(ajaxTitle.data, 'feeId');
+            var line1Data = Glob_fn.Table.getAjaxTitleData('原始账单', feeIdArr, JSON.parse(data[i].feeItemList));
+            var line2Data = Glob_fn.Table.getAjaxTitleData('开账账单', feeIdArr, JSON.parse(data[i].realFeeItemList));
+            var line2Object = Glob_fn.Table.getAjaxTitleObject(feeIdArr, JSON.parse(data[i].realFeeItemList));
+            linkmodify.setAttribute('data-feeItemList', JSON.stringify(line2Object));
+            Glob_fn.Table.buildValueWithAjaxTitle(line1Data, tr);
+            Glob_fn.Table.buildValueWithAjaxTitle(line2Data, trAdd);
+
+            if (modifyFlag == 'modify') {
+              tdAction2.appendChild(linkmodify);
+              linkmodify.addEventListener('click', function(event) {
+                event.preventDefault();
+                var postData = {
+                  "stockNo": this.getAttribute('data-stockNo'),
+                  "totalFee": this.getAttribute('data-totalFee'),
+                  "totalFeeStr": this.getAttribute('data-totalFeeStr'),
+                  "feeWt": this.getAttribute('data-feeWt'),
+                  "feeItemList": this.getAttribute('data-feeItemList')
+                };
+                // console.log(postData)
+                var element = fn_getModal(postData, '账单收费项');
+                UIkit.modal(element).show();
+              });
+            } else {
+              tdAction2.innerText = '-';
+            }
+
+            tr.appendChild(td15); // 添加总价
+            trAdd.appendChild(td16);
+            tr.appendChild(tdAction1);// 添加操作
+            trAdd.appendChild(tdAction2);
+            tr.appendChild(td14); // 添加备注
+          }
+
+          // 设置pagination
+          fn_initPaginate(rawData, pageNumber, pageSize, fetch_sta_stationQueryBillDetails);
+        }
+      });
+    };
+// 账单明细主表(新需求)：
+Sta_table.prototype.getTable_queryDetails_new = function(res, pageNumber, pageSize) {
+  // console.log(res)
+  getFeeItem();
+  function getFeeItem() {
+    var url = document.querySelector('input[name=api_queryFeeItem]').value;
+    fetchData(url, '', createTable);
+  }
+  function createTable(feeItems) {
+    try {
+      var table = document.getElementById('dataTable');
+      if (!feeItems.data) throw new Error('远程数据非法: 费用列表项未定义');
+      var trInThead = Glob_fn.Table.getThTr(table);
+      getCaptionData();
+      setThead(feeItems.data);
+      setTbody(res, feeItems.data);
+      Glob_fn.Table.hideUnvalued();
+      fn_initPaginate(res, pageNumber, pageSize, fetchData, new Sta_table().getTable_queryDetails_new);
+    } catch (error) {
+      throw new Error(error)
+      return;
+    }
+    function getCaptionData() {
+      var url = document.querySelector('input[name=api_queryBillDetailsSum]').value;
+      var postData = JSON.stringify($(document.getElementById('dataForm')).serializeObject());
+      fetchData(url, postData, setCaption);
+    }
+    function setCaption(res) {
+      var data = res.data;
+      var caption = table.querySelector('caption');
+      if (!caption) return;
+      caption.querySelector('span.totalCount').innerText = data.totalCount? data.totalCount: '无数据';
+      caption.querySelector('span.totalFee').innerText = data.totalFee? data.totalFee: '无数据';
+      caption.querySelector('span.totalWeight').innerText = data.totalWeight? data.totalWeight: '无数据';
+      caption.querySelector('span.realTotalFee').innerText = data.realTotalFee? data.realTotalFee: '无数据';
+      caption.removeAttribute('hidden');
+    }
+    function setThead(data) {
       Glob_fn.Table.setTh(trInThead, '序号');
       Glob_fn.Table.setTh(trInThead, '费用记录号');
       Glob_fn.Table.setTh(trInThead, '运单前缀');
@@ -412,16 +1177,14 @@ Sta_table.prototype.getTable_queryDetails = function(res, pageNumber, pageSize) 
       Glob_fn.Table.setTh(trInThead, '计费营业点');
       Glob_fn.Table.setTh(trInThead, '计费营业点名称');
       Glob_fn.Table.setTh(trInThead, '账单类型');
-      var titleData = ajaxTitle.data;
-      Glob_fn.Table.buildAjaxTitle(titleData, trInThead);
-      Glob_fn.Table.setTh(trInThead, '总价');
+      Glob_fn.Table.buildAjaxTitle(data, trInThead);
+      Glob_fn.Table.setTh(trInThead, '金额');
       Glob_fn.Table.setTh(trInThead, '操作');
-      Glob_fn.Table.setTh(trInThead, '备注');
-
+    }
+    function setTbody(rawData, ajaxTitle) {
       var tbody = table.querySelector('tbody');
       tbody.innerHTML = '';
       var data = rawData.data.feeList;
-
       if (!data || data.length < 1) {
         var tr0 = Glob_fn.Table.showNoData(trInThead.querySelectorAll('th').length);
         tbody.appendChild(tr0);
@@ -429,168 +1192,99 @@ Sta_table.prototype.getTable_queryDetails = function(res, pageNumber, pageSize) 
       }
       for (var i = 0; i < data.length; i++) {
         var tr = document.createElement('tr');
-        var trAdd = document.createElement('tr');
         tbody.appendChild(tr);
+        var trAdd = document.createElement('tr');
         tbody.appendChild(trAdd);
-        
-        var tdSerial = document.createElement('td');
-        tdSerial.setAttribute('rowspan', '2');
-        tr.appendChild(tdSerial);
-        tdSerial.innerText = i + 1 + (Number(pageNumber) - 1) * Number(pageSize);
-
-        var td1 = document.createElement('td');
-        td1.setAttribute('rowspan', '2');
-        tr.appendChild(td1);
-        var td2 = document.createElement('td');
-        td2.setAttribute('rowspan', '2');
-        tr.appendChild(td2);
-        var td3 = document.createElement('td');
-        td3.setAttribute('rowspan', '2');
-        tr.appendChild(td3);
-        var td4 = document.createElement('td');
-        td4.setAttribute('rowspan', '2');
-        tr.appendChild(td4);
-        var td5 = document.createElement('td');
-        td5.setAttribute('rowspan', '2');
-        tr.appendChild(td5);
-        var td6 = document.createElement('td');
-        td6.setAttribute('rowspan', '2');
-        tr.appendChild(td6);
-        var td7 = document.createElement('td');
-        td7.setAttribute('rowspan', '2');
-        tr.appendChild(td7);
-        var td8 = document.createElement('td');
-        td8.setAttribute('rowspan', '2');
-        tr.appendChild(td8);
-        var td9 = document.createElement('td');
-        td9.setAttribute('rowspan', '2');
-        tr.appendChild(td9);
-        var td10 = document.createElement('td');
-        td10.setAttribute('rowspan', '2');
-        tr.appendChild(td10);
-        var td11 = document.createElement('td');
-        td11.setAttribute('rowspan', '2');
-        tr.appendChild(td11);
-        var td12 = document.createElement('td');
-        td12.setAttribute('rowspan', '2');
-        tr.appendChild(td12);
-        var td13 = document.createElement('td');
-        td13.setAttribute('rowspan', '2');
-        tr.appendChild(td13);
-        var td14 = document.createElement('td');
-        td14.setAttribute('rowspan', '2');
-        var td_opedepartStr = document.createElement('td');
-        td_opedepartStr.setAttribute('rowspan', '2');
-        tr.appendChild(td_opedepartStr);
-
-        var td15 = document.createElement('td');
-        var td16 = document.createElement('td');
-        var tdAction1 = document.createElement('td');
-        tdAction1.innerText = '-';
-        var tdAction2 = document.createElement('td');
-        var modifyFlag = document.querySelector('input[name=modify]').value;
+        Glob_fn.Table.setTdSerial(tr, i, pageNumber, pageSize).setAttribute('rowspan', 2)
+        Glob_fn.Table.setTd(tr, data[i].feeRecId).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].stockPre).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].stockNo).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].cargoNm).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].type).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].sAirportDsc).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].eAirportDsc).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].flight).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].pcs).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].weight).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].feeWt).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].crtopeTimeStr).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].opedepartId).setAttribute('rowspan', 2);
+        Glob_fn.Table.setTd(tr, data[i].opedepartStr).setAttribute('rowspan', 2);
+        var feeIdArr = Glob_fn.Table.getAjaxTitleValue(ajaxTitle, 'feeId');
+        var l1Data = Glob_fn.Table.getAjaxTitleData('原始账单', feeIdArr, JSON.parse(data[i].feeItemList));
+        var l2Data = Glob_fn.Table.getAjaxTitleData('开账账单', feeIdArr, JSON.parse(data[i].realFeeItemList));
+        var line2Object = Glob_fn.Table.getAjaxTitleObject(feeIdArr, JSON.parse(data[i].realFeeItemList));
+        Glob_fn.Table.buildValueWithAjaxTitle(l1Data, tr);
+        Glob_fn.Table.buildValueWithAjaxTitle(l2Data, trAdd);
+        Glob_fn.Table.setTd(tr, data[i].totalFeeStr);
+        Glob_fn.Table.setTd(trAdd, data[i].realTotalFeeStr);
+        Glob_fn.Table.setTd(tr, '-').setAttribute('class', 'uk-text-center');
+        Glob_fn.Table.setTd(trAdd, getAction(data[i], line2Object));
+        Glob_fn.Table.trHideSome(tr);
+      }
+      function getAction(data, line2Object) {
+        if (!document.querySelector('input[name=modify]').value) return false;
         var linkmodify = document.createElement('a');
         linkmodify.innerText = '修改';
-
-        for ( var key in data[i]) {
-          if (key == 'feeRecId') {
-            td1.innerText = data[i][key] === null? '-': data[i][key];
-          }
-          if (key == 'stockPre') {
-            td2.innerText = data[i][key] === null? '-': data[i][key];
-          }
-          if (key == 'stockNo') {
-            td3.innerText = data[i][key] === null? '-': data[i][key];
-            linkmodify.setAttribute('data-' + key, data[i][key]);
-          }
-          if (key == 'cargoNm') {
-            td4.innerText = data[i][key] === null? '-': data[i][key];
-          }
-          if (key == 'type') {
-            td5.innerText = data[i][key] === null? '-': data[i][key];
-          }
-          if (key == 'sAirportDsc') {
-            td6.innerText = data[i][key] === null? '-': data[i][key];
-          }
-          if (key == 'eAirportDsc') {
-            td7.innerText = data[i][key] === null? '-': data[i][key];
-          }
-          if (key == 'flight') {
-            td8.innerText = data[i][key] === null? '-': data[i][key];
-          }
-          if (key == 'pcs') {
-            td9.innerText = data[i][key] === null? '-': data[i][key];
-          }
-          if (key == 'weight') {
-            td10.innerText = data[i][key] === null? '-': data[i][key];
-          }
-          if (key == 'feeWt') {
-            td11.innerText = data[i][key] === null? '-': data[i][key];
-            linkmodify.setAttribute('data-' + key, data[i][key]);
-          }
-          if (key == 'crtopeTimeStr') {
-            td12.innerText = data[i][key] === null? '-': data[i][key];
-          }
-          if (key == 'opedepartId') {
-            td13.innerText = data[i][key] === null? '-': data[i][key];
-          }
-          if (key == 'opedepartStr') {
-            td_opedepartStr.innerText = data[i][key] === null? '-': data[i][key];
-          }
-          if (key == 'remark') {
-            td14.innerText = data[i][key] === null? '-': data[i][key];
-          }
-          if (key == 'totalFeeStr') {
-            td15.innerText = data[i][key] === null? '-': data[i][key];
-            linkmodify.setAttribute('data-' + key, data[i][key]);
-          }
-          if (key == 'totalFee') {
-            td15.innerText = data[i][key] === null? '-': data[i][key];
-            linkmodify.setAttribute('data-' + key, data[i][key]);
-          }
-          if (key == 'realTotalFeeStr') {
-            td16.innerText = data[i][key] === null? '-': data[i][key];
-          }
-        }
-
-        var feeIdArr = Glob_fn.Table.getAjaxTitleValue(ajaxTitle.data, 'feeId');
-        var line1Data = Glob_fn.Table.getAjaxTitleData('原始账单', feeIdArr, JSON.parse(data[i].feeItemList));
-        var line2Data = Glob_fn.Table.getAjaxTitleData('开账账单', feeIdArr, JSON.parse(data[i].realFeeItemList));
-        var line2Object = Glob_fn.Table.getAjaxTitleObject(feeIdArr, JSON.parse(data[i].realFeeItemList));
         linkmodify.setAttribute('data-feeItemList', JSON.stringify(line2Object));
-        Glob_fn.Table.buildValueWithAjaxTitle(line1Data, tr);
-        Glob_fn.Table.buildValueWithAjaxTitle(line2Data, trAdd);
-
-        if (modifyFlag == 'modify') {
-          tdAction2.appendChild(linkmodify);
-          linkmodify.addEventListener('click', function(event) {
-            event.preventDefault();
-            var postData = {
-              "stockNo": this.getAttribute('data-stockNo'),
-              "totalFee": this.getAttribute('data-totalFee'),
-              "totalFeeStr": this.getAttribute('data-totalFeeStr'),
-              "feeWt": this.getAttribute('data-feeWt'),
-              "feeItemList": this.getAttribute('data-feeItemList')
-            };
-            // console.log(postData)
-            var element = fn_getModal(postData, '账单收费项');
-            UIkit.modal(element).show();
-          });
-        } else {
-          tdAction2.innerText = '-';
-        }
-
-        tr.appendChild(td15); // 添加总价
-        trAdd.appendChild(td16);
-        tr.appendChild(tdAction1);// 添加操作
-        trAdd.appendChild(tdAction2);
-        tr.appendChild(td14); // 添加备注
+        linkmodify.setAttribute('data-stockNo', data.stockNo);
+        linkmodify.setAttribute('data-feeWt', data.feeWt);
+        linkmodify.setAttribute('data-totalFeeStr', data.totalFeeStr);
+        linkmodify.setAttribute('data-totalFee', data.totalFee);
+        linkmodify.addEventListener('click', function(event) {
+          event.preventDefault();
+          var postData = {
+            "stockNo": this.getAttribute('data-stockNo'),
+            "totalFee": this.getAttribute('data-totalFee'),
+            "totalFeeStr": this.getAttribute('data-totalFeeStr'),
+            "feeWt": this.getAttribute('data-feeWt'),
+            "feeItemList": this.getAttribute('data-feeItemList')
+          };
+          var element = fn_getModal(postData, '账单收费项');
+          UIkit.modal(element).show();
+        });
+        var linkModHis = document.createElement('a');
+        linkModHis.innerText = '修改记录';
+        linkModHis.setAttribute('data-stockNo', data.stockNo);
+        linkModHis.setAttribute('class', 'uk-margin-small-left');
+        linkModHis.addEventListener('click', function(event) {
+          event.preventDefault();
+          var postData = JSON.stringify({stockNo: this.getAttribute('data-stockNo')});
+          var url = document.querySelector('input[name=api_queryModifyLog]').value;
+          fetchData(url, postData, createModHis);
+        });
+        return [linkmodify, linkModHis];
       }
-
-      // 设置pagination
-      fn_initPaginate(rawData, pageNumber, pageSize, fetch_sta_stationQueryBillDetails);
     }
-  });
+  }
+  function createModHis(res) {
+    // console.log(res);
+    var data = res.data;
+    if (res.data === undefined) throw new Error('远程数据非法: data未定义');
+    if (res.data === null || data.length < 1) {
+      UIkit.modal.alert('没有或不可查询该笔订单的修改记录');
+      return;
+    }
+    if (!Array.isArray(res.data)) throw new Error('远程数据非法: data属性不是数组');
+    var modal = document.getElementById('modifiedHistory');
+    var table = document.getElementById('modifiedHistoryTable');
+    var thead = table.querySelector('thead');
+    thead.innerHTML = '';
+    var trInThead = Glob_fn.Table.getThTr(table);
+    Glob_fn.Table.setTh(trInThead, '用户名');
+    Glob_fn.Table.setTh(trInThead, '修改时间');
+    Glob_fn.Table.setTh(trInThead, '备注');
+    var tbody = table.querySelector('tbody');
+    tbody.innerHTML = '';
+    for (var i = 0; i < res.data.length; i++) {
+      var tr = document.createElement('tr');
+      tbody.appendChild(tr);
+      Glob_fn.Table.setTd(tr, res.data[i].createName);
+      Glob_fn.Table.setTd(tr, res.data[i].createTime);
+      Glob_fn.Table.setTd(tr, res.data[i].remark);
+    }
+    UIkit.modal(modal).show();
+  }
 };
 // 用户管理主表：
 Sta_table.prototype.getTable_getStationAllConsumer = function(res, pageNumber, pageSize) {
@@ -687,7 +1381,7 @@ Sta_table.prototype.getTable_getStationAllConsumer = function(res, pageNumber, p
   // 设置pagination
   fn_initPaginate(res, pageNumber, pageSize, fetch_sta_getStationAllConsumer);
 };
-// 主表用户优惠查看：
+// 用户优惠查看主表：
 Sta_table.prototype.getTable_queryDiscountCustomer = function(res) {
   var tbody = document.createElement('tbody');
   var data = res.data;
@@ -880,6 +1574,279 @@ Sta_table.prototype.getTable_getAllDiscountPolicy = function(res, pageNumber, pa
     tbody.appendChild(tr);
   }
   fn_initPaginate(res, pageNumber, pageSize, fetch_sta_getAllDiscountPolicy);
+};
+// 生成账单规则汇总表格（新需求）:
+Sta_table.prototype.getTable_queryBillRuleByPage = function(res, pageNumber, pageSize) {
+  try {
+    var table = document.querySelector('#dataTable');
+    createThead();
+    createTbody();
+    fn_initPaginate(res, pageNumber, pageSize, fetchData, new Sta_table().getTable_queryBillRuleByPage);
+  } catch(error) {
+    throw new Error(error);
+    return;
+  }
+  function createThead() {
+    var trInThead = Glob_fn.Table.getThTr(table);
+    Glob_fn.Table.setTh(trInThead, '序号');
+    Glob_fn.Table.setTh(trInThead, '账单ID', false);
+    Glob_fn.Table.setTh(trInThead, '账单名称');
+    Glob_fn.Table.setTh(trInThead, '营业点');
+    Glob_fn.Table.setTh(trInThead, '地区');
+    Glob_fn.Table.setTh(trInThead, '进/出港类型');
+    Glob_fn.Table.setTh(trInThead, '运单类型');
+    Glob_fn.Table.setTh(trInThead, '是否为快件');
+    Glob_fn.Table.setTh(trInThead, '用户名');
+    Glob_fn.Table.setTh(trInThead, '状态');
+    Glob_fn.Table.setTh(trInThead, '状态码', false);
+    Glob_fn.Table.setTh(trInThead, '设置时间');
+    Glob_fn.Table.setTh(trInThead, '操作');
+  }
+  function createTbody() {
+    var tbody = table.querySelector('tbody');
+    tbody.innerHTML = '';
+    var data = res.data.queryBillRuleList;
+    if (!data || data.length < 1) {
+      var tr0 = Glob_fn.Table.showNoData(trInThead.querySelectorAll('th').length);
+      tbody.appendChild(tr0);
+      return;
+    }
+    for (var i = 0; i < data.length; i++) {
+      var tr = document.createElement('tr');
+      tbody.appendChild(tr);
+      var tdSerial = document.createElement('td');
+      tr.appendChild(tdSerial);
+      tdSerial.innerText = i + 1 + (Number(pageNumber) - 1) * Number(pageSize);
+      Glob_fn.Table.setTd(tr, data[i].billRuleId, false);
+      Glob_fn.Table.setTd(tr, data[i].billRuleName);
+      setTdFromArray(tr, data[i].billRule, 'OPEDEPART');
+      setTdFromArray(tr, data[i].billRule, 'DOM_INT');
+      setTdFromArray(tr, data[i].billRule, 'EXP_IMP');
+      setTdFromArray(tr, data[i].billRule, 'TRANSFER_TYPE');
+      setTdFromArray(tr, data[i].billRule, 'EXP_MAIL');
+      Glob_fn.Table.setTd(tr, data[i].createName);
+      Glob_fn.Table.setTd(tr, data[i].statusStr);
+      Glob_fn.Table.setTd(tr, data[i].status, false);
+      Glob_fn.Table.setTd(tr, data[i].setTime);
+      tr.appendChild(getTdAction(data[i].billRuleId));
+    }
+    function setTdFromArray(parentTr, array, name, showBoo) {
+      var show = showBoo === undefined? true: showBoo;
+      var td = document.createElement('td');
+      parentTr.appendChild(td);
+      td.innerText = getValue().text;
+      td.setAttribute('data-billRuleType', getValue().type);
+      if (!show) td.setAttribute('hidden', '');
+      return td;
+      function getValue() {
+        if (!Array.isArray(array)) throw new Error('billRule属性不是数组');
+        var text = '-';
+        var ruleType = '';
+        for (var j = 0; j < array.length; j++) {
+          var type = array[j].type
+          if (type === name) {
+            text = array[j].content? array[j].content: text;
+            ruleType = type;
+          }
+        }
+        return {
+          text: text,
+          type: ruleType,
+        };
+      }
+    }
+    function getTdAction(billRuleId) {
+      var td = document.createElement('td');
+      td.setAttribute('class', 'uk-table-link');
+      var deleteLink = document.createElement('a');
+      td.appendChild(deleteLink);
+      deleteLink.setAttribute('class', 'deleteTr');
+      deleteLink.setAttribute('title', '删除此账单');
+      deleteLink.setAttribute('data-billRuleId', billRuleId);
+      deleteLink.innerText = '删除';
+      deleteLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        var thisBtn = this;
+        UIkit.modal.confirm('删除后不可恢复，确认删除吗？').then(function(){
+          try {
+            fetchData(getUrl(), getPostData(thisBtn), successCallback);
+          } catch (error) {
+            Glob_fn.errorHandler(error);
+            return;
+          }
+        })
+      });
+      return td;
+      function getUrl() {
+        return document.querySelector('input[name=api_deleteRule]').value;
+      }
+      function getPostData(trigger) {
+        var billRuleId = trigger.getAttribute('data-billRuleId');
+        if (billRuleId === undefined) throw new Error('billRuleId未定义');
+        return JSON.stringify({
+          'billRuleId': billRuleId,
+        });
+      }
+      function successCallback(res) {
+        UIkit.modal.alert('删除成功').then(function() {
+          try {
+            document.getElementById('submitBtn').click();
+          } catch (error) {
+            Glob_fn.errorHandler(error);
+            return;            
+          }
+        });
+      }
+    }
+  }
+};
+// 生成基础数据展示表格（新需求）:
+Sta_table.prototype.getTable_queryOriginalWaybill = function(res, pageNumber, pageSize) {
+  getFeeItem();
+  function getFeeItem() {
+    var url = document.querySelector('input[name=api_queryFeeItem]').value;
+    fetchData(url, '', createTable);
+  }
+  function createTable(feeItems) {
+    try {
+      var table = document.getElementById('dataTable');
+      if (!feeItems.data) throw new Error('远程数据非法: 费用列表项未定义');
+      var trInThead = Glob_fn.Table.getThTr(table);
+      setCaption(res.data);
+      setThead(feeItems.data);
+      setTbody(res, feeItems.data);
+      Glob_fn.Table.hideUnvalued();
+      fn_initPaginate(res, pageNumber, pageSize, fetchData, new Sta_table().getTable_queryOriginalWaybill, function(data) {
+        if (data.billRule === '') 
+          data.billRule = null;
+      });
+    } catch (error) {
+      throw new Error(error)
+      return;
+    }
+    function setCaption(data) {
+      var caption = table.querySelector('caption');
+      if (!caption) return;
+      caption.setAttribute('hidden', '')
+      if (data.totalCount !== undefined) {
+        caption.querySelector('span.totalCount').innerText = data.totalCount;
+        caption.removeAttribute('hidden');
+      }
+    }
+    function setThead(data) {
+      Glob_fn.Table.setTh(trInThead, '序号');
+      Glob_fn.Table.setTh(trInThead, '费用记录号');
+      Glob_fn.Table.setTh(trInThead, '运单前缀');
+      Glob_fn.Table.setTh(trInThead, '运单号');
+      Glob_fn.Table.setTh(trInThead, '品名');
+      Glob_fn.Table.setTh(trInThead, '货运类型');
+      Glob_fn.Table.setTh(trInThead, '始发站');
+      Glob_fn.Table.setTh(trInThead, '目的站');
+      Glob_fn.Table.setTh(trInThead, '航班号');
+      Glob_fn.Table.setTh(trInThead, '件数');
+      Glob_fn.Table.setTh(trInThead, '重量');
+      Glob_fn.Table.setTh(trInThead, '计费重量');
+      Glob_fn.Table.setTh(trInThead, '计费时间');
+      Glob_fn.Table.setTh(trInThead, '计费营业点');
+      Glob_fn.Table.setTh(trInThead, '计费营业点名称');
+      Glob_fn.Table.buildAjaxTitle(data, trInThead);
+      Glob_fn.Table.setTh(trInThead, '金额');
+    }
+    function setTbody(rawData, ajaxTitle) {
+      var tbody = table.querySelector('tbody');
+      tbody.innerHTML = '';
+      var data = rawData.data.feeList;
+      if (!data || data.length < 1) {
+        var tr0 = Glob_fn.Table.showNoData(trInThead.querySelectorAll('th').length);
+        tbody.appendChild(tr0);
+        return;
+      }
+      for (var i = 0; i < data.length; i++) {
+        var tr = document.createElement('tr');
+        tbody.appendChild(tr);
+        var tdSerial = document.createElement('td');
+        tr.appendChild(tdSerial);
+        tdSerial.innerText = i + 1 + (Number(pageNumber) - 1) * Number(pageSize);
+        Glob_fn.Table.setTd(tr, data[i].feeRecId);
+        Glob_fn.Table.setTd(tr, data[i].stockPre);
+        Glob_fn.Table.setTd(tr, data[i].stockNo);
+        Glob_fn.Table.setTd(tr, data[i].cargoNm);
+        Glob_fn.Table.setTd(tr, data[i].type);
+        Glob_fn.Table.setTd(tr, data[i].sAirportDsc);
+        Glob_fn.Table.setTd(tr, data[i].eAirportDsc);
+        Glob_fn.Table.setTd(tr, data[i].flight);
+        Glob_fn.Table.setTd(tr, data[i].pcs);
+        Glob_fn.Table.setTd(tr, data[i].weight);
+        Glob_fn.Table.setTd(tr, data[i].feeWt);
+        Glob_fn.Table.setTd(tr, data[i].crtopeTimeStr);
+        Glob_fn.Table.setTd(tr, data[i].opedepartId);
+        Glob_fn.Table.setTd(tr, data[i].opedepartStr);
+        var feeIdArr = Glob_fn.Table.getAjaxTitleValue(ajaxTitle, 'feeId');
+        var ajaxData = Glob_fn.Table.getAjaxTitleData(null, feeIdArr, JSON.parse(data[i].feeItemList));
+        Glob_fn.Table.buildValueWithAjaxTitle(ajaxData, tr);
+        Glob_fn.Table.setTd(tr, data[i].totalFeeStr);
+        Glob_fn.Table.trHideSome(tr);
+      }
+    }
+  }
+};
+// 生成账单汇总查询表格（新需求）:
+Sta_table.prototype.getTable_querySumBillByRule = function(res, pageNumber, pageSize) {
+  try {
+    createTable(res);
+  } catch(error) {
+    throw new Error(error);
+    return;
+  }
+  function createTable(res) {
+    var table = document.getElementById('dataTable');
+    if (!res.data) throw new Error('远程数据非法: data未定义');
+    var trInThead = Glob_fn.Table.getThTr(table);
+    setThead();
+    setTbody(res);
+    fn_initPaginate(res, pageNumber, pageSize, fetchData, new Sta_table().getTable_querySumBillByRule);
+    function setThead() {
+      Glob_fn.Table.setTh(trInThead, '序号');
+      Glob_fn.Table.setTh(trInThead, '账单名称');
+      Glob_fn.Table.setTh(trInThead, '开账时间');
+      Glob_fn.Table.setTh(trInThead, '账期');
+      Glob_fn.Table.setTh(trInThead, '金额');
+      Glob_fn.Table.setTh(trInThead, '操作');
+    }
+    function setTbody(res) {
+      var tbody = table.querySelector('tbody');
+      tbody.innerHTML = '';
+      var data = res.data.billList;
+      if (!data || data.length < 1) {
+        var tr0 = Glob_fn.Table.showNoData(trInThead.querySelectorAll('th').length);
+        tbody.appendChild(tr0);
+        return;
+      }
+      for (var i = 0; i < data.length; i++) {
+        var tr = document.createElement('tr');
+        tbody.appendChild(tr);
+        Glob_fn.Table.setTdSerial(tr, i, pageNumber, pageSize);
+        Glob_fn.Table.setTd(tr, data[i].billRuleName);
+        Glob_fn.Table.setTd(tr, data[i].accountOpeningTime);
+        Glob_fn.Table.setTd(tr, data[i].orderTime);
+        Glob_fn.Table.setTd(tr, data[i].totalFee);
+        Glob_fn.Table.setTd(tr, getLink(data[i].billRuleId));
+        function getLink(id) {
+          if (id === undefined) throw new Error('远程数据非法: summaryList.billRule未定义');
+          var link = document.createElement('a');
+          link.innerText = '查看账单'
+          link.setAttribute('data-billRuleId', id);
+          link.setAttribute('uk-tooltip', '点击查看');
+          link.addEventListener('click', function(event) {
+            event.preventDefault();
+            var url = document.querySelector('input[name=url_forNext]').value + '/' + id;
+            Glob_fn.submVirtForm(url, Glob_fn.getOrderTime());
+          });
+          return link;
+        }
+      }
+    }
+  }
 };
 
 // 调账模态：

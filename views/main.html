@@ -11,10 +11,10 @@
       <% } else if (name == 'discountPoliciesManagementDetails') { %>
         <%- include('components/station/userManagement/discountPoliciesManagementDetails.html') %>
       <!-- 新需求替换: -->
-      <% } else if (name == 'billManagement') { %>
-        <%- include('components/station/billManagement/index.html') %>
-      <% } else if (name == 'billDetails') { %>
-        <%- include('components/station/billManagement/details.html') %>
+          <% } else if (name == 'billManagement') { %>
+            <%- include('components/station/billManagement/index.html') %>
+          <% } else if (name == 'billDetails') { %>
+            <%- include('components/station/billManagement/details.html') %>
       <!-- 新需求新增: -->
       <% } else if (name == 'billsSetting') { %>
         <%- include('components/station/billsSetting/index.html') %>
@@ -32,18 +32,35 @@
     <% } else if (type == 'agent') {%>
       <% if (name == 'accountBinding') { %>
         <%- include('components/agent/accountBinding/accountBinding.html') %>
-      <% } else if (name == 'billManagement') { %>
-        <%- include('components/agent/billManagement/index.html') %>
-      <% } else if (name == 'billDetails') { %>
-        <%- include('components/agent/billManagement/details.html') %>
+      <!-- 新需求替换: -->
+          <% } else if (name == 'billManagement') { %>
+            <%- include('components/agent/billManagement/index.html') %>
+          <% } else if (name == 'billDetails') { %>
+            <%- include('components/agent/billManagement/details.html') %>
+      <!-- 新需求新增: -->
+      <% } else if (name == 'queryBills') { %>
+        <%- include('components/agent/billManagement/queryBills.html') %>
+      <% } else if (name == 'queryDetails') { %>
+        <%- include('components/agent/billManagement/details_new.html') %>
       <% } %>
     <% } else if (type == 'system') {%>
       <% if (name == 'userInfoManagement') { %>
         <%- include('components/system/userInfoManagement.html') %>
-      <% } else if (name == 'billManagement') { %>
-        <%- include('components/system/billsManagement.html') %>
-      <% } else if (name == 'billDetails') { %>
-        <%- include('components/system/billDetails.html') %>
+      <!-- 新需求替换: -->
+        <% } else if (name == 'billManagement') { %>
+          <%- include('components/system/billsManagement.html') %>
+        <% } else if (name == 'billDetails') { %>
+          <%- include('components/system/billDetails.html') %>
+      <!-- 新需求新增: -->
+      <% } else if (name == 'baseData') { %>
+        <%- include('components/system/baseData.html') %>
+      <% } else if (name == 'queryBills') { %>
+        <%- include('components/system/queryBills.html') %>
+      <% } else if (name == 'queryBills_bill') { %>
+        <%- include('components/system/index_new.html') %>
+      <% } else if (name == 'queryBills_details') { %>
+        <%- include('components/system/details_new.html') %>
+
       <% } else if (name == 'policiesManagement') { %>
         <%- include('components/system/policiesManagement.html') %>
       <% } else if (name == 'policyDetails') { %>

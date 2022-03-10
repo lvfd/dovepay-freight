@@ -13,7 +13,8 @@
       <% if (type === 'station') { %>
         &nbsp;货站用户: <%= userId %>
       <% } else if (type === 'agent') { %>
-        &nbsp;货代用户: <%= userId %>
+        <input type="hidden" name="api_getAgentName" value=<%= urls.api.consumer.getBindConsumer %>>
+        <span id="agentNameInHeader">&nbsp;货代用户: <%= userId %></span>
       <% } else if (type === 'system') { %>
         &nbsp;系统运营用户: <%= userId %>
       <% } %>

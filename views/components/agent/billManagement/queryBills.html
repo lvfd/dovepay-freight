@@ -1,0 +1,55 @@
+<input type="hidden" data-pageId="agent_billMangement_queryBills">
+<input type="hidden" name="pageUrl" value=<%= pageUrl %>>
+<input type="hidden" name="api_forTable" value=<%= urls.api.consumer.consumerQueryBill %>>
+<input type="hidden" name="api_pay" value=<%= urls.api.pay.pay%>>
+<input type="hidden" name="url_forNext" value=<%- urls.agent.index + urls.agent.queryBills %>>
+<section class="breadcrumb">
+  <ul>
+    <li>账单管理</li>
+    <li><%= title %></li>
+  </ul>
+</section>
+<hr>
+<form id="dataForm" class="uk-form-stacked uk-flex-bottom uk-grid-small" uk-grid>
+  <div hidden>
+    <label class="uk-form-label">负责人</label>
+    <input type="text" name="" class="uk-input uk-form-width-medium" placeholder="全部负责人">
+  </div>
+  <div>
+    <label class="uk-form-label" for="orderTimeStart">账期(限制之前36个月)</label>
+    <div class="uk-form-controls uk-flex uk-flex-middle">
+      <input id="startTime" type="text" name="orderTimeStart" class="uk-input uk-form-width-medium" placeholder="全部时间" readonly>
+      <span class="uk-margin-small-left uk-margin-small-right">至</span>
+      <input id="endTime" type="text" name="orderTimeEnd" class="uk-input uk-form-width-medium" placeholder="全部时间" readonly>
+    </div>
+  </div>
+  <div>
+    <label class="uk-form-label" for="status">付款状态</label>
+    <select class="uk-select uk-form-width-medium" name="status">
+      <option value="-1">全部</option>
+      <option value="1">未支付</option>
+      <option value="2">已支付</option>
+    </select>
+  </div>
+  <div>
+    <label class="uk-form-label" for="billRuleName">账单名称</label>
+    <input type="text" name="billRuleName" class="uk-input uk-form-width-medium" placeholder="全部账单">
+  </div>
+  <div class="uk-width-1-1 uk-grid-small uk-flex-center uk-margin" uk-grid>
+    <div><button id="submitBtn" class="button button-primary button-rounded uk-width-small">查询</button></div>
+    <div><input type="reset" class="button button-highlight button-rounded uk-width-small" value="清空"></div>
+    <div><button id="exportBtn" class="button button-action button-rounded uk-width-small">导出数据</button></div>
+  </div>
+</form>
+<hr>
+<div class="uk-alert-primary" uk-alert>
+  <a class="uk-alert-close" uk-close></a>
+  <p>注: 上月无交易情况下, 结算月无信息展现。</p>
+</div>
+<div class="uk-overflow-auto">
+  <table id="dataTable" class="uk-table uk-table-small uk-table-divider uk-table-striped uk-table-hover">
+    <thead></thead>
+    <tbody></tbody>
+  </table>
+</div>
+<ul class="uk-pagination uk-flex-center" data-for="dataTable"></ul>

@@ -1,18 +1,62 @@
+// Polyfill:
+if (!Array.isArray) {
+  Array.isArray = function(arg) {
+    return Object.prototype.toString.call(arg) === '[object Array]';
+  };
+}
+// Extend:
+// String.prototype.byteLength = function() {
+//   var b = 0;
+//   var len = this.length;
+//   if (len) {
+//     for (var i = 0; i < len; i++) {
+//       if (this.charCodeAt(i) > 255) {
+//         b += 2;
+//       } else {
+//         b ++;
+//       }
+//     }
+//     return b;
+//   } else {
+//     return 0;
+//   }
+// };
 var Glob_fn = {
   errorHandler: function(error, callback) {
+    var errMsg = error? error: '未知错误';
     if (console) {
-      console.error('错误信息IN_CONSOLE: ', error);
+      console.error('错误信息IN_CONSOLE: ', errMsg);
     }
     if (UIkit) {
-      UIkit.modal.alert(error).then(callback);
+      try {
+        UIkit.modal.alert(errMsg).then(callback);  
+      } catch (e) {
+        alert(errMsg);
+      }
     } else {
-      alert(error);
-    }   
+      alert(errMsg);
+    }
   },
   inheritPrototype: function(superType, subType) {  // 继承函数：
     var prototype = Object(superType.prototype);  //创建对象
     prototype.constructor = subType;              //增强对象
     subType.prototype = prototype;                //指定对象
+  },
+  isJSON: function(str) {
+    if (typeof str !== "string") return false;
+    try {
+        var object = JSON.parse(str);
+        if(object && typeof object === "object"){
+          return true
+        } else {
+          return false
+        }
+    }catch (e) {}
+  },
+  isDOM: function(item) {
+    return (typeof HTMLElement === 'function')
+      ? (item instanceof HTMLElement)
+      : (item && (typeof item === 'object') && (item.nodeType === 1) && (typeof item.nodeName === 'string'));
   },
   initMain: function() {
     const headerH = 73
@@ -57,11 +101,14 @@ var Glob_fn = {
   },
   loading: {
     show: function() {
+      if (document.getElementById('loadingOverlay')) return;
       var body = document.querySelector('body');
       var main = document.querySelector('main');
       var parentNode = main? main: body;
       var div = document.createElement('div');
       div.setAttribute('id', 'loadingOverlay');
+      div.setAttribute('uk-sticky', '');
+      // div.style.position = 'absolute';
       div.setAttribute('class', 'uk-position-cover uk-overlay uk-overlay-default uk-flex uk-flex-center uk-flex-middle');
       div.innerHTML = '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">Loading...</span>';
       parentNode.appendChild(div);
@@ -132,21 +179,67 @@ var Glob_fn = {
       return value;
     },
   },
-  WdateInit: function(startTimeId, endTimeId) {
+  WdateInit: function(startTimeId, endTimeId, args) {
     var sta = document.getElementById(startTimeId);
     var end = document.getElementById(endTimeId);
+    var dateFmt = args && args.dateFmt? args.dateFmt: 'yyyy-MM-dd';
+    if (dateFmt === 'yyyy年MM月') {
+      setVelInp(startTimeId);
+      setVelInp(endTimeId);
+    }
+    var minDate = args && args.minDate? args.minDate: false;
+    var maxDate = args && args.maxDate? args.maxDate: false;
     sta.addEventListener('click', function() {
-      WdatePicker({
-        dateFmt: 'yyyy-MM-dd',
-        maxDate: '#F{$dp.$D(\'' + endTimeId + '\')}'
-      });
+      var config_s = {
+        dateFmt: dateFmt,
+        maxDate: '#F{$dp.$D(\'' + endTimeId + '\')}',
+      };
+      if (dateFmt === 'yyyy年MM月') {
+        config_s.vel = startTimeId + '_2';
+        config_s.realDateFmt = args.realDateFmt? args.realDateFmt: 'yyyyMMdd';
+      }
+      if (minDate) config_s.minDate = minDate;
+      if (maxDate === 'today') config_s.maxDate = '#F{$dp.$D(\'' + endTimeId + '\') || \'%y-%M-%d\'}';
+      WdatePicker(config_s);
     });
     end.addEventListener('click', function() {
-      WdatePicker({
-        dateFmt: 'yyyy-MM-dd',
+      var config_e = {
+        dateFmt: dateFmt,
         minDate: '#F{$dp.$D(\'' + startTimeId + '\')}'
-      });
+      };
+      if (dateFmt === 'yyyy年MM月') {
+        config_e.vel = endTimeId + '_2';
+        config_e.realDateFmt = args.realDateFmt? args.realDateFmt: 'yyyyMMdd';
+      }
+      if (minDate)
+        config_e.minDate = '#F{$dp.$D(\'' + startTimeId + '\') || \'' + minDate + '\'}';
+      if (maxDate === 'today') config_e.maxDate = '%y-%M-%d';
+      WdatePicker(config_e);
     });
+    function setResetButton(input) {
+      var btn = document.querySelector('form input[type=reset]');
+      if (!btn) return;
+      btn.addEventListener('click', function(event) {
+        input.value = '';
+      });
+    }
+    function setVelInp(id) {
+      var inp = document.createElement('input');
+      var src = document.getElementById(id);
+      var srcName = src.getAttribute('name');
+      var data = src.getAttribute('data-value');
+      src.removeAttribute('name');
+      inp.setAttribute('name', srcName);
+      inp.setAttribute('id', id + '_2');
+      inp.setAttribute('type', 'hidden');
+      if (data) {
+        inp.setAttribute('value', data);
+        src.setAttribute('value', data.slice(0, 4) + '年' + data.slice(4, 6) + '月');
+      }
+      document.getElementById(id).parentNode.appendChild(inp);
+      setResetButton(inp);
+      return inp;
+    }
   },
   banBackSpace: function(event) {
     var ev = event || window.event;
@@ -303,25 +396,99 @@ var Glob_fn = {
       thead.appendChild(trInThead);
       return trInThead;
     },
-    setTh: function(parentTr, content) {
+    setTh: function(parentTr, content, showBoo) {
       var th = document.createElement('th');
+      var show = showBoo === undefined? true: showBoo;
       if (typeof content == 'object') {
         th.appendChild(content);
       } else {
         th.innerText = content;
       }
+      if (!show) th.setAttribute('hidden', '');
       parentTr.appendChild(th);
+      return th;
+    },
+    setTd: function(parentTr, data, showBoo, replaceStr) {
+      var td = document.createElement('td');
+      var show = showBoo === undefined? true: showBoo;
+      var replace = replaceStr? replaceStr: '-'
+      if (typeof data === 'string' || typeof data === 'number') {
+        if (data) {
+          var span = document.createElement('span');
+          span.style.display = 'inline-block';
+          span.innerHTML = data;
+          td.appendChild(span);
+        } else {
+          setNoData(td, replace);
+        }
+      } else if (Glob_fn.isDOM(data)) {
+        td.appendChild(data);
+      } else if (Array.isArray(data)) {
+        if (data.length < 1) {
+          setNoData(td, replace);
+        } else {
+          for (var i = 0; i < data.length; i++) {
+            td.appendChild(data[i]);
+          }
+        }
+      } else {
+        setNoData(td, replace);
+      }
+      if (!show) td.setAttribute('hidden', '');
+      parentTr.appendChild(td);
+      return td;
+      function setNoData(td, replace) {
+        td.innerHTML = replace;
+        td.setAttribute('class', 'uk-text-center');
+      }
+    },
+    setTdSerial: function(parentTr, number, pageNumber, pageSize) {
+      var tdSerial = document.createElement('td');
+      parentTr.appendChild(tdSerial);
+      tdSerial.innerText = number + 1 + (Number(pageNumber) - 1) * Number(pageSize);
+      return tdSerial;
+    },
+    hideSome: function(td, width) {
+      var span = td.querySelector('span');
+      if (!span) return;
+      var maxW = width? width: 100;
+      // var byteLength = td.innerText.byteLength();
+      var computedWidth = window.getComputedStyle
+        ? window.getComputedStyle(span, null).getPropertyValue('width').slice(0, -2)
+        : span.currentStyle.getPropertyValue('width').slice(0, -2);
+      if (Number(computedWidth) < maxW) return td;
+      td.style.overflow = 'hidden';
+      td.style.textOverflow = 'ellipsis';
+      td.style.maxWidth = maxW + 'px';
+      td.innerText = span.innerText;
+      td.setAttribute('uk-tooltip', td.innerText);
+      return td;
+    },
+    trHideSome: function(tr, max) {
+      var tds = tr.querySelectorAll('td');
+      for (var i = 0; i < tds.length; i++) {
+        var td = tds[i];
+        this.hideSome(td, max);
+      }
+      return tr;
     },
     buildAjaxTitle: function(titleData, parentNode) {
+      var colCount = 0;
       for (var i = 0; i < titleData.length; i++) {
         var list = titleData[i];
         if (list.feeShortNm === '处置费') {
           var th0 = document.createElement('th');
           th0.innerText = '地面费率';
+          th0.setAttribute('data-col', colCount);
+          th0.setAttribute('class', 'feeItemTitle');
+          colCount++;
           parentNode.appendChild(th0);
         }
         var th = document.createElement('th');
         th.innerText = list.feeShortNm;
+        th.setAttribute('data-col', colCount);
+        colCount++;
+        th.setAttribute('class', 'feeItemTitle');
         parentNode.appendChild(th); 
       }
     },
@@ -338,7 +505,7 @@ var Glob_fn = {
       return arr;
     },
     getAjaxTitleData: function(title, feeIdArr, dataList) {
-      var arr = [title];
+      var arr = title? [title]: [];
       for (var i = 0; i < feeIdArr.length; i++) {
         var data = '-';
         var feeIdGroup = feeIdArr[i];
@@ -360,7 +527,14 @@ var Glob_fn = {
         }
         arr.push(data);
       }
-      return arr;
+      if (title) {
+        return arr;
+      } else {
+        return {
+          data: arr,
+          title: false,
+        };
+      }
     },
     getAjaxTitleObject: function(feeIdArr, dataList) {
       var arr = [];
@@ -382,11 +556,40 @@ var Glob_fn = {
       }
       return arr;
     },
-    buildValueWithAjaxTitle: function(data, parentNode) {
+    buildValueWithAjaxTitle: function(linedata, parentNode) {
+      var isArr = Array.isArray(linedata);
+      var data = isArr? linedata: linedata.data;
       for (var i = 0; i < data.length; i++) {
         var td = document.createElement('td');
         td.innerText = data[i];
+        if (!isArr) {
+          td.setAttribute('data-col', i);
+        } else {
+          if (i >= 1) td.setAttribute('data-col', i-1);
+        }
         parentNode.appendChild(td);
+      }
+    },
+    hideUnvalued: function(pointedTable, checkValue) {
+      var table = pointedTable? pointedTable: document.getElementById('dataTable');
+      var flag = checkValue? checkValue: '-';
+      var colCount = table.querySelectorAll('th.feeItemTitle').length;
+      for (var i = 0; i < colCount; i++) {
+        var column = table.querySelectorAll('td[data-col="'+i+'"]');
+        var unvaluedCol = '';
+        for (var j = 0; j < column.length; j++) {
+          unvaluedCol = true;
+          if (column[j].innerText !== flag) {
+            unvaluedCol = false;
+            break;
+          }
+        }
+        if (unvaluedCol) {
+          for (var k = 0; k < column.length; k++) {
+            column[k].setAttribute('hidden', '');
+          }
+          table.querySelector('th[data-col="'+i+'"]').setAttribute('hidden', '');
+        }
       }
     },
     getCheckbox: function(ifAll) {
@@ -500,7 +703,39 @@ var Glob_fn = {
     } catch(e) {
       throw new Error(e);
     }
-  }
+  },
+  getOrderTime: function() {  // 账单查看界面获取账期
+    try {
+      return {
+        orderTimeStart: document.querySelector('input[name=orderTimeStart]').value,
+        orderTimeEnd: document.querySelector('input[name=orderTimeEnd]').value,
+      };
+    } catch (error) {
+      if (console) console.error(error);
+      return {
+        orderTimeStart: '',
+        orderTimeEnd: '',
+      };
+    }
+  },
+  setPostLink: function(links, postData) {
+    try {
+      if (!this.isDOM(links) && links.length) {
+        for (var i = 0; i < links.length; i++) {
+          links[i].addEventListener('click', callback);
+        }
+      } else {
+        links.addEventListener('click', callback);
+      }
+    } catch (error) {
+      return;
+    }
+    function callback(event) {
+      event.preventDefault();
+      var url = this.getAttribute('href');
+      Glob_fn.submVirtForm(url, postData);
+    }
+  },
 };
 // function SuperType(){
 //   this.name = 'name'; 

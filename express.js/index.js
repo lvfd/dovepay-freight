@@ -49,7 +49,8 @@ dovepay_freight.use(session(sess))
 dovepay_freight.use(checkRedisConnect)
 
 // Test login:
-dovepay_freight.get('/', testLogin('user'))
+dovepay_freight.get('/test1', testLogin('station'))
+dovepay_freight.get('/test2', testLogin('agent'))
 dovepay_freight.get('/mgr', testLogin('system'))
 
 // Link dovePay:

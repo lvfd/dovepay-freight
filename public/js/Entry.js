@@ -29,19 +29,28 @@ function EntryJS() {
   // Init header:
   if (document.getElementById('dpfHeader')) {
     initLogin_initQuirBtn();
+    if (document.getElementById('agentNameInHeader')) initAgent_userName();
   }
 
   // 初始化系统商：用户查询：
   if (document.querySelector('input[data-pageId=system_getAllConsumer]')) {
     initSystem_getAllConsumer();
   }
-  // 初始化系统商：账单查询：
-  if (document.querySelector('input[data-pageId=system_systemQueryBill]')) {
-    initSystem_systemQueryBill();
+      // 初始化系统商：账单查询：
+      if (document.querySelector('input[data-pageId=system_systemQueryBill]')) {
+        initSystem_systemQueryBill();
+      }
+  // 初始化系统商：查询账单：新需求
+  if (document.querySelector('input[data-pageId=system_systemQueryBill_new]')) {
+    initSystem_systemQueryBill_new();
   }
-  // 初始化系统商：账单详情查询：
-  if (document.querySelector('input[data-pageId=system_systemQueryBillDetails]')) {
-    initSystem_systemQueryBillDetails();
+      // 初始化系统商：账单详情查询：
+      if (document.querySelector('input[data-pageId=system_systemQueryBillDetails]')) {
+        initSystem_systemQueryBillDetails();
+      }
+  // 初始化系统商：查询账单详情：新需求
+  if (document.querySelector('input[data-pageId=system_systemQueryBillDetails_new]')) {
+    initSystem_systemQueryBillDetails_new();
   }
   // 初始化系统商：优惠政策管理：
   if (document.querySelector('input[data-pageId=system_getAllDiscountPolicy]')) {
@@ -51,29 +60,47 @@ function EntryJS() {
   if (document.querySelector('input[data-pageId=system_getDiscountPolicy]')) {
     initSystem_getDiscountPolicy();
   }
-
-  // 初始化agent：查询账单：
-  if (document.querySelector('input[data-pageId=consumer_consumerQueryBill]')) {
-    initAgent_consumerQueryBill();
+  // 初始化系统商: 账单汇总查询:
+  if (document.querySelector('input[data-pageId=system_billMangement_queryBills]')) {
+    initSystem_billMangement_queryBills();
   }
-  // 初始化agent：查询账单详情：
-  if (document.querySelector('input[data-pageId=consumer_consumerQueryBillDetails]')) {
-    initAgent_consumerQueryBillDetails();
+
+      // 初始化agent：查询账单(旧需求)：
+      if (document.querySelector('input[data-pageId=consumer_consumerQueryBill]')) {
+        initAgent_consumerQueryBill();
+      }
+  // 初始化agent：查询账单(新需求)：
+  if (document.querySelector('input[data-pageId=agent_billMangement_queryBills]')) {
+    initAgent_consumerQueryBill_new();
+  }
+      // 初始化agent：查询账单详情(旧需求)：
+      if (document.querySelector('input[data-pageId=consumer_consumerQueryBillDetails]')) {
+        initAgent_consumerQueryBillDetails();
+      }
+  // 初始化agent：查询账单详情(新需求)：
+  if (document.querySelector('input[data-pageId=consumer_consumerQueryBillDetails_new]')) {
+    initAgent_consumerQueryBillDetails_new();
   }
   // 初始化agent：绑定账户：
   if (document.querySelector('input[data-pageId=consumer_getBindConsumer]')) {
     initAgent_getBindConsumer();
   }
 
-  // 初始化station：查询账单：* 新旧需求合并
-  if (document.querySelector('input[data-pageId=station_stationQueryBill]')
-      || document.querySelector('input[data-pageId=station_stationQueryBill_new]')) {
-    initStation_stationQueryBill();
+      // 初始化station：查询账单：旧需求
+      if (document.querySelector('input[data-pageId=station_stationQueryBill]')) {
+        initStation_stationQueryBill();
+      }
+  // 初始化station：查询账单：新需求
+  if (document.querySelector('input[data-pageId=station_stationQueryBill_new]')) {
+    initStation_stationQueryBill_new();
   }
-  // 初始化station：查询账单详情：* 新旧需求合并
-  if (document.querySelector('input[data-pageId=station_stationQueryBillDetails]')
-      || document.querySelector('input[data-pageId=station_stationQueryBillDetails_new]')) {
-    initStation_stationQueryBillDetails();
+      // 初始化station：查询账单详情：旧需求
+      if (document.querySelector('input[data-pageId=station_stationQueryBillDetails]')) {
+        initStation_stationQueryBillDetails();
+      }
+  // 初始化station：查询账单详情：新需求
+  if (document.querySelector('input[data-pageId=station_stationQueryBillDetails_new]')) {
+    initStation_stationQueryBillDetails_new();
   }
   // 初始化station：用户信息管理：
   if (document.querySelector('input[data-pageId=station_getStationAllConsumer]')) {
@@ -103,6 +130,9 @@ function EntryJS() {
   if (document.querySelector('input[data-pageId=station_billsSetting_addRule]')) {
     initStation_billsSetting_addRule();
   }
-
+  // 初始化station: 账单汇总查询:
+  if (document.querySelector('input[data-pageId=station_billMangement_queryBills]')) {
+    initStation_billMangement_queryBills();
+  }
 }
 

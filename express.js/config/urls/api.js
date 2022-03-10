@@ -26,7 +26,16 @@ const api = {
     createDiscountPolicy: baseAPIUrl + '/station/createDiscountPolicy',
     getAllDiscountPolicy: baseAPIUrl + '/station/getAllDiscountPolicy',
     getDiscountPolicy: baseAPIUrl + '/station/getDiscountPolicy',
-    changeDiscountStatus: baseAPIUrl + '/station/changeDiscountStatus'
+    changeDiscountStatus: baseAPIUrl + '/station/changeDiscountStatus',
+    createBillRule: baseAPIUrl + '/station/createBillRule', // 新建账单规则接口
+    queryBillRuleByPage: baseAPIUrl + '/station/queryBillRuleByPage', // 分页查询账单规则接口
+    removeBillRule: baseAPIUrl + '/station/removeBillRule', // 删除账单规则接口
+    queryEffectiveBillRule: baseAPIUrl + '/station/queryEffectiveBillRule', // 已生效账单规则接口
+    stationQueryOriginalWaybill: baseAPIUrl + '/station/stationQueryOriginalWaybill', // 货站基础数据查询接口（天信达推送的运单）
+    stationOriginalWaybillExcel: baseAPIUrl + '/station/stationOriginalWaybillExcel', // 货站基础数据导出接口
+    stationQuerySumBillByRule: baseAPIUrl + '/station/stationQuerySumBillByRule', // 货站账单汇总查询接口
+    queryModifyLog: baseAPIUrl + '/station/queryModifyLog', // 查询运单的修改记录接口
+    stationQueryBillDetailsSum: baseAPIUrl + '/station/stationQueryBillDetailsSum',// 货站查看明细汇总接口
   },
   system: {
     systemQueryBill: baseAPIUrl + '/system/systemQueryBill',
@@ -37,7 +46,8 @@ const api = {
     exportStationAllConsumer: baseAPIUrl + '/system/exportStationAllConsumer',
     getAllDiscountPolicy: baseAPIUrl + '/system/getAllDiscountPolicy',
     queryDiscountCustomer: baseAPIUrl + '/system/queryDiscountCustomer',
-    getDiscountPolicy: baseAPIUrl + '/system/getDiscountPolicy'
+    getDiscountPolicy: baseAPIUrl + '/system/getDiscountPolicy',
+    systemQuerySumBillByRule: baseAPIUrl + '/system/systemQuerySumBillByRule',
   },
   pay: {
     pay: baseAPIUrl + '/pay/pay'

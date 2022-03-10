@@ -1,7 +1,7 @@
-function fn_initPaginate(res, pageNumber, pageSize, fetchFn) {
+function fn_initPaginate(res, pageNumber, pageSize, fetchFn, callback, postDataHandler) {
   if (res.data.totalPage > 1) {
     var p = new Paginate();
-    p.showPagnition(res.data.totalPage, pageNumber, pageSize, fetchFn);
+    p.showPagnition(res.data.totalPage, pageNumber, pageSize, fetchFn, callback, postDataHandler);
   } else {
     var wrap = document.querySelector('ul[data-for=dataTable]');
     if (wrap)
@@ -9,7 +9,7 @@ function fn_initPaginate(res, pageNumber, pageSize, fetchFn) {
   }
 }
 function Paginate() {}
-Paginate.prototype.showPagnition = function (totalPage, pageNumber, pageSize, fetchFn){
+Paginate.prototype.showPagnition = function (totalPage, pageNumber, pageSize, fetchFn, callback, postDataHandler){
   var totalPage = Number(totalPage);
   var pageNumber = Number(pageNumber);
   var pageSize = Number(pageSize);
@@ -20,8 +20,8 @@ Paginate.prototype.showPagnition = function (totalPage, pageNumber, pageSize, fe
     var link_pre = Paginate.getPagi_liPre(wrap);
     link_pre.addEventListener('click', function(event) {
       event.preventDefault();
-      var data = getPostData(pageNumber - 1);
-      fetchFn.call(this, url, data);
+      var data = getPostData(pageNumber - 1, postDataHandler);
+      fetchFn.call(this, url, data, callback);
     });
   }
   for (var i = 0; i < totalPage; i++) {
@@ -33,8 +33,8 @@ Paginate.prototype.showPagnition = function (totalPage, pageNumber, pageSize, fe
       var li = obj.li;
       link.addEventListener('click', function(event) {
         event.preventDefault();
-        var data = getPostData(this.innerText);
-        fetchFn.call(this, url, data);
+        var data = getPostData(this.innerText, postDataHandler);
+        fetchFn.call(this, url, data, callback);
       });
     }
     wrap.appendChild(li);
@@ -43,17 +43,18 @@ Paginate.prototype.showPagnition = function (totalPage, pageNumber, pageSize, fe
     var link_nex = Paginate.getPagi_liNext(wrap);
     link_nex.addEventListener('click', function(event) {
       event.preventDefault();
-      var data = getPostData(pageNumber + 1);
-      fetchFn.call(this, url, data);
+      var data = getPostData(pageNumber + 1, postDataHandler);
+      fetchFn.call(this, url, data, callback);
     });
   }
 
   Paginate.getPagi_hidePage(10, wrap, pageNumber, totalPage);
   
-  function getPostData(pageNumber) {
+  function getPostData(pageNumber, postDataHandler) {
     var data = {};
     var form = document.getElementById('dataForm');
     var data = $(form).serializeObject();
+    if (typeof postDataHandler === 'function') postDataHandler.call(this, data);
     data.pageNumber = pageNumber;
     data.indexPage = pageNumber;
     data.pageSize = pageSize;

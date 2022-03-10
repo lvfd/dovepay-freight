@@ -1,12 +1,11 @@
-<input type="hidden" data-pageId="station_stationQueryBill_new">
-<input type="hidden" name="api_forTable" value=<%= urls.api.station.stationQueryBill%>>
-<input type="hidden" name="api_forExport" value=<%= urls.api.station.stationBillExcel%>>
-<input type="hidden" name="api_stationBillPush" value=<%= urls.api.station.stationBillPush%>>
-<input type="hidden" name="url_forQueryDetails" value=<%- urls.station.index + urls.station.queryBills + '/' + tType%>>
+<input type="hidden" data-pageId="system_systemQueryBill_new">
+<input type="hidden" name="api_forTable" value=<%= urls.api.system.systemQueryBill%>>
+<input type="hidden" name="api_forExport" value=<%= urls.api.system.systemBillExcel%>>
+<input type="hidden" name="url_forQueryDetails" value=<%- urls.system.index + urls.system.queryBills + '/' + tType%>>
 <section class="breadcrumb">
   <ul>
     <li>账单管理</li>
-    <li><a class="postDataLink" href=<%- urls.station.index + urls.station.queryBills %>><%= title %></a></li>
+    <li><a href=<%- urls.system.index + urls.system.queryBills %>><%= title %></a></li>
     <li><%= subTitle %></li>
   </ul>
 </section>
@@ -16,9 +15,9 @@
   <div hidden>
     <label class="uk-form-label">开账时间(之前三十六个月)</label>
     <div class="uk-form-controls uk-flex uk-flex-middle">
-      <input type="text" name="orderTimeStart" class="uk-input uk-form-width-medium" placeholder="开始时间" value="<%= orderTimeStart %>" readonly>
+      <input id="staTime" type="text" name="orderTimeStart" class="uk-input uk-form-width-medium" placeholder="开始时间" readonly>
       <span class="uk-margin-small-left uk-margin-small-right">至</span>
-      <input type="text" name="orderTimeEnd" class="uk-input uk-form-width-medium" placeholder="结束时间" value="<%= orderTimeEnd %>" readonly>
+      <input id="endTime" type="text" name="orderTimeEnd" class="uk-input uk-form-width-medium" placeholder="结束时间" readonly>
     </div>
   </div>
   <div>
@@ -55,7 +54,6 @@
     <div><button id="submitBtn" class="button button-primary button-rounded uk-width-small">查询</button></div>
     <div><input type="reset" class="button button-highlight button-rounded uk-width-small" value="清空"></div>
     <div><button id="exportBtn" class="button button-action button-rounded uk-width-small">导出数据</button></div>
-    <div><button id="multiBtn" class="button button-royal button-rounded uk-width-small" disabled>批量推送</button></div>
   </div>
 </form>
 <hr>
