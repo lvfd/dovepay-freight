@@ -59,14 +59,16 @@ var Glob_fn = {
       : (item && (typeof item === 'object') && (item.nodeType === 1) && (typeof item.nodeName === 'string'));
   },
   initMain: function() {
-    const headerH = 73
-    const navH = 40
-    const footerH = 90
-    const browserH = window.outerHeight
-    const browserVisibleH = window.innerHeight
+    var main = document.getElementById('dpfMain');
+    main.querySelector('.maincontent').classList.add('normalWidth');
+    var headerH = 73
+    var navH = 40
+    var footerH = 90
+    var browserH = window.outerHeight
+    var browserVisibleH = window.innerHeight
     // console.log(browserH, browserVisibleH)
     var dH = browserVisibleH - headerH - navH - footerH;
-    document.querySelector('main').setAttribute("style", "min-height:" + dH + "px")
+    main.setAttribute("style", "min-height:" + dH + "px");
   },
   initNav: function() {
     var btns = document.querySelectorAll('#dpfNav button')
@@ -394,6 +396,8 @@ var Glob_fn = {
       thead.innerHTML = '';
       var trInThead = document.createElement('tr');
       thead.appendChild(trInThead);
+      // thead.style.backgroundColor = 'white';
+      // thead.setAttribute('uk-sticky', '');
       return trInThead;
     },
     setTh: function(parentTr, content, showBoo) {
@@ -451,7 +455,7 @@ var Glob_fn = {
     hideSome: function(td, width) {
       var span = td.querySelector('span');
       if (!span) return;
-      var maxW = width? width: 100;
+      var maxW = width? width: 200;
       // var byteLength = td.innerText.byteLength();
       var computedWidth = window.getComputedStyle
         ? window.getComputedStyle(span, null).getPropertyValue('width').slice(0, -2)
@@ -460,6 +464,7 @@ var Glob_fn = {
       td.style.overflow = 'hidden';
       td.style.textOverflow = 'ellipsis';
       td.style.maxWidth = maxW + 'px';
+      td.style.cursor = 'pointer';
       td.innerText = span.innerText;
       td.setAttribute('uk-tooltip', td.innerText);
       return td;
@@ -471,6 +476,21 @@ var Glob_fn = {
         this.hideSome(td, max);
       }
       return tr;
+    },
+    tbodyHideSome: function(max) {
+      var table = document.getElementById('dataTable');
+      if (!table) return;
+      if (!table.hasAttribute('data-hideSome')) return;
+      var prop = table.getAttribute('data-hideSome');
+      var size = isNaN(Number(prop))? null: Number(prop);
+      var tbody = table.querySelector('tbody');
+      var trs = tbody.querySelectorAll('tr');
+      if (trs.length < 1) return;
+      for (var i = 0; i < trs.length; i++) {
+        var tr = trs[i];
+        this.trHideSome(tr, size);
+      }
+      return tbody;
     },
     buildAjaxTitle: function(titleData, parentNode) {
       var colCount = 0;
@@ -571,25 +591,48 @@ var Glob_fn = {
       }
     },
     hideUnvalued: function(pointedTable, checkValue) {
-      var table = pointedTable? pointedTable: document.getElementById('dataTable');
-      var flag = checkValue? checkValue: '-';
-      var colCount = table.querySelectorAll('th.feeItemTitle').length;
-      for (var i = 0; i < colCount; i++) {
-        var column = table.querySelectorAll('td[data-col="'+i+'"]');
-        var unvaluedCol = '';
-        for (var j = 0; j < column.length; j++) {
-          unvaluedCol = true;
-          if (column[j].innerText !== flag) {
-            unvaluedCol = false;
-            break;
+      try {
+        var table = pointedTable? pointedTable: document.getElementById('dataTable');
+        var flag = checkValue? checkValue: '-';
+        var ths = table.querySelectorAll('th.feeItemTitle');
+        if (!ths) return;
+        var colCount = ths.length;
+        for (var i = 0; i < colCount; i++) {
+          var column = table.querySelectorAll('td[data-col="'+i+'"]');
+          var unvaluedCol = '';
+          for (var j = 0; j < column.length; j++) {
+            unvaluedCol = true;
+            if (column[j].innerText !== flag) {
+              unvaluedCol = false;
+              break;
+            }
+          }
+          if (unvaluedCol) {
+            for (var k = 0; k < column.length; k++) {
+              column[k].setAttribute('hidden', '');
+            }
+            table.querySelector('th[data-col="'+i+'"]').setAttribute('hidden', '');
           }
         }
-        if (unvaluedCol) {
-          for (var k = 0; k < column.length; k++) {
-            column[k].setAttribute('hidden', '');
-          }
-          table.querySelector('th[data-col="'+i+'"]').setAttribute('hidden', '');
+      } catch (error) {
+        console.error(error);
+        return;
+      }
+    },
+    checkSize: function(pointedTable) {
+      try {
+        var table = pointedTable? pointedTable: document.getElementById('dataTable');
+        var div = table.parentNode;
+        var container = document.querySelector('.maincontent');
+        var tabwidth = window.getComputedStyle(table, null).getPropertyValue('width').slice(0, -2);
+        var divwidth = window.getComputedStyle(div, null).getPropertyValue('width').slice(0, -2);
+        if (Number(tabwidth) > Number(divwidth)) {
+          container.classList.remove('normalWidth');
+          container.classList.add('largeWidth');
         }
+      } catch(error) {
+        console.error(error);
+        return;
       }
     },
     getCheckbox: function(ifAll) {
@@ -645,7 +688,19 @@ var Glob_fn = {
           continue;
         }
       }
-    }
+    },
+    hideTable: function() {
+      document.body.style.overflowY = 'hidden';
+      var tab = document.getElementById('dataTable');
+      if (!tab) return;
+      tab.setAttribute('hidden', '');
+    },
+    showTable: function() {
+      document.body.style.overflowY = 'auto';
+      var tab = document.getElementById('dataTable');
+      if (!tab) return;
+      tab.removeAttribute('hidden');
+    },
   },
   getDictArg_forQueryBills: function() {
     var tType = document.querySelector('input[name=type]').value;

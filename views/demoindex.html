@@ -12,8 +12,10 @@
   <input type="hidden" data-pageId="dovepay-freight_login">
   <input type="hidden" name="api_role" value=<%= urls.api.role %>>
   <input type="hidden" name="pagefor" value=<%= pagefor %>>
-  <h1><%= title %></h1>
-  <form id="form_login" method="post" action="/dovepay-freight/log/login">
+  <input type="hidden" name="url_dovepay" value=<%= urls.login.user %>>
+  <input type="hidden" name="url_dovemgr" value=<%= urls.login.system %>>
+  <form id="form_login" method="post" action="/dovepay-freight/log/login" hidden>
+    <h1><%= title %></h1>
     <label for="userId">登录ID</label>
     <input type="text" name="userId" value=<%= userId %>>
     <label for="accountId">M号</label>
@@ -26,11 +28,6 @@
     </select>
     <input type="submit" name="" value="进入">
   </form>
-  <div class="uk-position-cover uk-background-muted uk-overlay uk-overlay-default uk-flex uk-flex-center uk-flex-middle">
-    <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
-    <span class="sr-only">Loading...</span>
-    <span>正在跳转</span>
-  </div>
   <script type="text/javascript" src="/dovepay-freight/js/plugins/uikit.min.js"></script>
   <script type="text/javascript" src="/dovepay-freight/js/plugins/jquery/jquery-3.6.0.min.js"></script>
   <script type="text/javascript" src="/dovepay-freight/js/Global.js"></script>

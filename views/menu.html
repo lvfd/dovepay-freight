@@ -25,15 +25,6 @@
         <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + station.queryBills %>>账单查看</a></li>
       </ul>
     </section>
-    <section class="menu-group-inline" hidden>
-      <button class="button button-primary">账单管理(旧)<i class="fa fa-caret-down" aria-hidden="true"></i></button>
-      <ul>
-        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + station.internationalBills %>>国际直达</a></li>
-        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + station.domesticBills %>>国内直达</a></li>
-        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + station.transferBills %>>中转</a></li>
-        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + station.expressBills %>>快件</a></li>
-      </ul>
-    </section>
     <% }
     if (!!type && type == 'agent') {
       var agent = urls.agent;
@@ -49,15 +40,6 @@
       <button class="button button-primary">账户绑定<i class="fa fa-caret-down" aria-hidden="true"></i></button>
       <ul>
         <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + agent.accountBinding %>>账户绑定</a></li>
-      </ul>
-    </section>
-    <section class="menu-group-inline" hidden>
-      <button class="button button-primary">账单管理(旧)<i class="fa fa-caret-down" aria-hidden="true"></i></button>
-      <ul>
-        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + agent.internationalBills %>>国际直达</a></li>
-        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + agent.domesticBills %>>国内直达</a></li>
-        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + agent.transferBills %>>中转</a></li>
-        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + agent.expressBills %>>快件</a></li>
       </ul>
     </section>
     <% }
@@ -77,15 +59,6 @@
       <ul>
         <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + system.baseData %>>基础数据</a></li>
         <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + system.queryBills %>>账单查看</a></li>
-      </ul>
-    </section>
-    <section class="menu-group-inline" hidden>
-      <button class="button button-primary">账单管理(旧)<i class="fa fa-caret-down" aria-hidden="true"></i></button>
-      <ul>
-        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + system.internationalBills %>>国际直达</a></li>
-        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + system.domesticBills %>>国内直达</a></li>
-        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + system.transferBills %>>中转</a></li>
-        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + system.expressBills %>>快件</a></li>
       </ul>
     </section>
     <% }%>

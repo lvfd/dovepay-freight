@@ -5,7 +5,7 @@
 <section class="breadcrumb">
   <ul>
     <li>账单管理</li>
-    <li><a href=<%- urls.system.index + urls.system.queryBills %>><%= title %></a></li>
+    <li><a class="postDataLink" href=<%- urls.system.index + urls.system.queryBills %>><%= title %></a></li>
     <li><%= subTitle %></li>
   </ul>
 </section>
@@ -15,9 +15,9 @@
   <div hidden>
     <label class="uk-form-label">开账时间(之前三十六个月)</label>
     <div class="uk-form-controls uk-flex uk-flex-middle">
-      <input id="staTime" type="text" name="orderTimeStart" class="uk-input uk-form-width-medium" placeholder="开始时间" readonly>
+      <input id="staTime" type="text" name="orderTimeStart" class="uk-input uk-form-width-medium" placeholder="开始时间" value="<%= orderTimeStart %>" readonly>
       <span class="uk-margin-small-left uk-margin-small-right">至</span>
-      <input id="endTime" type="text" name="orderTimeEnd" class="uk-input uk-form-width-medium" placeholder="结束时间" readonly>
+      <input id="endTime" type="text" name="orderTimeEnd" class="uk-input uk-form-width-medium" placeholder="结束时间" value="<%= orderTimeEnd %>" readonly>
     </div>
   </div>
   <div>

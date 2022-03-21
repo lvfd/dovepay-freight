@@ -10,11 +10,6 @@
         <%- include('components/station/userManagement/discountPoliciesManagement.html') %>
       <% } else if (name == 'discountPoliciesManagementDetails') { %>
         <%- include('components/station/userManagement/discountPoliciesManagementDetails.html') %>
-      <!-- 新需求替换: -->
-          <% } else if (name == 'billManagement') { %>
-            <%- include('components/station/billManagement/index.html') %>
-          <% } else if (name == 'billDetails') { %>
-            <%- include('components/station/billManagement/details.html') %>
       <!-- 新需求新增: -->
       <% } else if (name == 'billsSetting') { %>
         <%- include('components/station/billsSetting/index.html') %>
@@ -32,11 +27,6 @@
     <% } else if (type == 'agent') {%>
       <% if (name == 'accountBinding') { %>
         <%- include('components/agent/accountBinding/accountBinding.html') %>
-      <!-- 新需求替换: -->
-          <% } else if (name == 'billManagement') { %>
-            <%- include('components/agent/billManagement/index.html') %>
-          <% } else if (name == 'billDetails') { %>
-            <%- include('components/agent/billManagement/details.html') %>
       <!-- 新需求新增: -->
       <% } else if (name == 'queryBills') { %>
         <%- include('components/agent/billManagement/queryBills.html') %>
@@ -46,11 +36,6 @@
     <% } else if (type == 'system') {%>
       <% if (name == 'userInfoManagement') { %>
         <%- include('components/system/userInfoManagement.html') %>
-      <!-- 新需求替换: -->
-        <% } else if (name == 'billManagement') { %>
-          <%- include('components/system/billsManagement.html') %>
-        <% } else if (name == 'billDetails') { %>
-          <%- include('components/system/billDetails.html') %>
       <!-- 新需求新增: -->
       <% } else if (name == 'baseData') { %>
         <%- include('components/system/baseData.html') %>
@@ -60,7 +45,6 @@
         <%- include('components/system/index_new.html') %>
       <% } else if (name == 'queryBills_details') { %>
         <%- include('components/system/details_new.html') %>
-
       <% } else if (name == 'policiesManagement') { %>
         <%- include('components/system/policiesManagement.html') %>
       <% } else if (name == 'policyDetails') { %>

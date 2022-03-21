@@ -18,7 +18,6 @@ $(document).ajaxError(function(event, xhr, settings){
   var res = xhr.status + xhr.statusText;
   if (console)
     console.error(reqUrl, reqData, res);
-
   Glob_fn.errorHandler('服务器数据获取失败: 错误码: ' + xhr.status + ';<br>错误描述: ' + getStatusText(xhr.statusText));
   function getStatusText(statusStr) {
     var text = statusStr;
@@ -62,7 +61,7 @@ function checkRes (res) {
   }
 }
 // Init submit button:
-function fn_initSubmitBtn(pageNumber, pageSize, fetchFn, callback, postDataHandler) {
+function fn_initSubmitBtn(pageNumber, pageSize, fetchFn, callback, postDataHandler, config) {
   var submitBtn = document.getElementById('submitBtn');
   submitBtn.addEventListener('click', function(event){
     event.preventDefault();
@@ -74,8 +73,9 @@ function fn_initSubmitBtn(pageNumber, pageSize, fetchFn, callback, postDataHandl
     postData.indexPage = pageNumber;
     postData.pageSize = pageSize;
     postData.countPage = pageSize;
+    Glob_fn.Table.hideTable();
     if (typeof callback === 'function') {
-      fetchFn.call(this, url, postData, callback);
+      fetchFn.call(this, url, postData, callback, config);
     } else {
       fetchFn.call(this, url, postData);
     }
@@ -85,10 +85,12 @@ function fn_initSubmitBtn(pageNumber, pageSize, fetchFn, callback, postDataHandl
 // Init export button:
 function fn_initExportBtn(fetchFn) {
   var expoBtn = document.getElementById('exportBtn');
+  if (!expoBtn) return;
   expoBtn.addEventListener('click', function(event) {
     event.preventDefault();
     var $this = $(this);
     var url = document.querySelector('input[name=api_forExport]').value;
+    if (!url) return;
     var postData = $this.closest('form').serializeObject();
     fetchFn.call(this, url, postData);
   });
@@ -170,45 +172,6 @@ function fetchData(url, data, callback, config) {
   $.ajax(ajaxConfig);
 }
 
-// login:
-function fetch_login_getRole(url, data) {
-  var postData = JSON.stringify(data);
-  $.ajax({
-    url: url,
-    data: postData,
-    success: function(res) {
-      // console.log(postData, res);
-      if (checkRes(res) === false) return;
-      try {
-        var page = new Page_login();
-        page.setRole(res);
-      } catch (err) {
-        Glob_fn.errorHandler(err);
-        if (console)
-          console.error(err, res)
-      }
-    }
-  });
-}
-
-// logout:
-function fetch_login_logout(url, data) {
-  var postData = JSON.stringify(data);
-  $.ajax({
-    url: url,
-    data: postData,
-    success: function(res) {
-      if (checkRes(res) === false) return;
-      try {
-        var url = res.data.redirect;
-        window.location.href = url;
-      } catch (err) {
-        Glob_fn.errorHandler(err);
-      }
-    }
-  });
-}
-
 // sys:
 function fetch_sys_getAllConsumer(url, data) {
   var postData = JSON.stringify(data);
@@ -247,44 +210,6 @@ function fetch_sys_queryDiscountCustomer(url, data) {
     }
   });
 }
-function fetch_sys_systemQueryBill(url, data) {
-  var postData = JSON.stringify(data);
-  var indexPage = data.indexPage;
-  var countPage = data.countPage;
-  // console.log(url, postData)
-  $.ajax({
-    url: url,
-    data: postData,
-    success: function(res) {
-      if (checkRes(res) === false) return;
-      // console.log(res);
-      var table = new Sys_table();
-      try {
-        table.getTable_queryBill(res, indexPage, countPage);
-      } catch (err) {
-        Glob_fn.errorHandler(err);
-      }
-    }
-  });
-}
-function fetch_sys_systemQueryBillDetails(url, data) {
-  var postData = JSON.stringify(data);
-  var indexPage = data.indexPage;
-  var countPage = data.countPage;
-  $.ajax({
-    url: url,
-    data: postData,
-    success: function(res) {
-      if (checkRes(res) === false) return;
-      var table = new Sys_table();
-      try {
-        table.getTable_queryDetails(res, indexPage, countPage);
-      } catch (err) {
-        Glob_fn.errorHandler(err);
-      }
-    }
-  });
-}
 function fetch_sys_getAllDiscountPolicy(url, data) {
   var postData = JSON.stringify(data);
   var pageNumber = data.pageNumber;
@@ -307,47 +232,6 @@ function fetch_sys_getAllDiscountPolicy(url, data) {
 }
 
 // agent:
-// 账单查询：
-function fetch_age_consumerQueryBill(url, data) {
-  var postData = JSON.stringify(data);
-  var indexPage = data.indexPage;
-  var countPage = data.countPage;
-  console.log(url, postData)
-  $.ajax({
-    url: url,
-    data: postData,
-    success: function(res) {
-      if (checkRes(res) === false) return;
-      console.log(res);
-      var table = new Age_table();
-      try {
-        table.getTable_queryBill(res, indexPage, countPage);
-      } catch (err) {
-        Glob_fn.errorHandler(err);
-      }
-    }
-  });
-}
-// 账单明细查询：
-function fetch_age_consumerQueryBillDetails(url, data) {
-  var postData = JSON.stringify(data);
-  var indexPage = data.indexPage;
-  var countPage = data.countPage;
-  $.ajax({
-    url: url,
-    data: postData,
-    success: function(res) {
-      if (checkRes(res) === false) return;
-      // console.log(res);
-      var table = new Age_table();
-      try {
-        table.getTable_queryDetails(res, indexPage, countPage);
-      } catch (err) {
-        Glob_fn.errorHandler(err);
-      }
-    }
-  });
-}
 // 提交支付：
 function fetch_age_toPay(url, data) {  // 去收银台
   var postData = JSON.stringify(data);
@@ -411,48 +295,6 @@ function fetch_age_bindConsumer(url, data) {  // 绑定商户
 }
 
 // Station:
-// 账单查询：
-function fetch_sta_stationQueryBill(url, data) {
-  var postData = JSON.stringify(data);
-  var indexPage = data.indexPage;
-  var countPage = data.countPage;
-  console.log(url, postData)
-  $.ajax({
-    url: url,
-    data: postData,
-    success: function(res) {
-      if (checkRes(res) === false) return;
-      console.log(res);
-      var table = new Sta_table();
-      try {
-        table.getTable_queryBill(res, indexPage, countPage);
-      } catch (err) {
-        Glob_fn.errorHandler(err);
-      }
-    }
-  });
-}
-// 账单明细查询：
-function fetch_sta_stationQueryBillDetails(url, data) {
-  var postData = JSON.stringify(data);
-  var indexPage = data.indexPage;
-  var countPage = data.countPage;
-  console.log(url, postData)
-  $.ajax({
-    url: url,
-    data: postData,
-    success: function(res) {
-      if (checkRes(res) === false) return;
-      console.log(res);
-      var table = new Sta_table();
-      try {
-        table.getTable_queryDetails(res, indexPage, countPage);
-      } catch (err) {
-        Glob_fn.errorHandler(err);
-      }
-    }
-  });
-}
 // 调账：
 function fetch_sta_updateFee(url, data) {
   var postData = JSON.stringify(data);

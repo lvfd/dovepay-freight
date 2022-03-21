@@ -48,6 +48,8 @@ const api = {
     queryDiscountCustomer: baseAPIUrl + '/system/queryDiscountCustomer',
     getDiscountPolicy: baseAPIUrl + '/system/getDiscountPolicy',
     systemQuerySumBillByRule: baseAPIUrl + '/system/systemQuerySumBillByRule',
+    systemQueryBillDetailsSum: baseAPIUrl + '/system/systemQueryBillDetailsSum',
+    systemQueryOriginalWaybill: baseAPIUrl + '/system/systemQueryOriginalWaybill',
   },
   pay: {
     pay: baseAPIUrl + '/pay/pay'
@@ -57,7 +59,8 @@ const api = {
   role: baseAPIUrl + '/role',
   queryCargo: baseAPIUrl + '/queryCargo',
   queryFeeItemRemove: baseAPIUrl + '/queryFeeItemRemove',
-  getAllSupplier: baseAPIUrl + '/getAllSupplier'
+  queryModifyLog: baseAPIUrl + '/queryModifyLog',
+  getAllSupplier: baseAPIUrl + '/getAllSupplier',
 }
 module.exports = {
   api

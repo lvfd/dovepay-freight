@@ -10,8 +10,24 @@ main .button {
   font-size: 14px;
 }
 main .maincontent {
-  width: 980px;
+  /*width: 980px;*/
   margin: 0 auto;
+}
+main .normalWidth {
+  width: 980px;
+}
+main .largeWidth {
+  padding-right: 30px;
+  padding-left: 30px;
+}
+main .breadcrumb,
+main #dataForm,
+main ul[data-for=dataTable] {
+  width: 980px;
+  margin:  0 auto;
+}
+.breadcrumb + hr {
+  width: 980px;
 }
 main .breadcrumb ul > * {
   display: contents;

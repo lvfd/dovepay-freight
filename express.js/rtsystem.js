@@ -3,6 +3,8 @@ const router = express.Router()
 const { urls } = require('./config')
 const system = urls.system
 const { authenticate } = require('./mws')
+const bodyParser = require('body-parser')
+const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 // Authentication: 
 router.use(authenticate('system'))
@@ -61,22 +63,28 @@ router.get(system.baseData, (req, res) => {  // 基础数据
   params.name = 'baseData'
   res.render('frame', params)
 })
-router.get(system.queryBills, (req, res) => {  // 账单信息
+router.all(system.queryBills, urlencodedParser, (req, res) => {  // 账单信息
   let params = getParams(req, res)
+  setOrderTime(req, params)
   params.title = '账单信息'
   params.name = 'queryBills'
   res.render('frame', params)
 })
-router.get(system.queryBills_bill, (req, res) => { // 账单信息-查看账单
+router.get(system.queryBills + '/*', (req, res) => {   // GET访问信息二三级界面会跳转
+  res.redirect(system.index + system.queryBills)
+})
+router.post(system.queryBills_bill, urlencodedParser, (req, res) => {  // 账单信息-查看账单POST账期
   let params = getParams(req, res)
+  setOrderTime(req, params)
   params.title = '账单信息'
   params.subTitle = '查看账单'
   params.name = 'queryBills_bill'
   params.tType = req.params.rule
   res.render('frame', params)
 })
-router.get(system.queryBills_details, (req, res) => {
+router.post(system.queryBills_details, urlencodedParser, (req, res) => { // 账单信息-查看账单-详情POST账期&能否修改
   let params = getParams(req, res)
+  setOrderTime(req, params)
   params.title = '账单信息'
   params.subTitle = '查看账单'
   params.thirdTitle = '账单详情'
@@ -101,6 +109,14 @@ function getParams(req, res) {
     accountId: user.accountId,
     type: user.type
   }
+  return params
+}
+function setOrderTime(req, params) {
+  params.orderTimeStart = ''
+  params.orderTimeEnd = ''
+  if (!req.body) return params
+  params.orderTimeStart = req.body.orderTimeStart
+  params.orderTimeEnd = req.body.orderTimeEnd
   return params
 }
 

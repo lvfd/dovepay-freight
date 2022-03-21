@@ -1,4 +1,8 @@
 function fn_initPaginate(res, pageNumber, pageSize, fetchFn, callback, postDataHandler) {
+  Glob_fn.Table.hideUnvalued();
+  Glob_fn.Table.showTable();
+  Glob_fn.Table.checkSize();
+  Glob_fn.Table.tbodyHideSome();
   if (res.data.totalPage > 1) {
     var p = new Paginate();
     p.showPagnition(res.data.totalPage, pageNumber, pageSize, fetchFn, callback, postDataHandler);

@@ -3,6 +3,7 @@ $(document).ready(function() {
     EntryJS();
   } catch (error) {
     Glob_fn.errorHandler(error);
+    return;
   }
 });
 
@@ -63,6 +64,10 @@ function EntryJS() {
   // 初始化系统商: 账单汇总查询:
   if (document.querySelector('input[data-pageId=system_billMangement_queryBills]')) {
     initSystem_billMangement_queryBills();
+  }
+  // 初始化系统商: 基础数据页面:
+  if (document.querySelector('input[data-pageId=system_baseData]')) {
+    initSystem_baseData();
   }
 
       // 初始化agent：查询账单(旧需求)：

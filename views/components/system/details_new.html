@@ -3,13 +3,15 @@
 <input type="hidden" name="api_forTable" value=<%= urls.api.system.systemQueryBillDetails%>>
 <input type="hidden" name="api_forExport" value=<%= urls.api.system.systemBillDetailsExcel%>>
 <input type="hidden" name="api_queryFeeItem" value=<%= urls.api.queryFeeItem%>>
-<input type="hidden" name="api_queryBillDetailsSum" value=<%= urls.api.station.stationQueryBillDetailsSum%>>
-<input type="hidden" name="api_queryModifyLog" value=<%= urls.api.station.queryModifyLog%>>
+<input type="hidden" name="api_queryBillDetailsSum" value=<%= urls.api.system.systemQueryBillDetailsSum%>>
+<input type="hidden" name="api_queryModifyLog" value=<%= urls.api.queryModifyLog%>>
+<input type="hidden" name="orderTimeStart" value="<%= orderTimeStart %>">
+<input type="hidden" name="orderTimeEnd" value="<%= orderTimeEnd %>">
 <section class="breadcrumb">
   <ul>
     <li>账单管理</li>
-    <li><a href=<%- urls.system.index + urls.system.queryBills %>><%= title %></a></li>
-    <li><a href=<%- urls.system.index + urls.system.queryBills + '/' + rule %>><%= subTitle %></a></li>
+    <li><a class="postDataLink" href=<%- urls.system.index + urls.system.queryBills %>><%= title %></a></li>
+    <li><a class="postDataLink" href=<%- urls.system.index + urls.system.queryBills + '/' + rule %>><%= subTitle %></a></li>
     <li><%= thirdTitle %></li>
   </ul>
 </section>

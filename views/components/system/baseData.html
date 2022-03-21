@@ -1,8 +1,8 @@
 <input type="hidden" data-pageId="system_baseData">
 <input type="hidden" name="dict_api" value=<%= urls.api.dict%>>
-<input type="hidden" name="api_stationQueryEffectiveBillRule" value=<%= urls.api.station.queryEffectiveBillRule %>>
-<input type="hidden" name="api_forTable" value=<%= urls.api.station.stationQueryOriginalWaybill %>>
-<input type="hidden" name="api_forExport" value=<%= urls.api.station.stationOriginalWaybillExcel %>>
+<input type="hidden" name="api_queryEffectiveBillRule" value="">
+<input type="hidden" name="api_forTable" value=<%= urls.api.system.systemQueryOriginalWaybill %>>
+<input type="hidden" name="api_forExport" value="">
 <input type="hidden" name="api_queryFeeItem" value=<%= urls.api.queryFeeItem %>>
 <section class="breadcrumb">
   <ul>
@@ -32,7 +32,7 @@
       </select>
     </div>
   </div>
-  <div class="uk-margin">
+  <div class="uk-margin" hidden>
     <label class="uk-form-label">已生效账单规则（暂时不要）</label>
     <div id="ruleSetsWrap" class="uk-form-controls uk-grid-small" uk-grid>
       <div>
@@ -40,37 +40,12 @@
           <input type="radio" name="billRule" value="" hidden checked>全部
         </label>
       </div>
-      <!--
-      <div>
-        <label class="void button">
-          <input type="radio" name="ruleSets" value="1" hidden>国际XXX账单
-        </label>
-        <div uk-drop="delay-hide: 0">
-          <div class="uk-card uk-card-small uk-card-default">
-            <div class="uk-card-header">
-              <div class="uk-card-title">
-                <h5>国际XXX账单</h5>
-              </div>
-            </div>
-            <div class="uk-card-body uk-container uk-container-xsmall">
-              <span class="uk-label uk-margin-small-bottom">国际进港</span>
-              <span class="uk-label uk-margin-small-bottom">国际出港</span>
-              <span class="uk-label uk-margin-small-bottom">国内出港</span>
-              <span class="uk-label uk-margin-small-bottom">国内进港</span>
-              <span class="uk-label uk-margin-small-bottom">国内地空中转</span>
-              <span class="uk-label uk-margin-small-bottom">国内空空中转</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      -->
     </div>
   </div>
-  <div class="uk-flex uk-flex-center">
+  <div class="uk-margin uk-flex uk-flex-center">
     <button id="submitBtn" class="button button-rounded uk-width-small button-primary" type="button">查询</button>
     <input type="reset" class="button button-rounded uk-width-small button-highlight uk-margin-small-left" value="重置">
-    <button id="exportBtn" class="button button-rounded uk-width-small button-action uk-margin-small-left" type="button">导出数据</button>
-  </div>  
+  </div>
 </form>
 <hr>
 <div class="uk-overflow-auto">
