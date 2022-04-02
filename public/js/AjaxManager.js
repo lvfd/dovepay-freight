@@ -239,6 +239,8 @@ function fetch_age_toPay(url, data) {  // 去收银台
     url: url,
     data: postData,
     success: function(res) {
+      // console.log(res)
+      // debugger
       if (checkRes(res) === false) return; 
       var data = res.data,
           payUrl = data.payUrl,
