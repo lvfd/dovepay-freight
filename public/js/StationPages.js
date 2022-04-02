@@ -828,6 +828,7 @@ Sta_table.prototype.getTable_queryBill_new = function(res, pageNumber, pageSize)
       Glob_fn.Table.setTh(trInThead, '付款状态');
       Glob_fn.Table.setTh(trInThead, '支付订单号');
       Glob_fn.Table.setTh(trInThead, '操作');
+      return trInThead;
     }
     function setTbody(res) {
       var tbody = table.querySelector('tbody');
@@ -937,6 +938,8 @@ Sta_table.prototype.getTable_queryBill_new = function(res, pageNumber, pageSize)
           var pageUrl = document.querySelector('input[name=pageUrl]').value;
           var orderNo = this.getAttribute('data-orderNo');
           var data = { orderNo: orderNo, pageUrl: pageUrl };
+          // console.info(url, data)
+          // debugger
           fetch_age_toPay(url, data);
         });
         result.push(payLink);
