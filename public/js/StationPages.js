@@ -11,7 +11,7 @@ function initStation_baseData() {
   var form = document.getElementById('dataForm');
   Glob_fn.WdateInit('startTime', 'endTime', {
     dateFmt: 'yyyy年MM月',
-    minDate: '{%y-1}-{%M+9}-%d',
+    // minDate: '{%y-1}-{%M+9}-%d',
     maxDate: 'today',
   });
   fetchPayMode();
@@ -50,9 +50,13 @@ function initStation_baseData() {
   }
   function createEffectiveBillRules(res) {
     var data = res.data || res.date;
-    if (data === undefined) throw new Error('远程数据格式非法: 没有data属性');
-    if (!Array.isArray(data)) throw new Error('远程数据格式非法: data属性不是数组');
-    if (data.length < 1) throw new Error('没有已生效的账单规则');
+    try {
+      if (data === undefined) throw new Error('远程数据格式非法: 没有data属性');
+      if (!Array.isArray(data)) throw new Error('远程数据格式非法: data属性不是数组');
+      if (data.length < 1) throw new Error('没有已生效的账单规则(此功能可选)');
+    } catch(err) {
+      Glob_fn.errorHandler(err, initPage);
+    }
     for (var i = 0; i < data.length; i++) {
       createBillRuleButtons(data[i]);
     }
@@ -173,7 +177,7 @@ function initStation_billMangement_queryBills() {
   var form = document.getElementById('dataForm');
   Glob_fn.WdateInit('startTime', 'endTime', {
     dateFmt: 'yyyy年MM月',
-    minDate: '{%y-3}-%M-%d',
+    // minDate: '{%y-3}-%M-%d',
     maxDate: 'today',
     realDateFmt: 'yyyyMM',
   });
@@ -1103,7 +1107,6 @@ Sta_table.prototype.getTable_queryDetails_new = function(res, pageNumber, pageSi
     }
   }
   function createModHis(res) {
-    // console.log(res);
     var data = res.data;
     if (res.data === undefined) throw new Error('远程数据非法: data未定义');
     if (res.data === null || data.length < 1) {
@@ -1135,6 +1138,7 @@ Sta_table.prototype.getTable_queryDetails_new = function(res, pageNumber, pageSi
 Sta_table.prototype.getTable_queryBillRuleByPage = function(res, pageNumber, pageSize) {
   try {
     var table = document.querySelector('#dataTable');
+    var trInThead = Glob_fn.Table.getThTr(table);
     createThead();
     createTbody();
     fn_initPaginate(res, pageNumber, pageSize, fetchData, new Sta_table().getTable_queryBillRuleByPage);
@@ -1143,7 +1147,6 @@ Sta_table.prototype.getTable_queryBillRuleByPage = function(res, pageNumber, pag
     return;
   }
   function createThead() {
-    var trInThead = Glob_fn.Table.getThTr(table);
     Glob_fn.Table.setTh(trInThead, '序号');
     Glob_fn.Table.setTh(trInThead, '账单ID', false);
     Glob_fn.Table.setTh(trInThead, '账单名称');
