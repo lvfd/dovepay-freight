@@ -55,7 +55,8 @@ function initStation_baseData() {
       if (!Array.isArray(data)) throw new Error('远程数据格式非法: data属性不是数组');
       if (data.length < 1) throw new Error('没有已生效的账单规则(此功能可选)');
     } catch(err) {
-      Glob_fn.errorHandler(err, initPage);
+      // Glob_fn.errorHandler(err, initPage); // 显示异常
+      initPage(); // 不处理异常
     }
     for (var i = 0; i < data.length; i++) {
       createBillRuleButtons(data[i]);
