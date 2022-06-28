@@ -14,15 +14,55 @@ function initStation_baseData() {
     // minDate: '{%y-1}-{%M+9}-%d',
     maxDate: 'today',
   });
-  fetchPayMode();
+  function fetchDictErrHandler(res) {
+    if (res.data === undefined) throw new Error('远程数据非法: 数据没有data属性');
+    if (!Array.isArray(res.data)) throw new Error('远程数据非法: data属性不是数组');
+    if (res.data.length < 1) throw new Error('远程数据非法: 结算类型为空');
+  }
+  function setOptions(arr, selName) {
+    var sel = document.querySelector('select[name=' + selName + ']');
+    if (!sel) return;
+    for (var i = 0; i < arr.length; i++) {
+      var op = document.createElement('option');
+      op.setAttribute('value', arr[i].key);
+      op.innerText = arr[i].value;
+      sel.appendChild(op);
+    }
+  }
+  fetchExpImp();
+  function fetchExpImp() {
+    fn_queryDict('EXP_IMP', function(res) {
+      if (checkRes(res) === false) return;
+      try {
+        console.log(res)
+        fetchDictErrHandler(res);
+        setOptions(res.data, 'expImp');
+        fetchDomInt();
+      } catch (error) {
+        Glob_fn.errorHandler(error);
+        return;
+      }
+    });
+  }
+  function fetchDomInt() {
+    fn_queryDict('DOM_INT', function(res) {
+      if (checkRes(res) === false) return;
+      try {
+        fetchDictErrHandler(res);
+        setOptions(res.data, 'domInt');
+        fetchPayMode();
+      } catch (error) {
+        Glob_fn.errorHandler(error);
+        return;
+      }
+    });
+  }
   function fetchPayMode() {
     fn_queryDict('PAY_MODE', function(res) {
       if (checkRes(res) === false) return;
       try {
-        if (res.data === undefined) throw new Error('远程数据非法: 数据没有data属性');
-        if (!Array.isArray(res.data)) throw new Error('远程数据非法: data属性不是数组');
-        if (res.data.length < 1) throw new Error('远程数据非法: 结算类型为空');
-        setPayMode(res.data);
+        fetchDictErrHandler(res);
+        setOptions(res.data, 'payMode');
         if (role === 'system') {
           initPage();
           return;
@@ -33,15 +73,6 @@ function initStation_baseData() {
         return;
       }
     });
-    function setPayMode(arr) {
-      var sel = document.querySelector('select[name=payMode]');
-      for (var i = 0; i < arr.length; i++) {
-        var op = document.createElement('option');
-        op.setAttribute('value', arr[i].key);
-        op.innerText = arr[i].value;
-        sel.appendChild(op);
-      }
-    }
   }
   function fetchEffectiveBillRules() {
     var api = document.querySelector('input[name=api_queryEffectiveBillRule');
