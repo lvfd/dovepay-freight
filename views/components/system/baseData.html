@@ -12,22 +12,34 @@
 </section>
 <hr>
 <form id="dataForm" class="uk-form-stacked">
-  <div class="uk-flex">
+  <div class="uk-grid-small" uk-grid>
     <div>
-      <label class="uk-form-label" for="staTime">时间(限制之前三个月)</label>
+      <label class="uk-form-label" for="staTime">时间</label>
       <div class="uk-form-controls uk-flex uk-flex-middle">
         <input id="startTime" type="text" name="staTime" class="uk-input uk-form-width-medium" placeholder="全部时间" readonly>
         <span class="uk-margin-small-left uk-margin-small-right">至</span>
         <input id="endTime" type="text" name="endTime" class="uk-input uk-form-width-medium" placeholder="全部时间" readonly>
       </div>
     </div>
-    <div class="uk-margin-left">
+    <div>
       <label class="uk-form-label" for="stockNo">运单号</label>
       <input type="text" name="stockNo" class="uk-input uk-form-width-medium" placeholder="全部运单">
     </div>
-    <div class="uk-margin-left">
+    <div>
       <label class="uk-form-label" for="payMode">结算类型</label>
       <select class="uk-select uk-form-width-medium" name="payMode">
+        <option value="">全部</option>
+      </select>
+    </div>
+    <div>
+      <label class="uk-form-label" for="domInt">地区</label>
+      <select class="uk-select uk-form-width-medium" name="domInt">
+        <option value="">全部</option>
+      </select>
+    </div>
+    <div>
+      <label class="uk-form-label" for="expImp">进/出港</label>
+      <select class="uk-select uk-form-width-medium" name="expImp">
         <option value="">全部</option>
       </select>
     </div>
