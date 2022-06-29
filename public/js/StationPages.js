@@ -14,10 +14,14 @@ function initStation_baseData() {
     // minDate: '{%y-1}-{%M+9}-%d',
     maxDate: 'today',
   });
+  entry();  // 异步函数调用入口
+  function entry() {
+    fetchExpImp();
+  }
   function fetchDictErrHandler(res) {
-    if (res.data === undefined) throw new Error('远程数据非法: 数据没有data属性');
-    if (!Array.isArray(res.data)) throw new Error('远程数据非法: data属性不是数组');
-    if (res.data.length < 1) throw new Error('远程数据非法: 结算类型为空');
+    if (res.data === undefined) throw new Error('远程数据非法: 字典接口返回值未定义');
+    if (!Array.isArray(res.data)) throw new Error('远程数据非法: 字典接口返回值格式错误');
+    if (res.data.length < 1) throw new Error('远程数据非法: 字典接口返回值为空值');
   }
   function setOptions(arr, selName) {
     var sel = document.querySelector('select[name=' + selName + ']');
@@ -29,12 +33,10 @@ function initStation_baseData() {
       sel.appendChild(op);
     }
   }
-  fetchExpImp();
   function fetchExpImp() {
     fn_queryDict('EXP_IMP', function(res) {
       if (checkRes(res) === false) return;
       try {
-        console.log(res)
         fetchDictErrHandler(res);
         setOptions(res.data, 'expImp');
         fetchDomInt();
