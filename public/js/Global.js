@@ -109,8 +109,8 @@ var Glob_fn = {
       var parentNode = main? main: body;
       var div = document.createElement('div');
       div.setAttribute('id', 'loadingOverlay');
-      div.setAttribute('uk-sticky', '');
-      // div.style.position = 'absolute';
+      // div.setAttribute('uk-sticky', '');
+      div.style.position = 'fixed';
       div.setAttribute('class', 'uk-position-cover uk-overlay uk-overlay-default uk-flex uk-flex-center uk-flex-middle');
       div.innerHTML = '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">Loading...</span>';
       parentNode.appendChild(div);
