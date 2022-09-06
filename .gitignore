@@ -59,3 +59,9 @@ typings/
 
 # next.js build output
 .next
+
+# Self defination
+package-lock.json
+/dist/*
+/public/css/plugins/uikit-rtl*
+/public/css/plugins/uikit-core*
