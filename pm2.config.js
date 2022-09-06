@@ -1,18 +1,19 @@
-module.exports = {
+let config = {
   apps : [{
     name: 'dovepay-freight',
-    script: './express.js',
-    watch: '.',
-    ignore_watch: ["[\/\\]\./", "node_modules"],
-    env: {
-       NODE_ENV: "development"
-    },
+    script: './express',
+    // watch: '.',
+    // ignore_watch: ["[\/\\]\./", "node_modules"],
     env_production: {
        NODE_ENV: "production"
     },
+    env_development: {
+       NODE_ENV: "development"
+    },
+    autorestart: false,
     // pm2 start process.json --env production
-    instances: 0,
-    exec_mode: "cluster"
+    // instances: 0,
+    // exec_mode: "cluster"
   }]
 
   // ,deploy : {
@@ -27,4 +28,7 @@ module.exports = {
   //     'pre-setup': ''
   //   }
   // }
-};
+}
+
+
+module.exports = config
