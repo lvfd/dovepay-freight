@@ -1,7 +1,7 @@
 let config = {
   apps : [{
     name: 'dovepay-freight',
-    script: './express',
+    script: './express.js',
     // watch: '.',
     // ignore_watch: ["[\/\\]\./", "node_modules"],
     env_production: {
@@ -11,6 +11,7 @@ let config = {
        NODE_ENV: "development"
     },
     autorestart: false,
+    log_date_format: "YYYY-MM-DD HH:mm",
     // pm2 start process.json --env production
     // instances: 0,
     // exec_mode: "cluster"
