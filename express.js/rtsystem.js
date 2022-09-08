@@ -93,6 +93,19 @@ router.post(system.queryBills_details, urlencodedParser, (req, res) => { // 账�
   params.name = 'queryBills_details'
   res.render('frame', params)
 })
+router.get(system.dataStatistic, (req, res) => {
+  let params = getParams(req, res)
+  params.title = '数据统计'
+  params.name = 'dataStatistic'
+  res.render('frame', params)
+})
+router.get(system.dataStatisticDetails, (req, res) => {
+  let params = getParams(req, res)
+  params.title = '数据统计'
+  params.subTitle = '详情'
+  params.name = 'dataStatisticDetails'
+  res.render('frame', params)
+})
 
 
 // Functions: 

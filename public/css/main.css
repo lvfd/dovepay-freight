@@ -14,7 +14,7 @@ main .maincontent {
   margin: 0 auto;
 }
 main .normalWidth {
-  width: 980px;
+  /*width: 980px;*/
 }
 main .largeWidth {
   padding-right: 30px;
@@ -23,11 +23,11 @@ main .largeWidth {
 main .breadcrumb,
 main #dataForm,
 main ul[data-for=dataTable] {
-  width: 980px;
+  width: 100%;
   margin:  0 auto;
 }
 .breadcrumb + hr {
-  width: 980px;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
 }

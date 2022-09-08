@@ -16,7 +16,8 @@ module.exports = {
         "sourceType": "module"
     },
     "plugins": [
-        "json"
+        "json",
+        "html",
     ],
     "rules": {
     },

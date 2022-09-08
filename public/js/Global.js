@@ -60,7 +60,6 @@ var Glob_fn = {
   },
   initMain: function() {
     var main = document.getElementById('dpfMain');
-    main.querySelector('.maincontent').classList.add('normalWidth');
     var headerH = 73
     var navH = 40
     var footerH = 90

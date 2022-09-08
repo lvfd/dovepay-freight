@@ -3,7 +3,7 @@ nav {
   background-color: rgb(3,78,162);
 }
 nav .button-group {
-  width: 980px;
+  /*width: 980px;*/
   margin: 0 auto;
 }
 nav .fa-caret-down, nav .fa-caret-up {

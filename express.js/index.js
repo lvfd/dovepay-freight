@@ -79,5 +79,5 @@ function errorsHandler() {
 
 // Listener: 
 app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`)
+  console.log(`货运系统界面启动。端口: ${port}`)
 })

@@ -1,5 +1,5 @@
 <nav id="dpfNav">
-  <section class="button-group">
+  <section class="button-group uk-container uk-container-xlarge">
     <% if (!!type && type == 'station') {
       var station = urls.station;
       var base = urls.station.index;
@@ -23,6 +23,7 @@
       <ul>
         <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + station.baseData %>>基础数据</a></li>
         <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + station.queryBills %>>账单查看</a></li>
+        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + station.dataStatistic %>>数据统计</a></li>
       </ul>
     </section>
     <% }
@@ -59,6 +60,7 @@
       <ul>
         <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + system.baseData %>>基础数据</a></li>
         <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + system.queryBills %>>账单查看</a></li>
+        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + system.dataStatistic %>>数据统计</a></li>
       </ul>
     </section>
     <% }%>

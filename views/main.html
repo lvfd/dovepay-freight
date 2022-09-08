@@ -1,6 +1,7 @@
 <main id="dpfMain">
   <hr>
-  <section class="maincontent">
+  <section class="uk-container uk-container-xlarge">
+
     <% if (type == 'station') { %>
       <% if (name == 'userInfo') { %>
         <%- include('components/station/userManagement/userInfo.html') %>
@@ -23,7 +24,12 @@
         <%- include('components/station/billManagement/index_new.html') %>
       <% } else if (name == 'queryBills_details') { %>
         <%- include('components/station/billManagement/details_new.html') %>
+      <% } else if (name == 'dataStatistic') { %>
+        <%- include('components/station/dataStatistic/index.html') %>
+      <% } else if (name == 'dataStatisticDetails') { %>
+        <%- include('components/station/dataStatistic/details.html') %>
       <% } %>
+
     <% } else if (type == 'agent') {%>
       <% if (name == 'accountBinding') { %>
         <%- include('components/agent/accountBinding/accountBinding.html') %>
@@ -33,6 +39,7 @@
       <% } else if (name == 'queryDetails') { %>
         <%- include('components/agent/billManagement/details_new.html') %>
       <% } %>
+
     <% } else if (type == 'system') {%>
       <% if (name == 'userInfoManagement') { %>
         <%- include('components/system/userInfoManagement.html') %>
@@ -49,7 +56,12 @@
         <%- include('components/system/policiesManagement.html') %>
       <% } else if (name == 'policyDetails') { %>
         <%- include('components/system/policyDetails.html') %>
+      <% } else if (name == 'dataStatistic') { %>
+        <%- include('components/station/dataStatistic/index.html') %>
+      <% } else if (name == 'dataStatisticDetails') { %>
+        <%- include('components/station/dataStatistic/details.html') %>
       <% } %>
     <% } %>
+
   </section>
 </main>

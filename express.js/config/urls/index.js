@@ -39,7 +39,10 @@ const urls = {
     baseData: '/baseData',  // 基础数据
     queryBills: '/queryBills',  // 账单信息
     queryBills_bill: '/queryBills/:rule',  // 账单信息-查看账单
-    queryBills_details: '/queryBills/:rule/:orderNo' // 账单信息-查看账单-查看详情
+    queryBills_details: '/queryBills/:rule/:orderNo', // 账单信息-查看账单-查看详情
+    /* 220908 数据统计路由 */
+    dataStatistic: '/dataStatistic',  /* Init Page */
+    dataStatisticDetails: '/dataStatistic/details',
   },
   agent: {
     index: '/dovepay-freight/agent',
@@ -71,7 +74,10 @@ const urls = {
     baseData: '/baseData',  // 基础数据
     queryBills: '/queryBills',  // 账单信息
     queryBills_bill: '/queryBills/:rule',  // 账单信息-查看账单
-    queryBills_details: '/queryBills/:rule/:orderNo' // 账单信息-查看账单-查看详情
+    queryBills_details: '/queryBills/:rule/:orderNo', // 账单信息-查看账单-查看详情
+    /* 220908 数据统计路由 */
+    dataStatistic: '/dataStatistic',  /* Init Page */
+    dataStatisticDetails: '/dataStatistic/details',
   },
   api: api
 }
