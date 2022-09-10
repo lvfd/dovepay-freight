@@ -14,27 +14,27 @@
 
     <div>
       <label class="uk-form-label" for="">年度</label>
-      <input id="" type="text" name="" class="uk-input uk-form-width-medium" readonly>
+      <input id="" type="text" name="" class="uk-input uk-form-width-medium uk-disabled" readonly>
     </div>
 
     <div>
       <label class="uk-form-label" for="">往来户编号</label>
-      <input type="" name="" class="uk-input uk-form-width-medium" readonly>
+      <input type="" name="" class="uk-input uk-form-width-medium uk-disabled" readonly>
     </div>
 
     <div>
       <label class="uk-form-label" for="">商户编号</label>
-      <input type="" name="" class="uk-input uk-form-width-medium" readonly>
+      <input type="" name="" class="uk-input uk-form-width-medium uk-disabled" readonly>
     </div>
 
     <div>
       <label class="uk-form-label" for="">往来户名称</label>
-      <input type="" name="" class="uk-input uk-form-width-medium" readonly>
+      <input type="" name="" class="uk-input uk-form-width-medium uk-disabled" readonly>
     </div>
 
     <div>
       <label class="uk-form-label" for="">账单类型</label>
-      <input type="" name="" class="uk-input uk-form-width-medium" readonly>
+      <input type="" name="" class="uk-input uk-form-width-medium uk-disabled" readonly>
     </div>
 
   </div>
@@ -43,13 +43,11 @@
 <hr>
 
 <ul uk-tab="animation: uk-animation-fade">
-  <!-- <li class="uk-active"><a href="#">Left</a></li> -->
-  <!-- <li class="uk-disabled"><a>Disabled</a></li> -->
   <li><a href="#">详细数据</a></li>
   <li><a href="#">图表展示</a></li>
 </ul>
 
 <ul class="uk-switcher">
   <li>详细数据</li>
-  <li>图表展示</li>
+  <li><%- include('chart.html') %></li>
 </ul>
