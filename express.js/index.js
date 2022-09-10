@@ -26,6 +26,7 @@ dovepay_freight.set('view engine', views_ext)
 dovepay_freight.set('views', path.join(root_path, 'views'))
 dovepay_freight.engine(views_ext, ejs.__express)
 dovepay_freight.use(express.static(path.join(root_path, 'public')))
+dovepay_freight.use('/dist', express.static(path.join(root_path, 'dist')))
 dovepay_freight.use(helmet({
   contentSecurityPolicy: false
 }))
