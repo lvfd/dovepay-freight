@@ -22,6 +22,7 @@ module.exports = {
     "rules": {
     },
     "globals": {
-        "UIkit": "readonly"
+        "UIkit": "readonly",
+        "WdatePicker": "readonly",
     }
 }
