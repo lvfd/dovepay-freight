@@ -131,11 +131,16 @@ router.get(station.dataStatistic, (req, res) => {
   params.name = 'dataStatistic'
   res.render('frame', params)
 })
-router.get(station.dataStatisticDetails, (req, res) => {
+router.post(station.dataStatisticDetails, urlencodedParser, (req, res) => {
   let params = getParams(req, res)
   params.title = '数据统计'
   params.subTitle = '详情'
   params.name = 'dataStatisticDetails'
+  if (req.body) {
+    for (let prop in req.body) {
+      params[prop] = req.body[prop]
+    }
+  }
   res.render('frame', params)
 })
 

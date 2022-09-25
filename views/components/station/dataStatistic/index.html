@@ -1,10 +1,14 @@
 <input type="hidden" data-pageId="dataStatisticIndex">
+<input type="hidden" name="api_forTable" value=<%= urls.api.station.stationQueryBillSummary %>>
+<input type="hidden" name="api_forExport" value=<%= urls.api.station.stationQueryBillSummaryExcel %>>
+<input type="hidden" name="api_queryEffectiveBillRule" value=<%= urls.api.station.queryEffectiveBillRule %>>
+<input type="hidden" name="billRuleIdValue" value="">
 
 <section class="breadcrumb">
   <ul>
     <li>账单管理</li>
     <li><%= title %></li>
-    <li><a href="./dataStatistic/details">goto 查看详细</a></li>
+    <!-- <li><a id="testPostDetails" data-prop1="prop1" data-prop2="prop2" href="./dataStatistic/details">goto 查看详细</a></li> -->
   </ul>
 </section>
 <hr>
@@ -14,24 +18,24 @@
   <div class="uk-grid-small" uk-grid>
 
     <div>
-      <label class="uk-form-label" for="">年度</label>
-      <input id="" type="text" name="" class="uk-input uk-form-width-medium" placeholder="全部年度" readonly>
+      <label class="uk-form-label" for="billTime">年度</label>
+      <input type="text" name="billTime" class="uk-input uk-form-width-medium" placeholder="全部年度" readonly>
     </div>
     <div>
-      <label class="uk-form-label" for="">往来户编号</label>
-      <input type="" name="" class="uk-input uk-form-width-medium" placeholder="全部往来户编号">
+      <label class="uk-form-label" for="esbCustomerId">往来户编号</label>
+      <input type="" name="esbCustomerId" class="uk-input uk-form-width-medium" placeholder="全部往来户编号">
     </div>
     <div>
-      <label class="uk-form-label" for="">商户编号</label>
-      <input type="" name="" class="uk-input uk-form-width-medium" placeholder="全部商户编号">
+      <label class="uk-form-label" for="accountId">商户编码</label>
+      <input type="" name="accountId" class="uk-input uk-form-width-medium" placeholder="全部商户编号">
     </div>
     <div>
-      <label class="uk-form-label" for="">往来户名称</label>
-      <input type="" name="" class="uk-input uk-form-width-medium" placeholder="往来户名称">
+      <label class="uk-form-label" for="esbCustomerName">往来户名称</label>
+      <input type="" name="esbCustomerName" class="uk-input uk-form-width-medium" placeholder="往来户名称">
     </div>
     <div>
-      <label class="uk-form-label" for="">账单类型</label>
-      <select class="uk-select uk-form-width-medium" name="">
+      <label class="uk-form-label" for="billRuleId">账单类型</label>
+      <select class="uk-select uk-form-width-medium" name="billRuleId">
         <option value="">全部类型</option>
       </select>
     </div>
@@ -54,5 +58,10 @@
 
 </form>
 <hr>
-
-
+<div class="uk-overflow-auto">
+  <table id="dataTable" class="uk-table uk-table-small uk-table-divider uk-table-striped uk-table-hover">
+    <thead></thead>
+    <tbody></tbody>
+  </table>
+</div>
+<ul class="uk-pagination uk-flex-center" data-for="dataTable"></ul>

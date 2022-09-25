@@ -36,6 +36,11 @@ const api = {
     stationQuerySumBillByRule: baseAPIUrl + '/station/stationQuerySumBillByRule', // 货站账单汇总查询接口
     queryModifyLog: baseAPIUrl + '/station/queryModifyLog', // 查询运单的修改记录接口
     stationQueryBillDetailsSum: baseAPIUrl + '/station/stationQueryBillDetailsSum',// 货站查看明细汇总接口
+    /* 数据统计接口 */
+    stationQueryBillSummary: baseAPIUrl + '/station/stationQueryBillSummary', // 货站数据统计接口
+    stationQueryBillSummaryExcel: baseAPIUrl + '/station/stationQueryBillSummaryExcel', // 货站数据统计导出接口
+    stationQueryBillSummaryDetails: baseAPIUrl + '/station/stationQueryBillSummaryDetails', // 货站数据统计详情接口
+    stationQueryBillSummaryDetailsExcel: baseAPIUrl + '/station/stationQueryBillSummaryDetailsExcel', // 货站数据统计详情导出接口
   },
   system: {
     systemQueryBill: baseAPIUrl + '/system/systemQueryBill',

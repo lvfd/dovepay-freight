@@ -1,4 +1,6 @@
 <input type="hidden" data-pageId="dataStatisticDetails">
+<input type="hidden" name="api_forTable" value=<%= urls.api.station.stationQueryBillSummaryDetails %>>
+<input type="hidden" name="api_forExport" value=<%= urls.api.station.stationQueryBillSummaryDetailsExcel %>>
 
 <section class="breadcrumb">
   <ul>
@@ -13,28 +15,47 @@
   <div class="uk-grid-small" uk-grid>
 
     <div>
-      <label class="uk-form-label" for="">年度</label>
-      <input id="" type="text" name="" class="uk-input uk-form-width-medium uk-disabled" readonly>
+      <label class="uk-form-label" for="serialNumber">排名</label>
+      <input type="text" name="serialNumber" class="uk-input uk-form-width-medium uk-disabled" value="<%= serialNumber %>" readonly>
     </div>
 
     <div>
-      <label class="uk-form-label" for="">往来户编号</label>
-      <input type="" name="" class="uk-input uk-form-width-medium uk-disabled" readonly>
+      <label class="uk-form-label" for="billTime">年度</label>
+      <input type="text" name="billTime" class="uk-input uk-form-width-medium uk-disabled" value="<%= billTime %>" readonly>
     </div>
 
     <div>
-      <label class="uk-form-label" for="">商户编号</label>
-      <input type="" name="" class="uk-input uk-form-width-medium uk-disabled" readonly>
+      <label class="uk-form-label" for="esbCustomerId">往来户编号</label>
+      <input type="text" name="esbCustomerId" class="uk-input uk-form-width-medium uk-disabled" value="<%= esbCustomerId %>" readonly>
     </div>
 
     <div>
-      <label class="uk-form-label" for="">往来户名称</label>
-      <input type="" name="" class="uk-input uk-form-width-medium uk-disabled" readonly>
+      <label class="uk-form-label" for="accountId">商户编号</label>
+      <input type="text" name="accountId" class="uk-input uk-form-width-medium uk-disabled" value="<%= accountId %>" readonly>
     </div>
 
     <div>
-      <label class="uk-form-label" for="">账单类型</label>
-      <input type="" name="" class="uk-input uk-form-width-medium uk-disabled" readonly>
+      <label class="uk-form-label" for="esbCustomerName">往来户名称</label>
+      <input type="text" name="esbCustomerName" class="uk-input uk-form-width-medium uk-disabled" value="<%= esbCustomerName %>" readonly>
+    </div>
+
+    <div>
+      <label class="uk-form-label" for="billRuleId">账单类型</label>
+      <input type="text" name="billRuleId" class="uk-input uk-form-width-medium uk-disabled" value="<%= billRuleId %>" readonly>
+    </div>
+
+  </div>
+
+  <div class="uk-grid-small uk-flex-center" uk-grid hidden>
+
+    <div>
+      <button id="submitBtn" class="button button-rounded uk-width-small button-primary" type="button">查询</button>
+    </div>
+    <div>
+      <input type="reset" class="button button-rounded uk-width-small button-highlight uk-margin-small-left" value="重置">
+    </div>
+    <div>
+      <button id="exportBtn" class="button button-rounded uk-width-small button-action uk-margin-small-left" type="button">导出数据</button>
     </div>
 
   </div>
@@ -48,6 +69,13 @@
 </ul>
 
 <ul class="uk-switcher">
-  <li>详细数据</li>
+  <li>
+    <div class="uk-overflow-auto">
+      <table id="dataTable" class="uk-table uk-table-small uk-table-divider uk-table-striped uk-table-hover">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </li>
   <li><%- include('chart.html') %></li>
 </ul>
