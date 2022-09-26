@@ -138,6 +138,10 @@ router.post(station.dataStatisticDetails, urlencodedParser, (req, res) => {
   params.name = 'dataStatisticDetails'
   if (req.body) {
     for (let prop in req.body) {
+      if (prop === 'accountId') {
+        params.agentAccountId = req.body[prop]
+        continue
+      }
       params[prop] = req.body[prop]
     }
   }

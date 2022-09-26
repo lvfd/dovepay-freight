@@ -1,6 +1,7 @@
 <input type="hidden" data-pageId="dataStatisticDetails">
 <input type="hidden" name="api_forTable" value=<%= urls.api.station.stationQueryBillSummaryDetails %>>
 <input type="hidden" name="api_forExport" value=<%= urls.api.station.stationQueryBillSummaryDetailsExcel %>>
+<input type="hidden" name="api_queryEffectiveBillRule" value=<%= urls.api.station.queryEffectiveBillRule %>>
 
 <section class="breadcrumb">
   <ul>
@@ -15,6 +16,11 @@
   <div class="uk-grid-small" uk-grid>
 
     <div>
+      <label class="uk-form-label" for="esbCustomerName">往来户名称</label>
+      <input type="text" name="esbCustomerName" class="uk-input uk-form-width-large uk-disabled" value="<%= esbCustomerName %>" readonly>
+    </div>
+
+    <div hidden>
       <label class="uk-form-label" for="serialNumber">排名</label>
       <input type="text" name="serialNumber" class="uk-input uk-form-width-medium uk-disabled" value="<%= serialNumber %>" readonly>
     </div>
@@ -24,34 +30,30 @@
       <input type="text" name="billTime" class="uk-input uk-form-width-medium uk-disabled" value="<%= billTime %>" readonly>
     </div>
 
-    <div>
+    <div hidden>
       <label class="uk-form-label" for="esbCustomerId">往来户编号</label>
       <input type="text" name="esbCustomerId" class="uk-input uk-form-width-medium uk-disabled" value="<%= esbCustomerId %>" readonly>
     </div>
 
-    <div>
+    <div hidden>
       <label class="uk-form-label" for="accountId">商户编号</label>
-      <input type="text" name="accountId" class="uk-input uk-form-width-medium uk-disabled" value="<%= accountId %>" readonly>
-    </div>
-
-    <div>
-      <label class="uk-form-label" for="esbCustomerName">往来户名称</label>
-      <input type="text" name="esbCustomerName" class="uk-input uk-form-width-medium uk-disabled" value="<%= esbCustomerName %>" readonly>
+      <input type="text" name="accountId" class="uk-input uk-form-width-medium uk-disabled" value="<%= agentAccountId %>" readonly>
     </div>
 
     <div>
       <label class="uk-form-label" for="billRuleId">账单类型</label>
-      <input type="text" name="billRuleId" class="uk-input uk-form-width-medium uk-disabled" value="<%= billRuleId %>" readonly>
+      <input type="hidden" name="billRuleId" class="uk-input uk-form-width-medium uk-disabled" value="<%= billRuleId %>">
+      <input type="text" id="billRuleText" class="uk-input uk-form-width-medium uk-disabled" value="" readonly>
     </div>
 
   </div>
 
-  <div class="uk-grid-small uk-flex-center" uk-grid hidden>
+  <div class="uk-grid-small uk-flex-center" uk-grid>
 
-    <div>
+    <div hidden>
       <button id="submitBtn" class="button button-rounded uk-width-small button-primary" type="button">查询</button>
     </div>
-    <div>
+    <div hidden>
       <input type="reset" class="button button-rounded uk-width-small button-highlight uk-margin-small-left" value="重置">
     </div>
     <div>
