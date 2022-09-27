@@ -23,9 +23,12 @@
       <ul>
         <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + station.baseData %>>基础数据</a></li>
         <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + station.queryBills %>>账单查看</a></li>
-        <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + station.dataStatistic %>>数据统计</a></li>
       </ul>
     </section>
+    <section>
+      <a class="button button-primary" href=<%- base + station.dataStatistic %>>数据统计</a>
+    </section>
+
     <% }
     if (!!type && type == 'agent') {
       var agent = urls.agent;
@@ -62,6 +65,9 @@
         <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + system.queryBills %>>账单查看</a></li>
         <li><i class="fa fa-angle-right" aria-hidden="true"></i><a href=<%- base + system.dataStatistic %>>数据统计</a></li>
       </ul>
+    </section>
+    <section>
+      <a class="button button-primary" href=<%- base + system.dataStatistic %>>数据统计</a>
     </section>
     <% }%>
   </section>
