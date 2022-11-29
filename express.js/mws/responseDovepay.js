@@ -2,8 +2,7 @@ module.exports = (type) => {
   return (req, res, next) => {
     const Jssm4 = require('jssm4')
     const { sm4keys, urls } = require('../config')
-    const keys = sm4keys.test
-    // const keys = sm4keys.prod
+    const keys = process.env.NODE_ENV === 'development'? sm4keys.test: sm4keys.prod
     if (!type) {
       let msg = {
         type: type,
@@ -24,7 +23,7 @@ module.exports = (type) => {
     let userId = ''
     try {
       userId_raw = req.body.userid
-      userId = sm4.decryptData_ECB(userId_raw)
+      userId = process.env.NODE_ENV === 'development'? sm4.decryptData_ECB(userId_raw): userId_raw
     } catch (error) {
       let msg = {
         type: type,

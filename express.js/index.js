@@ -55,9 +55,12 @@ async function sessionHandler() {
 
 function routerHandler() {
   // Test login:
-  dovepay_freight.get('/test1', testLogin('station'))
-  dovepay_freight.get('/test2', testLogin('agent'))
-  dovepay_freight.get('/mgr', testLogin('system'))
+
+  // if (process.env.NODE_ENV === 'development') {
+    dovepay_freight.get('/test1', testLogin('station'))
+    dovepay_freight.get('/test2', testLogin('agent'))
+    dovepay_freight.get('/mgr', testLogin('system'))
+  // }
 
   // Link dovePay:
   dovepay_freight.post('/', urlencodedParser, responseDovepay('user'))

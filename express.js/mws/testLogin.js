@@ -3,13 +3,13 @@ module.exports = (type) => {
     const env = req.app.get('env')
     const { urls } = require('../config')
     // console.log(env)
-    if ( env === 'production' ) {
-      if (type === 'system') {
-        return res.redirect(urls.dovemgr)
-      } else {
-        return res.redirect(urls.dovepay)
-      }
-    }
+    // if ( env === 'production' ) {
+    //   if (type === 'system') {
+    //     return res.redirect(urls.dovemgr)
+    //   } else {
+    //     return res.redirect(urls.dovepay)
+    //   }
+    // }
     let pagefor, title
     if (type === 'system') {
       userId = 'sys'

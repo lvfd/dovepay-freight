@@ -1,6 +1,8 @@
 // const baseAPIUrl = 'http://10.1.51.51:8080/dovepay-freight-server/api/v1'  // 贺宁
 // const baseAPIUrl = 'http://10.1.51.40:8080/dovepay-freight-server/api/v1' // 薛志远
-const baseAPIUrl = 'https://test.dovepay.com/dovepay-freight-server/api/v1'  // 测试
+const baseAPIUrl = process.env.NODE_ENV === 'development'?
+  'https://test.dovepay.com/dovepay-freight-server/api/v1'  // 测试
+  : 'https://www.dovepay.com/dovepay-freight-server/api/v1'  // 生产
 const api = {
   consumer: {
     consumerQueryBill: baseAPIUrl + '/consumer/consumerQueryBill',
