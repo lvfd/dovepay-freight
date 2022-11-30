@@ -97,14 +97,16 @@ router.get(system.dataStatistic, (req, res) => {
   let params = getParams(req, res)
   params.title = '数据统计'
   params.name = 'dataStatistic'
-  res.render('frame', params)
+  // res.render('frame', params)
+  res.send('此功能待开发')
 })
 router.get(system.dataStatisticDetails, (req, res) => {
   let params = getParams(req, res)
   params.title = '数据统计'
   params.subTitle = '详情'
   params.name = 'dataStatisticDetails'
-  res.render('frame', params)
+  // res.render('frame', params)
+  res.send('此功能待开发')
 })
 
 
