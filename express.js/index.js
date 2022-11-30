@@ -44,10 +44,10 @@ sessionHandler().then(routerHandler).then(errorsHandler)
 // Init Session:
 async function sessionHandler() {
   const sess = await initSession()
-  if (dovepay_freight.get('env') === 'production') {
-    dovepay_freight.set('trust proxy', 1) // trust first proxy
-    sess.cookie.secure = true // serve secure cookies
-  }
+  // if (dovepay_freight.get('env') === 'production') {
+  //   dovepay_freight.set('trust proxy', 1) // trust first proxy
+  //   sess.cookie.secure = true // serve secure cookies
+  // }
   dovepay_freight.use(session(sess))
   dovepay_freight.use(checkRedisConnect)
 }
@@ -56,11 +56,12 @@ async function sessionHandler() {
 function routerHandler() {
   // Test login:
 
-  // if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development') {
     dovepay_freight.get('/test1', testLogin('station'))
     dovepay_freight.get('/test2', testLogin('agent'))
     dovepay_freight.get('/mgr', testLogin('system'))
-  // }
+    dovepay_freight.get('/tp', (req, res) => res.render('testpost'))
+  }
 
   // Link dovePay:
   dovepay_freight.post('/', urlencodedParser, responseDovepay('user'))
@@ -83,5 +84,5 @@ function errorsHandler() {
 
 // Listener: 
 app.listen(port, () => {
-  console.log(`货运系统界面启动。端口: ${port}`)
+  console.log(`------>货运系统${process.env.NODE_ENV}界面启动。端口: ${port}`)
 })

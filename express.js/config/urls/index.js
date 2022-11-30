@@ -1,14 +1,10 @@
 const { api } = require('./api')
 const urls = {
   login: {
-    // user: 'http://localhost:3001/dovepay-freight',
-    // system: 'http://localhost:3001/dovepay-freight/mgr'
-    // user: 'https://test.dovepay.com/dovepay-freight/',
-    // system: 'https://test.dovepay.com/dovepay-freight/mgr'
-    user: 'https://test.dovepay.com',
-    system: 'https://test.dovepay.com:8443/doveMgr/'
-    // user: 'https://www.dovepay.com',
-    // system: 'https://www.dovepay.com:8443/doveMgr/'
+    user: process.env.NODE_ENV === 'development'? 
+      'https://test.dovepay.com': 'https://www.dovepay.com',
+    system: process.env.NODE_ENV === 'development'? 
+      'https://test.dovepay.com:8443/doveMgr/': 'https://www.dovepay.com:8443/doveMgr/'
   },
   dovepay: 'https://www.dovepay.com',
   dovemgr: 'https://www.dovepay.com:8443/doveMgr/',
