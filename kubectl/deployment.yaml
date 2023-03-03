@@ -65,9 +65,9 @@ spec:
   ports:
     - name: http
       protocol: TCP # 协议
-      port: 118  # Service端口
+      port: 119  # Service端口
       targetPort: 3000 # 容器端口
-      nodePort: 30038  # 对外暴露的端口，可以指定
+      nodePort: 30039  # 对外暴露的端口，可以指定
   selector:
     app: $PROJECT
   type: NodePort
