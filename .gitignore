@@ -61,7 +61,7 @@ typings/
 .next
 
 # Self defination
-package-lock.json
-/dist/*
+# package-lock.json
+# /dist/*
 /public/css/plugins/uikit-rtl*
 /public/css/plugins/uikit-core*
