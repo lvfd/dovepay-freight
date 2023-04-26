@@ -18,13 +18,18 @@ spec:
         version: latest
         deployment: $PROJECT-latest
     spec:
+      nodeSelector:
+         node: slave
       hostAliases:
-      - ip: 108.0.100.60
-        hostnames:
-        - "test.dovepay.com"
-      - ip: 108.0.100.61
-        hostnames:
-        - "test.dovepay.com"
+        - ip: 108.0.100.51
+          hostnames:
+            - "www.dovepay.com"
+        - ip: 108.0.100.52
+          hostnames:
+            - "www.dovepay.com"
+        - ip: 108.0.100.53
+          hostnames:
+            - "www.dovepay.com"
       containers:
         - name: $PROJECT
           image: $IMAGE_NAME
@@ -36,13 +41,13 @@ spec:
           resources:
             limits:
               cpu: 500m
-              memory: 2Gi
+              memory: 1Gi
             requests:
               cpu: 100m
               memory: 256Mi
           volumeMounts:
             - name: app-file
-              mountPath: /home/appusr
+              mountPath: /epaynas
             - name: app-log
               mountPath: /opt/logs
       volumes:
