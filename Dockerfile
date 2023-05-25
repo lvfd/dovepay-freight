@@ -22,7 +22,7 @@ COPY package*.json ./
 # RUN npm ci --only=production
 RUN npm ci --omit=dev
 
-RUN rm -f .npmrc
+RUN rm .npmrc
 
 # Bundle app source
 COPY . .
