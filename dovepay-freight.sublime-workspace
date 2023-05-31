@@ -1,0 +1,1115 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"fetch",
+				"fetchValue"
+			],
+			[
+				"va",
+				"value"
+			],
+			[
+				"content",
+				"contentDiv"
+			],
+			[
+				"inner",
+				"innerText"
+			],
+			[
+				"orderI",
+				"orderId不能为空"
+			],
+			[
+				"ad",
+				"addedType"
+			],
+			[
+				"cl",
+				"cl\tconsole.log"
+			],
+			[
+				"fet",
+				"fetchValue"
+			],
+			[
+				"fu",
+				"function"
+			],
+			[
+				"fe",
+				"fetch"
+			],
+			[
+				"err",
+				"error"
+			],
+			[
+				"che",
+				"checked"
+			],
+			[
+				"chec",
+				"checkbox"
+			],
+			[
+				"data-fee",
+				"data-feeShortNm"
+			],
+			[
+				"fee",
+				"feeIteminput〔variable〕"
+			],
+			[
+				"uk",
+				"uk-flex"
+			],
+			[
+				"feeItem",
+				"feeItemAsset〔variable〕"
+			],
+			[
+				"uk-mar",
+				"uk-margin-small-right"
+			],
+			[
+				"uk-",
+				"uk-button"
+			],
+			[
+				"card",
+				"cardFooter〔variable〕"
+			],
+			[
+				"feeItemButton",
+				"feeItemButtonModal"
+			],
+			[
+				"feeI",
+				"feeItem"
+			],
+			[
+				"app",
+				"appendChild"
+			],
+			[
+				"feeItemD",
+				"feeItemDiv"
+			],
+			[
+				"padd",
+				"padding-top"
+			],
+			[
+				"addE",
+				"addEventListener"
+			],
+			[
+				"re",
+				"result"
+			],
+			[
+				"a",
+				"appname"
+			],
+			[
+				"st",
+				"style"
+			],
+			[
+				"inpu",
+				"inputTestFromDovepay"
+			],
+			[
+				"limi",
+				"limitationInfo"
+			],
+			[
+				"query",
+				"querySelector"
+			],
+			[
+				"toS",
+				"toStep3"
+			],
+			[
+				"ca",
+				"catch"
+			],
+			[
+				"ass",
+				"asset"
+			],
+			[
+				"f",
+				"from"
+			],
+			[
+				"for",
+				"forEach"
+			],
+			[
+				"ar",
+				"article"
+			],
+			[
+				"id",
+				"idNumber"
+			],
+			[
+				"op",
+				"option"
+			],
+			[
+				"order",
+				"orderId"
+			],
+			[
+				"fi",
+				"figure"
+			],
+			[
+				"rout",
+				"router"
+			],
+			[
+				"qr",
+				"qrcode"
+			],
+			[
+				"de",
+				"details"
+			],
+			[
+				"mod",
+				"module"
+			],
+			[
+				"DOM",
+				"DOMContentLoaded"
+			],
+			[
+				"get",
+				"getRootPath"
+			],
+			[
+				"pr",
+				"project"
+			],
+			[
+				"IE",
+				"IEVersion"
+			],
+			[
+				"al",
+				"alert"
+			],
+			[
+				"U",
+				"UIkit"
+			],
+			[
+				"po",
+				"postData"
+			],
+			[
+				"pwdRe",
+				"pwdResultSM"
+			],
+			[
+				"pge",
+				"pgeditor"
+			],
+			[
+				"res",
+				"response"
+			],
+			[
+				"is",
+				"isInstalled"
+			],
+			[
+				"pass",
+				"password"
+			],
+			[
+				"th",
+				"th"
+			],
+			[
+				"hea",
+				"header"
+			],
+			[
+				"link",
+				"link_top"
+			],
+			[
+				"ac",
+				"actionTd"
+			],
+			[
+				"getAr",
+				"getArticlePropertiesFrom"
+			],
+			[
+				"arti",
+				"articleListStatus"
+			],
+			[
+				"create",
+				"createElement"
+			],
+			[
+				"butt",
+				"buttonNext"
+			],
+			[
+				"button",
+				"buttonNext"
+			],
+			[
+				"remove",
+				"removeAttribute"
+			],
+			[
+				"uk-but",
+				"uk-button-primary"
+			],
+			[
+				"inn",
+				"innerText"
+			],
+			[
+				"rem",
+				"removeAttribute"
+			],
+			[
+				"set",
+				"setAttribute"
+			],
+			[
+				"l",
+				"console.log"
+			],
+			[
+				"article",
+				"articleId"
+			],
+			[
+				"wi",
+				"withCredentials"
+			],
+			[
+				"link_",
+				"link_modify"
+			],
+			[
+				"innerHt",
+				"innerHTML"
+			],
+			[
+				"adde",
+				"addEventListener"
+			],
+			[
+				"getA",
+				"getAttribute"
+			],
+			[
+				"forE",
+				"forEach"
+			],
+			[
+				"class",
+				"classList"
+			],
+			[
+				"red",
+				"redisCluster"
+			],
+			[
+				"ex",
+				"exports"
+			],
+			[
+				"auto",
+				"autocomplete"
+			],
+			[
+				"dove",
+				"dove-eee"
+			],
+			[
+				"log",
+				"logoutBtn"
+			],
+			[
+				"cli",
+				"click"
+			],
+			[
+				"in",
+				"input"
+			],
+			[
+				"input",
+				"inputResult"
+			],
+			[
+				"bl",
+				"blur"
+			],
+			[
+				"uk-ca",
+				"uk-card-body"
+			],
+			[
+				"uk-c",
+				"uk-card"
+			],
+			[
+				"se",
+				"section"
+			],
+			[
+				"uk-bu",
+				"uk-button-default"
+			],
+			[
+				"header",
+				"header"
+			],
+			[
+				"main",
+				"main"
+			],
+			[
+				"modi",
+				"modified"
+			],
+			[
+				"call",
+				"callback"
+			],
+			[
+				"cons",
+				"console"
+			],
+			[
+				"te",
+				"text"
+			],
+			[
+				"pl",
+				"plugins"
+			],
+			[
+				"Node",
+				"node_env"
+			],
+			[
+				"xt",
+				"html:xt"
+			],
+			[
+				"getPro",
+				"getPropertyValue"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"cw",
+				"process.cwd"
+			],
+			[
+				"java",
+				"javaRoot"
+			],
+			[
+				"sour",
+				"sourceRoot"
+			],
+			[
+				"readd",
+				"fs.readdirSync"
+			],
+			[
+				"read",
+				"fs.readdir"
+			],
+			[
+				"uk-car",
+				"uk-card-footer"
+			],
+			[
+				"ukmar",
+				"uk-margin-small"
+			],
+			[
+				"ui",
+				"uikit-icons"
+			],
+			[
+				"uikit",
+				"uikit_icon"
+			],
+			[
+				"uk-width",
+				"uk-width-small"
+			],
+			[
+				"node",
+				"nodeName"
+			],
+			[
+				"uk-gr",
+				"uk-grid-small"
+			],
+			[
+				"form",
+				"<form"
+			],
+			[
+				"add",
+				"addClass"
+			],
+			[
+				"fore",
+				"forEach"
+			],
+			[
+				"uk-button",
+				"uk-button-primary"
+			],
+			[
+				"parent",
+				"parentNode"
+			],
+			[
+				"Acca",
+				"AccaPayBankType"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"uk-align",
+				"uk-align-center"
+			],
+			[
+				"uk-ali",
+				"uk-align-center"
+			],
+			[
+				"uk-m",
+				"uk-margin-right"
+			],
+			[
+				"head",
+				"header"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "dovepay-freight.sublime-project",
+			"settings":
+			{
+				"buffer_size": 150,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/ESLint/ESLint.sublime-build",
+					""
+				],
+				[
+					"Packages/Nodejs/Nodejs.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/ESLint/ESLint.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Makefile/Make.sublime-build",
+					""
+				],
+				[
+					"Packages/Makefile/Make.sublime-build",
+					"Clean"
+				],
+				[
+					"Packages/Nodejs/Nodejs.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Nodejs/Nodejs.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 137.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"prett",
+				"Pretty JSON: Format JSON Lines"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"re",
+				"Package Control: Remove Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"theme",
+				"UI: Select Color Scheme"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"adva",
+				"Package Control: Advanced Install Package"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Remove Package"
+			],
+			[
+				"package",
+				"Package Control: Remove Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"up",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: git",
+				"Package Control: Install Package"
+			],
+			[
+				"",
+				"Bookmarks: Select All"
+			],
+			[
+				"Package Control: inst",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: insa",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: install",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: insta",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: instal",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 428.0
+	},
+	"console":
+	{
+		"height": 461.0,
+		"history":
+		[
+			"dir",
+			"ls",
+			"dir",
+			"import urllib.request,os,hashlib; h = '6f4c264a24d933ce70df5dedcf1dcaee' + 'ebe013ee18cced0ef93d5f746d80ef60'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+	],
+	"file_history":
+	[
+		"/C/Users/lvfd/nodejs/dovepay-freight/dovepay-freight.sublime-project",
+		"/C/Users/lvfd/nodejs/dovepay-freight-ui/dovepay-freight.sublime-project",
+		"/C/Users/lvfd/nodejs/dovepay-freight-ui/src/dataStatistic.js",
+		"/C/Users/lvfd/nodejs/dovepay-freight/views/components/station/dataStatistic/index.html",
+		"/C/Users/lvfd/nodejs/dovepay-freight-ui/src/StationPages.js",
+		"/C/Users/lvfd/nodejs/dovepay-freight/views/components/station/billsSetting/addRule.html",
+		"/C/Users/lvfd/nodejs/dovepay-freight-ui/webpack.config.js",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/views/test_fromDovepay.pug",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/routes/test-api.js",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/src/paymentFunction.js",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/.git/config",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/README.md",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/src/api.js",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/views/step1_payment_function.pug",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/views/step4_payment_result.pug",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/routes/project.js",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/src/paymentResult.js",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/kubectl/pipeline-test.groovy",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/project.config.js",
+		"/D/Sublime-Text-Build-3211_x64/Data/Packages/Pretty JSON/Pretty JSON.sublime-settings",
+		"/C/Users/lvfd/nodejs/dovepay-freight-ui/src/QueryDict.js",
+		"/C/Users/lvfd/nodejs/dovepay-freight/public/js/QueryDict.js",
+		"/C/Users/lvfd/nodejs/dovepay-freight/Dockerfile",
+		"/C/Users/lvfd/nodejs/dovepay-freight/gulpfile.js",
+		"/C/Users/lvfd/nodejs/dovepay-freight-ui/src/DiscountPages.js",
+		"/C/Users/lvfd/nodejs/dovepay-freight/public/css/main.css",
+		"/C/Users/lvfd/nodejs/dovepay-freight/views/components/station/userManagement/discountPolicies.html",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/views/step2_input_number.pug",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/views/step3_input_id.pug",
+		"/D/mongodb/mongo.config",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/routes/config.json",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/src/inputNumber.js",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/views/limitation_info.pug",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/views/layout.pug",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/app.js",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/public/data/bankInfo.json",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/public/data/limitation.json",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/src/functions.js",
+		"/D/Sublime-Text-Build-3211_x64/Data/Packages/DocBlockr/Base File.sublime-settings",
+		"/D/Sublime-Text-Build-3211_x64/Data/Packages/DocBlockr/README.md",
+		"/D/Sublime-Text-Build-3211_x64/Data/Packages/User/Pretty JSON.sublime-settings",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/.eslintrc.json",
+		"/D/Sublime-Text-Build-3211_x64/Data/Packages/CTags/CTags.sublime-settings",
+		"/D/Sublime-Text-Build-3211_x64/Data/Packages/ConvertToUTF8/ConvertToUTF8.sublime-settings",
+		"/D/Sublime-Text-Build-3211_x64/Data/Packages/SideBarEnhancements/Side Bar.sublime-settings",
+		"/D/Sublime-Text-Build-3211_x64/Data/Packages/JsFormat/JsFormat.sublime-settings",
+		"/D/Sublime-Text-Build-3211_x64/Data/Packages/User/JsFormat.sublime-settings",
+		"/D/Sublime-Text-Build-3211_x64/Data/Packages/JsFormat/Default (Windows).sublime-keymap",
+		"/D/Sublime-Text-Build-3211_x64/Data/Packages/ESLint/ESLint.sublime-settings",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/src/vars.js",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/public/data/orderInfo.json",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/Dockerfile",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/public/stylesheets/index.css",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/public/data/result.json",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/kubectl/deployment-test.yaml",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/接口文档.md",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/views/error.pug",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/src/inputCaptcha.js",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/src/inputId.js",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/views/step3_input_id_input_captcha.pug",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/webpack.config.js",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/views/step4_payment_result.html",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/public/data/captcha.json",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/views/step3_input_id_input_captcha.html",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/public/data/fakedata.json",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/public/data/qrCodePayAction.json",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/src/limitationInfo.js",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/src/init.js",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/views/project-layout.pug",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/routes/index.js",
+		"/C/Users/lvfd/Desktop/2023中国银联入网技术安全复测评采购/材料/03-测试原始记录-v0.0.3/03-测试原始记录/2.3 存储安全/1、账户信息/log4j_daily_dovePay.log.20230516",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/public/data/static.json",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/src/api.json",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/views/limitation_info.html",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/views/step3_input_id.html",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/views/step2_input_number.html",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/src/index.js",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/views/step1_payment_function.html",
+		"/C/Users/lvfd/nodejs/dove-eee/src/init-page.js",
+		"/C/Users/lvfd/nodejs/dove-eee/webpack.config.js",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/eslintrc.json",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/package.json",
+		"/C/Users/lvfd/nodejs/unionpay-certified-pay/.npmrc",
+		"/C/Users/lvfd/nodejs/dovepay-freight/package.json",
+		"/C/Users/lvfd/nodejs/dovepay-freight/views/main.html",
+		"/C/Users/lvfd/nodejs/dovepay-freight/views/components/station/billManagement/index_new.html",
+		"/C/Users/lvfd/nodejs/dove.sublime-project",
+		"/C/Users/lvfd/nodejs/dovepay-freight/views/components/system/queryBills.html",
+		"/C/Users/lvfd/nodejs/dovepay-freight/views/frame.html",
+		"/C/Users/lvfd/nodejs/dovepay-freight-ui/package-lock.json",
+		"/C/Users/lvfd/nodejs/dove-eee/views/login.html",
+		"/C/Users/lvfd/nodejs/dove-eee/src/login.jsx",
+		"/C/Users/lvfd/nodejs/dove-eee/src/react/Components.jsx",
+		"/C/Users/lvfd/nodejs/dove-eee/package.json",
+		"/C/Users/lvfd/nodejs/dove-eee/.eslintrc.js",
+		"/C/Users/lvfd/nodejs/dove-eee/babel.config.json",
+		"/C/Users/lvfd/nodejs/dove-eee/.npmrc",
+		"/C/Users/lvfd/nodejs/dove-eee/package-lock.json",
+		"/C/Users/lvfd/nodejs/dove-utils/node_modules/.bin/webpack",
+		"/C/Users/lvfd/nodejs/dove-eee/server.js",
+		"/C/Users/lvfd/nodejs/dove-eee/views/head.html",
+		"/C/Users/lvfd/nodejs/doveUtils/src/public/entry/ban.js",
+		"/C/Users/lvfd/nodejs/dove-eee/libs/preload/ie.js",
+		"/C/Users/lvfd/nodejs/dove-eee/src/preload/ie.js",
+		"/C/Users/lvfd/nodejs/dove-ui-server/src/dovepay/system-index.js",
+		"/C/Users/lvfd/nodejs/dove-eee/project.config.js",
+		"/C/Users/lvfd/Desktop/temp/hosts",
+		"/C/Windows/System32/drivers/etc/hosts",
+		"/C/Users/lvfd/nodejs/dove-eee/src/password/init.js",
+		"/C/Users/lvfd/nodejs/dove-eee/src/password/libs/crypto-js.js",
+		"/C/Users/lvfd/nodejs/dove-eee/src/password/libs/PassGuardCtrl_GM.js",
+		"/C/Users/lvfd/nodejs/dove-eee/src/password/libs/PassGuardCtrl.js",
+		"/C/Users/lvfd/nodejs/dove-eee/src/password/PassGuardCtrlFunctions.js",
+		"/C/Users/lvfd/nodejs/dove-eee/src/password/PassGuardCtrl.js",
+		"/C/Users/lvfd/nodejs/dove-eee/src/password/PassGuardCtrl_master.js",
+		"/C/Users/lvfd/nodejs/dove-eee/src/password/PassGuardCtrl_gm.js",
+		"/C/Users/lvfd/nodejs/dove-eee/src/password/crypto-js.js",
+		"/C/Users/lvfd/nodejs/dove-eee/src/password/.eslintrc.js",
+		"/C/Users/lvfd/nodejs/dove-eee/views/edit.html",
+		"/C/Users/lvfd/nodejs/dove-eee/src/edit.js",
+		"/C/Users/lvfd/nodejs/dove-eee/src/main.js",
+		"/C/Users/lvfd/nodejs/dove-eee/views/main.html",
+		"/C/Users/lvfd/nodejs/dove-eee/views/dovepay/notificationCenter.html",
+		"/C/Users/lvfd/nodejs/dove-eee/src/new.js",
+		"/C/Users/lvfd/nodejs/dove-eee/views/edit-main.html",
+		"/C/Users/lvfd/nodejs/dove-eee/src/password/passGuard.js",
+		"/C/Users/lvfd/nodejs/dove-eee/src/dovepay-notificationCenter.js",
+		"/C/Users/lvfd/git-idea/dovePay/src/main/webapp/accaBankPay.jsp"
+	],
+	"find":
+	{
+		"height": 29.0
+	},
+	"find_in_files":
+	{
+		"height": 128.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "dovepay-freight.sublime-project",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 150,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								73,
+								73
+							]
+						],
+						"settings":
+						{
+							"auto_complete": true,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/zzz A File Icon zzz/aliases/JSON (Sublime).sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 29.0
+	},
+	"input":
+	{
+		"height": 52.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.SublimeLinter":
+	{
+		"height": 156.0
+	},
+	"output.SublimeLinter Messages":
+	{
+		"height": 239.0
+	},
+	"output.exec":
+	{
+		"height": 418.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.nodejs":
+	{
+		"height": 156.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 444.0
+	},
+	"pinned_build_system": "Packages/Nodejs/Nodejs.sublime-build",
+	"project": "dovepay-freight.sublime-project",
+	"replace":
+	{
+		"height": 54.0
+	},
+	"save_all_on_build": false,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"addRule",
+				"dovepay-freight\\views\\components\\station\\billsSetting\\addRule.html"
+			],
+			[
+				"discountPolicies",
+				"dovepay-freight\\views\\components\\station\\userManagement\\discountPolicies.html"
+			],
+			[
+				"index_new",
+				"dovepay-freight\\views\\components\\station\\billManagement\\index_new.html"
+			],
+			[
+				"queryBills",
+				"dovepay-freight\\views\\components\\system\\queryBills.html"
+			],
+			[
+				"webpack.confi",
+				"dove-eee\\webpack.config.js"
+			],
+			[
+				"webpac",
+				"dove-utils\\node_modules\\.bin\\webpack"
+			],
+			[
+				"right",
+				"dovepay-ui-payment\\template\\rightpay.html"
+			],
+			[
+				"rechar",
+				"dovepay-ui\\src\\recharge.js"
+			],
+			[
+				"dominit",
+				"src\\public\\dominit.js"
+			],
+			[
+				"url",
+				"src\\public\\urls.js"
+			],
+			[
+				"pack",
+				"package.json"
+			],
+			[
+				"browser",
+				"src\\public\\browser.js"
+			],
+			[
+				"canvas",
+				"src\\dovepay-freight\\canvas.js"
+			],
+			[
+				"impor",
+				"src\\dovemgr\\import.js"
+			],
+			[
+				"urls.js",
+				"src\\public\\urls.js"
+			],
+			[
+				"import",
+				"src\\dovemgr\\import.js"
+			],
+			[
+				"browser.js",
+				"src\\public\\browser.js"
+			],
+			[
+				"filter",
+				"src\\change\\filter.js"
+			],
+			[
+				"rech",
+				"src\\dovepay\\recharge.js"
+			],
+			[
+				"buildBankLogoButton",
+				"src\\change\\buildBankLogoButton.js"
+			],
+			[
+				"width_resize",
+				"src\\dom\\width_resize.js"
+			],
+			[
+				"details",
+				"views\\components\\station\\dataStatistic\\details.html"
+			],
+			[
+				"datasta",
+				"views\\components\\station\\dataStatistic\\index.html"
+			],
+			[
+				"Global",
+				"src\\dovepay-freight\\Global.js"
+			],
+			[
+				"globa",
+				"src\\dovepay-freight\\Global.js"
+			],
+			[
+				"datast",
+				"src\\dovepay-freight\\dataStatistic.js"
+			],
+			[
+				"entry",
+				"src\\dovepay-freight\\Entry.js"
+			],
+			[
+				"width_",
+				"src\\dom\\width_resize.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 323.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 1323.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 281.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
