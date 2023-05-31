@@ -14,6 +14,7 @@ const api = {
   },
   station: {
     stationQueryBill: baseAPIUrl + '/station/stationQueryBill',
+    stationQueryBillSum: baseAPIUrl + '/station/stationQueryBillSum',
     stationBillExcel: baseAPIUrl + '/station/stationBillExcel',
     stationQueryBillDetails: baseAPIUrl + '/station/stationQueryBillDetails',
     stationBillDetailsExcel: baseAPIUrl + '/station/stationBillDetailsExcel',

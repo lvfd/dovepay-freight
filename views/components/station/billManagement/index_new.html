@@ -2,6 +2,7 @@
 <input type="hidden" name="api_forTable" value=<%= urls.api.station.stationQueryBill%>>
 <input type="hidden" name="api_forExport" value=<%= urls.api.station.stationBillExcel%>>
 <input type="hidden" name="api_stationBillPush" value=<%= urls.api.station.stationBillPush%>>
+<input type="hidden" name="api_queryBillSum" value=<%= urls.api.station.stationQueryBillSum%>>
 <input type="hidden" name="url_forQueryDetails" value=<%- urls.station.index + urls.station.queryBills + '/' + tType%>>
 <section class="breadcrumb">
   <ul>
@@ -61,6 +62,17 @@
 <hr>
 <div class="uk-overflow-auto">
   <table id="dataTable" class="uk-table uk-table-small uk-table-divider uk-table-striped uk-table-hover">
+    <caption class="uk-margin-small" hidden>
+      <span class="uk-margin-small-left">总计费重量
+        <span class="totalWeight uk-badge uk-margin-small-left uk-margin-small-right"></span>KG
+      </span>
+      <span class="uk-margin-small-left">总金额
+        <span class="totalFee uk-badge uk-margin-small-left uk-margin-small-right"></span>元
+      </span>
+      <span class="uk-margin-small-left">优惠后总金额
+        <span class="realTotalFee uk-badge uk-margin-small-left uk-margin-small-right"></span>元
+      </span>
+    </caption>
     <thead></thead>
     <tbody></tbody>
   </table>

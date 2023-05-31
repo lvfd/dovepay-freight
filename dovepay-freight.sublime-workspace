@@ -519,14 +519,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "/C/Users/lvfd/nodejs/dovepay-freight-ui/package-lock.json",
-			"settings":
-			{
-				"buffer_size": 261356,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -863,40 +855,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "/C/Users/lvfd/nodejs/dovepay-freight-ui/package-lock.json",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 261356,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								330,
-								330
-							]
-						],
-						"settings":
-						{
-							"origin_encoding": "ASCII",
-							"syntax": "Packages/zzz A File Icon zzz/aliases/JSON (NPM).sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		}
 	],
