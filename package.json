@@ -4,7 +4,8 @@
   "description": "",
   "main": "express.js",
   "scripts": {
-    "start": "node express.js"
+    "start": "node express.js",
+    "local": "set NODE_ENV=development&&node express.js"
   },
   "author": "lvfd@acca.com.cn",
   "license": "MIT",

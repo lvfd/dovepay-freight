@@ -520,11 +520,10 @@
 	"buffers":
 	[
 		{
-			"file": "dovepay-freight.sublime-project",
+			"file": "/C/Users/lvfd/nodejs/dovepay-freight-ui/package-lock.json",
 			"settings":
 			{
-				"buffer_size": 150,
-				"encoding": "UTF-8",
+				"buffer_size": 261356,
 				"line_ending": "Unix"
 			}
 		}
@@ -697,9 +696,12 @@
 	},
 	"expanded_folders":
 	[
+		"/C/Users/lvfd/nodejs/dovepay-freight",
+		"/C/Users/lvfd/nodejs/dovepay-freight-ui"
 	],
 	"file_history":
 	[
+		"/C/Users/lvfd/nodejs/dovepay-freight/package.json",
 		"/C/Users/lvfd/nodejs/dovepay-freight/dovepay-freight.sublime-project",
 		"/C/Users/lvfd/nodejs/dovepay-freight-ui/dovepay-freight.sublime-project",
 		"/C/Users/lvfd/nodejs/dovepay-freight-ui/src/dataStatistic.js",
@@ -783,7 +785,6 @@
 		"/C/Users/lvfd/nodejs/unionpay-certified-pay/eslintrc.json",
 		"/C/Users/lvfd/nodejs/unionpay-certified-pay/package.json",
 		"/C/Users/lvfd/nodejs/unionpay-certified-pay/.npmrc",
-		"/C/Users/lvfd/nodejs/dovepay-freight/package.json",
 		"/C/Users/lvfd/nodejs/dovepay-freight/views/main.html",
 		"/C/Users/lvfd/nodejs/dovepay-freight/views/components/station/billManagement/index_new.html",
 		"/C/Users/lvfd/nodejs/dove.sublime-project",
@@ -867,26 +868,27 @@
 			[
 				{
 					"buffer": 0,
-					"file": "dovepay-freight.sublime-project",
-					"semi_transient": false,
+					"file": "/C/Users/lvfd/nodejs/dovepay-freight-ui/package-lock.json",
+					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 150,
+						"buffer_size": 261356,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								73,
-								73
+								330,
+								330
 							]
 						],
 						"settings":
 						{
-							"auto_complete": true,
 							"origin_encoding": "ASCII",
-							"syntax": "Packages/zzz A File Icon zzz/aliases/JSON (Sublime).sublime-syntax"
+							"syntax": "Packages/zzz A File Icon zzz/aliases/JSON (NPM).sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
