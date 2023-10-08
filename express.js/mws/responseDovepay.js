@@ -23,7 +23,8 @@ module.exports = (type) => {
     let userId = ''
     try {
       userId_raw = req.body.userid
-      userId = process.env.NODE_ENV === 'development'? sm4.decryptData_ECB(userId_raw): userId_raw
+      // userId = process.env.NODE_ENV === 'development'? sm4.decryptData_ECB(userId_raw): userId_raw
+      userId = userId_raw
     } catch (error) {
       let msg = {
         type: type,
