@@ -10,7 +10,7 @@ def dockerTag = dateFormat.format(new Date()) + "_${env.BUILD_ID}"
 //定义变量
 
 def git_address = "http://10.1.85.161:8888/lvfudi/dovepay-freight.git" 
-def git_auth = "8dccd9d7-19d6-47ab-87c5-4173a88c4661"
+def git_auth = "b72fe9fe-b964-4857-bc7e-8ff409d3ce66"
 //def git_branch = "${branch_name}"
 
 
