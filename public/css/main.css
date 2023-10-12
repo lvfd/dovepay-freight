@@ -94,7 +94,7 @@ main #listboxR2L {
 }
 main #sourceSelect,
 main #destSelect {
-  overflow: hidden;
+  /*overflow: hidden;*/
   resize: none;
 }
 main #sourceSelect option,

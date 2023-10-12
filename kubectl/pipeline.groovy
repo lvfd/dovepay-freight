@@ -10,7 +10,7 @@ def dockerTag = dateFormat.format(new Date()) + "_${env.BUILD_ID}"
 //定义变量
 
 def git_address = "http://10.1.85.161:8888/lvfudi/dovepay-freight.git" 
-def git_auth = "b72fe9fe-b964-4857-bc7e-8ff409d3ce66"
+def git_auth = "8dccd9d7-19d6-47ab-87c5-4173a88c4661"
 //def git_branch = "${branch_name}"
 
 
@@ -105,7 +105,7 @@ node("jenkins-slave"){
     stage('检查部署应用'){
         
       //获取日志
-      sh 'sleep 10s'
+      sh 'sleep 30s'
       timeout(time: 3, unit: 'MINUTES'){
         sh '''
           ID_NAME=`kubectl get pods  -n dovepay-b2b  | grep  ${JOB_NAME} | awk -F " " '{print $1}' | head -1`
