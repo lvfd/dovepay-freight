@@ -519,6 +519,34 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "Jenkinsfile",
+			"settings":
+			{
+				"buffer_size": 4128,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			},
+			"undo_stack":
+			[
+				[
+					19,
+					1,
+					"revert",
+					null,
+					"AgAAAAAAAAAAAAAAAAAAAAAAAACkEQAAaW1wb3J0IGphdmEudGV4dC5TaW1wbGVEYXRlRm9ybWF0CmltcG9ydCBqYXZhLmxhbmcuU3RyaW5nCgovL+WumuS5ieS4gOS4queJiOacrOWPt+S9nOS4uuW9k+asoeaehOW7uueahOeJiOacrO+8jOi+k+WHuue7k+aenCAyMDE5MTIxMDE3NTg0Ml82OQpkZWYgZGF0ZUZvcm1hdCA9IG5ldyBTaW1wbGVEYXRlRm9ybWF0KCJ5eXl5TU1kZEhIbW0iKQpkZWYgZG9ja2VyVGFnID0gZGF0ZUZvcm1hdC5mb3JtYXQobmV3IERhdGUoKSkgKyAiXyR7ZW52LkJVSUxEX0lEfSIKCgoKLy/lrprkuYnlj5jph48KCmRlZiBnaXRfYWRkcmVzcyA9ICJodHRwOi8vMTAuMS44NS4xNjE6ODg4OC9sdmZ1ZGkvZG92ZXBheS1mcmVpZ2h0LmdpdCIgCmRlZiBnaXRfYXV0aCA9ICI4ZGNjZDlkNy0xOWQ2LTQ3YWItODdjNS00MTczYTg4YzQ2NjEiCi8vZGVmIGdpdF9icmFuY2ggPSAiJHticmFuY2hfbmFtZX0iCgoKLy9IYXJib3Lnp4HmnI3lnLDlnYAKZGVmIGhhcmJvcl91cmwgPSAiMTAuMS44NS4yMjoxMDM0IgovL0hhcmJvcueahOWHreivgQpkZWYgaGFyYm9yX2F1dGggPSAiNmI4ZmFjYWUtNmFmYy00ODE4LWE0ZTMtMmUyYThiMTY0MzJhIgoKCi8v5p6E5bu654mI5pys55qE5ZCN56ewCmRlZiBpbWFnZVVybCA9ICIke2Vudi5KT0JfTkFNRX06JHtkb2NrZXJUYWd9IgoKLy9rOHPnmoTlh63or4EKLy9kZWYgazhzX2F1dGg9IjNmMWFjMzJhLWQ2ODgtNDkzNC04Y2Y0LTlkZjZjN2NlZTAzZiIKLy/lrprkuYlrOHMtYmFyYm9y55qE5Yet6K+BCi8vZGVmIHNlY3JldF9uYW1lPSLorr/pl65rOHN0b2tlbiIKCgoKCm5vZGUoImplbmtpbnMtc2xhdmUiKXsKICBjb250YWluZXIoJ3Rvb2xzJyl7CiAgICAvLyDnrKzkuIDmraUKICAgIHN0YWdlKCfku6PnoIHkuIvovb0nKXsKICAgICAgY2hlY2tvdXQoWyRjbGFzczogJ0dpdFNDTScsIGJyYW5jaGVzOiBbW25hbWU6ICcqLyR7YnJhbmNoX25hbWV9J11dLCBleHRlbnNpb25zOiBbXSwgdXNlclJlbW90ZUNvbmZpZ3M6IFtbY3JlZGVudGlhbHNJZDogIiR7Z2l0X2F1dGh9IiwgdXJsOiAiJHtnaXRfYWRkcmVzc30iXV1dKQogICAgfQogICAgCgogICAgLy8g56ys5LqM5q2lCiAgICBzdGFnZSgn5LiK5Lyg6ZWc5YOPJyl7ICAKICAgICAgCiAgICAgIC8v5Yib5bu66ZWc5YOPCiAgICAgIHNoICJkb2NrZXIgYnVpbGQgLXQgJHtpbWFnZVVybH0gLS1ybT10cnVlIC4vIgoKICAgICAgICAKICAgICAgLy/nu5nplZzlg4/miZPmoIfnrb4KICAgICAgc2ggImRvY2tlciB0YWcgJHtpbWFnZVVybH0gJHtoYXJib3JfdXJsfS9wcm9qZWN0X2xpYnJhcnkvJHtpbWFnZVVybH0iCgogICAgICAgICAgICAvL+eZu+W9lUhhcmJvcu+8jOW5tuS4iuS8oOmVnOWDjwogICAgICAgICAgICB3aXRoQ3JlZGVudGlhbHMoW3VzZXJuYW1lUGFzc3dvcmQoY3JlZGVudGlhbHNJZDogIiR7aGFyYm9yX2F1dGh9IiwgcGFzc3dvcmRWYXJpYWJsZTogJ3Bhc3N3b3JkJywgdXNlcm5hbWVWYXJpYWJsZTogJ3VzZXJuYW1lJyldKQogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAvL+eZu+W9lQogICAgICAgICAgICAgICAgc2ggImRvY2tlciBsb2dpbiAtdSAke3VzZXJuYW1lfSAtcCAke3Bhc3N3b3JkfSAke2hhcmJvcl91cmx9IgogICAgICAgICAgICAgICAgLy/kuIrkvKDplZzlg48KICAgICAgICAgICAgICAgIHNoICJkb2NrZXIgcHVzaCAke2hhcmJvcl91cmx9L3Byb2plY3RfbGlicmFyeS8ke2ltYWdlVXJsfSIKICAgICAgICAgICAgfQogICAgICAKICAgICAgLy/liKDpmaTmnKzlnLDplZzlg48KICAgICAgICAgICAgc2ggImRvY2tlciBybWkgLWYgJHtpbWFnZVVybH0iIAogICAgICAgICAgICBzaCAiZG9ja2VyIHJtaSAtZiAke2hhcmJvcl91cmx9L3Byb2plY3RfbGlicmFyeS8ke2ltYWdlVXJsfSIKICAgIH0KICAgIAogICAgLy8g56ys5Zub5q2lCiAgICBzdGFnZSgn6YOo572y5Yiwazhz5bmz5Y+wJyl7CiAgICAgICAgCiAgICAgIC8v5pu/5o2i5Y+Y6YePCiAgICAgIGRlZiBkZXBsb3lfaW1hZ2VfbmFtZSA9ICIke2hhcmJvcl91cmx9L3Byb2plY3RfbGlicmFyeS8ke2ltYWdlVXJsfSIKICAgICAgc2ggInNlZCAtaSAncyNcJElNQUdFX05BTUUjJHtkZXBsb3lfaW1hZ2VfbmFtZX0jJyBrdWJlY3RsL2RlcGxveW1lbnQueWFtbCIKICAgICAgc2ggInNlZCAtaSAncyNcJFBST0pFQ1QjJHtKT0JfTkFNRX0jJyBrdWJlY3RsL2RlcGxveW1lbnQueWFtbCIKICAgICAgc2ggInNlZCAtaSAncyNcJE5PREVfRU5WIyR7bm9kZV9lbnZ9Iycga3ViZWN0bC9kZXBsb3ltZW50LnlhbWwiCiAgICAgIHNoICJzZWQgLWkgJ3MjXCRQUk9KRUNUIyR7Sk9CX05BTUV9Iycga3ViZWN0bC9wdnB2Yy10ZXN0LnltbCIKICAgICAgICAKICAgICAgLy/mm7/mjaJ5bWzlkI3np7DvvIzku6Xkvr/mu5rliqjmm7TmlrAKICAgICAgc2ggIm12IGt1YmVjdGwvZGVwbG95bWVudC55YW1sIGt1YmVjdGwvZGVwbG95bWVudF8ke2Vudi5CVUlMRF9JRH0ueWFtbCIKICAgICAgICAKICAgICAgLy/liJvlu7pQVlBWQwogICAgICBzaCAia3ViZWN0bCBhcHBseSAtZiBrdWJlY3RsL3B2cHZjLXRlc3QueW1sIgogICAgICAKICAgICAgLy/muIXnkIblkK/liqjlpLHotKXnmoTov5vnqIsKICAgICAgc2ggJycnCiAgICAgICAgICBOVU09YGt1YmVjdGwgZ2V0IGRlcGxveW1lbnQgLW4gZG92ZXBheS1iMmIgfCBncmVwICR7Sk9CX05BTUV9IHwgYXdrIC1GICIvIiAne3ByaW50ICQxfScgfCBhd2sgLUYgIiAiICd7cHJpbnQgJDJ9J2AKICAgICAgICAgIENPVU5UPWBrdWJlY3RsIGdldCBkZXBsb3ltZW50IC1uIGRvdmVwYXktYjJiIHwgZ3JlcCAke0pPQl9OQU1FfSB8IHdjIC1sYAogICAgICAgICAgaWYgWyAkQ09VTlQgLW5lIDAgXTt0aGVuCiAgICAgICAgICAgICAgaWYgWyAkTlVNIC1lcSAwIF07dGhlbgogICAgICAgICAgICAgIGt1YmVjdGwgZGVsZXRlIGRlcGxveW1lbnQgJHtKT0JfTkFNRX0tbGF0ZXN0IC1uIGRvdmVwYXktYjJiCiAgICAgICAgICAgICAgc2xlZXAgOHMKICAgICAgICAgICAgICAgICAgZWNobyAi5riF55CG6L+b56iL5a6M5oiQ77yBIgogICAgICAgICAgICAgIGZpCiAgICAgICAgICBlbHNlCiAgICAgICAgICAgICAgICBlY2hvICLnrKzkuIDmrKHpg6jnvbLvvIEiCiAgICAgICAgICBmaQogICAgICAnJycgICAKICAgICAgCiAgICAKICAgICAgCiAgICAgIC8v6YOo572y5YiwSzhTIAogICAgICBzaCAia3ViZWN0bCBhcHBseSAtZiBrdWJlY3RsL2RlcGxveW1lbnRfJHtlbnYuQlVJTERfSUR9LnlhbWwgLS1yZWNvcmQiCgogICAgfQogICAgCiAgICAvLyDnrKzkupTmraUKICAgIHN0YWdlKCfmo4Dmn6Xpg6jnvbLlupTnlKgnKXsKICAgICAgICAKICAgICAgLy/ojrflj5bml6Xlv5cKICAgICAgc2ggJ3NsZWVwIDMwcycKICAgICAgdGltZW91dCh0aW1lOiAzLCB1bml0OiAnTUlOVVRFUycpewogICAgICAgIHNoICcnJwogICAgICAgICAgSURfTkFNRT1ga3ViZWN0bCBnZXQgcG9kcyAgLW4gZG92ZXBheS1iMmIgIHwgZ3JlcCAgJHtKT0JfTkFNRX0gfCBhd2sgLUYgIiAiICd7cHJpbnQgJDF9JyB8IGhlYWQgLTFgCiAgICAgICAgICBrdWJlY3RsIGxvZ3MgLS10YWlsICAzMDAwIC1uIGRvdmVwYXktYjJiICR7SURfTkFNRX0KICAgICAgICAnJycKICAgICAgfQogICAgICAKICAgICAgLy/liKTmlq3pg6jnvbLlupTnlKjmmK/lkKblkK/liqjmiJDlip8KICAgICAgc2ggJycnCiAgICAgICAgICBOVU09YGt1YmVjdGwgZ2V0IGRlcGxveW1lbnQgLW4gZG92ZXBheS1iMmIgfCBncmVwICR7Sk9CX05BTUV9IHwgYXdrIC1GICIvIiAne3ByaW50ICQxfScgfCBhd2sgLUYgIiAiICd7cHJpbnQgJDJ9J2AKICAgICAgICAgIGlmIFsgJE5VTSAtZXEgMSBdO3RoZW4KICAgICAgICAgICAgICBlY2hvICLpg6jnvbLlupTnlKjmiJDlip/vvIEiCiAgICAgICAgICBlbHNlCiAgICAgICAgICAgICAgZWNobyAi6YOo572y5bqU55So5aSx6LSl77yBIgogICAgICAgICAgICAgIGV4aXQgMQogICAgICAgICAgZmkKICAgICAgICAnJycKICAgICAgc2ggImt1YmVjdGwgcm9sbG91dCBoaXN0b3J5IGRlcGxveW1lbnQgICR7Sk9CX05BTUV9LWxhdGVzdCAtbiBkb3ZlcGF5LWIyYiIKCiAgICB9CiAgICAvLyDnrKzlha3mraUKICAgIHN0YWdlKCfmuIXnkIbplZzlg48nKXsKICAgIAogICAgICBzaCAnJycKICAgICAgICBOVU1fTkVXPWBkb2NrZXIgaW1hZ2VzIHwgZ3JlcCAke0pPQl9OQU1FfSB8IGF3ayAnTlI9PTF7cHJpbnQgJDJ9J2AKICAgICAgICBOVU1fT0xEPWBkb2NrZXIgaW1hZ2VzIHwgZ3JlcCAke0pPQl9OQU1FfSAgfCBhd2sgLUYiICIgJ3twcmludCAkMn0nYAogICAgICAgIGZvciBpIGluICROVU1fT0xECiAgICAgICAgZG8KICAgICAgICAgIGlmIFsgICRpICE9ICROVU1fTkVXIF0KICAgICAgICAgIHRoZW4KICAgICAgICAgICAgZG9ja2VyIHJtaSAtZiAxMC4xLjg1LjIyOjEwMzQvcHJvamVjdF9saWJyYXJ5LyR7Sk9CX05BTUV9OiRpCiAgICAgICAgICAgIGVjaG8gIiRp5riF55CG5oiQ5Yqf77yBIgogICAgICAgICAgZmkKICAgICAgICBkb25lCiAgICAgICAgCiAgICAgICcnJwogICAgfQogIH0KfQAAAAAAAAAAIBAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA2AsAAAAAAADYCwAAAAAAAAAAAAAAAPC/"
+				]
+			]
+		},
+		{
+			"file": "package.json",
+			"settings":
+			{
+				"buffer_size": 677,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -689,6 +717,8 @@
 	"expanded_folders":
 	[
 		"/C/Users/lvfd/nodejs/dovepay-freight",
+		"/C/Users/lvfd/nodejs/dovepay-freight/dist",
+		"/C/Users/lvfd/nodejs/dovepay-freight/kubectl",
 		"/C/Users/lvfd/nodejs/dovepay-freight-ui"
 	],
 	"file_history":
@@ -847,8 +877,10 @@
 		[
 		],
 		"reverse": false,
+		"scrollbar_highlights": true,
 		"show_context": true,
 		"use_buffer2": true,
+		"use_gitignore": true,
 		"whole_word": false,
 		"wrap": true
 	},
@@ -857,6 +889,84 @@
 		{
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "Jenkinsfile",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4128,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3011,
+								3011
+							]
+						],
+						"settings":
+						{
+							"lsp_uri": "file:///C:/Users/lvfd/nodejs/dovepay-freight/Jenkinsfile",
+							"syntax": "Packages/zzz A File Icon zzz/aliases/Groovy (Jenkins).sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 920.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "package.json",
+					"selected": true,
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 677,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html, text.xml"
+								},
+								{
+									"rhs_empty": true,
+									"selector": "punctuation.accessor"
+								}
+							],
+							"lsp_uri": "file:///C:/Users/lvfd/nodejs/dovepay-freight/package.json",
+							"origin_encoding": "ASCII",
+							"show_definitions": true,
+							"syntax": "Packages/zzz A File Icon zzz/aliases/JSON (NPM).sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"stack_multiselect": false,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -891,6 +1001,10 @@
 		]
 	},
 	"menu_visible": true,
+	"output.LSP Log Panel":
+	{
+		"height": 0.0
+	},
 	"output.SublimeLinter":
 	{
 		"height": 156.0
@@ -898,6 +1012,10 @@
 	"output.SublimeLinter Messages":
 	{
 		"height": 239.0
+	},
+	"output.diagnostics":
+	{
+		"height": 0.0
 	},
 	"output.exec":
 	{
